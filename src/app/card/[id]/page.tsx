@@ -1,5 +1,7 @@
 import { notFound } from "next/navigation";
 import { serviceClient } from "@/lib/supabase/service";
+export const dynamic = "force-dynamic";
+
 import { ShareableCard } from "@/components/collectors/shareable-card";
 
 interface CardPageProps {

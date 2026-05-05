@@ -1,4 +1,6 @@
 import { serviceClient } from "@/lib/supabase/service";
+export const dynamic = "force-dynamic";
+
 import { 
   Users, 
   Package, 

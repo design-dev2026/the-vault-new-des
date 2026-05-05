@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>COLLECTIBLE VAULT | Home</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#131313",
+                        "error-container": "#93000a",
+                        "inverse-surface": "#e2e2e2",
+                        "surface-variant": "#353535",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "primary-fixed": "#e2e2e2",
+                        "outline": "#8e9192",
+                        "error": "#ffb4ab",
+                        "background": "#131313",
+                        "primary-fixed-dim": "#c6c6c7",
+                        "on-error": "#690005",
+                        "on-tertiary": "#2f3131",
+                        "primary": "#ffffff",
+                        "on-surface-variant": "#c4c7c8",
+                        "outline-variant": "#444748",
+                        "secondary-container": "#474746",
+                        "surface-container-highest": "#353535",
+                        "surface-container-lowest": "#0e0e0e",
+                        "surface-bright": "#393939",
+                        "primary-container": "#e2e2e2",
+                        "tertiary-container": "#e2e2e2",
+                        "secondary-fixed": "#e5e2e1",
+                        "on-tertiary-container": "#636565",
+                        "surface-container-low": "#1b1b1b",
+                        "tertiary": "#ffffff",
+                        "on-secondary-container": "#b7b5b4",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "on-tertiary-fixed-variant": "#454747",
+                        "secondary": "#c8c6c5",
+                        "inverse-primary": "#5d5f5f",
+                        "surface-container-high": "#2a2a2a",
+                        "surface": "#131313",
+                        "on-surface": "#e2e2e2",
+                        "on-error-container": "#ffdad6",
+                        "on-primary-fixed-variant": "#454747",
+                        "tertiary-fixed-dim": "#c6c6c7",
+                        "surface-container": "#1f1f1f",
+                        "on-primary": "#2f3131",
+                        "tertiary-fixed": "#e2e2e2",
+                        "on-primary-fixed": "#1a1c1c",
+                        "on-secondary": "#313030",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "inverse-on-surface": "#303030",
+                        "on-primary-container": "#636565",
+                        "surface-tint": "#c6c6c7",
+                        "on-background": "#e2e2e2",
+                        "on-secondary-fixed-variant": "#474746"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-max": "1440px",
+                        "gutter": "24px",
+                        "margin-mobile": "20px",
+                        "margin-desktop": "64px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "h1": ["Plus Jakarta Sans"],
+                        "label-caps": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "h3": ["Plus Jakarta Sans"],
+                        "h2": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                        "h1": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "700"}],
+                        "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                        "h3": ["24px", {"lineHeight": "1.3", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "h2": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.03em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(40px);
+            border: 1px solid #1A1A1A;
+        }
+        .asset-card {
+            background: #0A0A0A;
+            border: 1px solid #1A1A1A;
+            transition: all 0.3s ease;
+        }
+        .asset-card:hover {
+            border-color: #FFFFFF;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md overflow-x-hidden">
+<!-- TopAppBar -->
+<header class="bg-black/80 backdrop-blur-xl text-white fixed top-0 w-full z-50 border-b border-white/10">
+<div class="flex justify-between items-center px-6 h-16 max-w-[1440px] mx-auto">
+<div class="flex items-center gap-4 cursor-pointer active:opacity-70">
+<span class="material-symbols-outlined">menu</span>
+<span class="text-lg font-black tracking-tighter text-white">COLLECTIBLE VAULT</span>
+</div>
+<div class="flex items-center gap-6">
+<nav class="hidden md:flex gap-8 font-['Plus_Jakarta_Sans'] tracking-widest uppercase text-xs font-bold">
+<span class="text-white cursor-pointer transition-colors duration-300">HOME</span>
+<span class="text-white/40 hover:text-white cursor-pointer transition-colors duration-300">VAULT</span>
+<span class="text-white/40 hover:text-white cursor-pointer transition-colors duration-300">MARKET</span>
+<span class="text-white/40 hover:text-white cursor-pointer transition-colors duration-300">ANALYTICS</span>
+</nav>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-white/20 cursor-pointer active:opacity-70">
+<img alt="User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgXWqgs775xCQgGKXSW0ewRwJVhblwCjV0G63UyS3fIh4FWFu2WNjYJXIumrlu89WvuHBWXM8xgCXf9LC7JtCi3RrBm31J-S0aadyj5Hp-y5JrCPMG8KngAn1S3GMV3mbpUWD6-6m4Y0hixKaVeG5uZH8Zc0Yrmagl3wggxnouMFTU8kDfl1jVGr32ta1idpypfjE60jW2O5bR1GEiP9wFaA6iF4-l5GeWFUVSlyfMgQJeFsQCXX__GhkiQ72XLpu2Xq-yp2yAEG84"/>
+</div>
+</div>
+</div>
+</header>
+<main class="pt-24 pb-32 px-6 max-w-[1440px] mx-auto">
+<!-- Hero Greeting -->
+<section class="mb-16">
+<h1 class="font-h1 text-h1 text-white mb-2">Good evening, John</h1>
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-[0.2em]">Welcome back to your private gallery</p>
+</section>
+<!-- Stats Grid (Bento Style) -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
+<div class="glass-panel p-8 rounded-xl flex flex-col justify-between min-h-[200px]">
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase mb-4">Total Items</p>
+<h2 class="font-h1 text-h1 text-white">142</h2>
+</div>
+<div class="flex items-center text-primary text-xs font-bold gap-1 mt-4">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span>+12 THIS MONTH</span>
+</div>
+</div>
+<div class="glass-panel p-8 rounded-xl flex flex-col justify-between min-h-[200px]">
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase mb-4">Collection Value</p>
+<div class="flex items-baseline gap-2">
+<h2 class="font-h1 text-h1 text-white">$42,500</h2>
+<span class="text-white/40 font-body-md">USD</span>
+</div>
+</div>
+<div class="flex items-center text-primary text-xs font-bold gap-1 mt-4">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">stars</span>
+<span>PLATINUM TIER ASSETS</span>
+</div>
+</div>
+<div class="glass-panel p-8 rounded-xl flex flex-col justify-between min-h-[200px]">
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase mb-4">Market Performance (ROI)</p>
+<h2 class="font-h1 text-h1 text-white">+18.4%</h2>
+</div>
+<div class="flex items-center text-primary text-xs font-bold gap-1 mt-4">
+<span class="material-symbols-outlined text-sm">analytics</span>
+<span>OUTPERFORMING SP500</span>
+</div>
+</div>
+</section>
+<!-- Recently Added Section -->
+<section class="mb-20">
+<div class="flex justify-between items-end mb-8">
+<div>
+<h3 class="font-h3 text-h3 text-white mb-1">Recently Added</h3>
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase">Latest acquisitions in your vault</p>
+</div>
+<button class="border border-white/20 px-6 py-2 rounded-full font-label-caps text-label-caps text-white hover:bg-white hover:text-black transition-all duration-300">VIEW ALL</button>
+</div>
+<div class="flex gap-6 overflow-x-auto hide-scrollbar pb-8 snap-x">
+<!-- Asset Card 1 -->
+<div class="asset-card min-w-[320px] md:min-w-[400px] rounded-lg overflow-hidden snap-start">
+<div class="aspect-[4/5] bg-surface-container overflow-hidden">
+<img class="w-full h-full object-cover grayscale-[0.5] hover:grayscale-0 transition-all duration-700" data-alt="A highly detailed close-up shot of a limited edition Naruto collectible statue, showcasing intricate sculpting and vibrant but moody lighting. The figurine is set against a dark, minimalist backdrop typical of a high-end luxury vault. The lighting highlights the fine textures of the craftsmanship, emphasizing its premium value. The overall aesthetic is monochromatic with subtle golden light catching the edges of the character's hair." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9Aa2zKpX5zsufVo9D8NIO3RhZCfIMRdfw6KQWUStCEE7LPpNSRalgMgJZlAQCNLMWjTi0LjivsLBDZN-Q4zSws4MkM8KQOg1Zy9xjOZpxGC4wGrs5nzHk35qufP4ka3gGR-7wkxZfCfppPb4ZlEvMUyQgX-7WwPc75v5O6BWShxfc2Hd1MURRClj4VQYDBxML9INuiMLxlrfFUi0WJVNye_XOQOEtKK8Q6D295mUmZ2BpPRrVjeRlaD3WA4S79vxyHb7DPF2Xhtn1"/>
+</div>
+<div class="p-6">
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase mb-1">Limited Edition</p>
+<h4 class="font-h3 text-h3 text-white">Naruto Uzumaki "The Last" Statue</h4>
+</div>
+<span class="font-body-md text-white font-bold">$1,200</span>
+</div>
+<div class="flex gap-2">
+<span class="border border-white/10 px-3 py-1 text-[10px] text-white/60 tracking-widest uppercase">MINT 12/50</span>
+<span class="border border-white/10 px-3 py-1 text-[10px] text-white/60 tracking-widest uppercase">STATUE</span>
+</div>
+</div>
+</div>
+<!-- Asset Card 2 -->
+<div class="asset-card min-w-[320px] md:min-w-[400px] rounded-lg overflow-hidden snap-start">
+<div class="aspect-[4/5] bg-surface-container overflow-hidden">
+<img class="w-full h-full object-cover grayscale-[0.8] hover:grayscale-0 transition-all duration-700" data-alt="A macro photography shot of a luxury vintage wristwatch resting on a textured black marble surface. The watch face is crystalline white with silver complications, illuminated by a single directional light source that creates deep, dramatic shadows. The mood is archival and prestigious, reflecting an ultra-high-end gallery style. The minimalist setting focuses entirely on the precision and elegance of the mechanical timepiece." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYOAytrPG8kOj_7VXxT-ovUmUi-kV_DaDONMZnvkHCwXlK9WBs40l-lA6OnOn5f0zY5x1ANsCz0fOHosnQB8Tzt7f4PN5Po8Tlnz-dZP_NYBKU57VMty8gEa04ZkfELKBlfklVukeG25BlsKdvXFGZYR-H6Fstk__b9r-rWzSRymdWZGEvncnLH9okX8xfr9v2xR_rwVzBN5Ymb5eAYUN5c_tYStaPw6N3KUwGH0Wts9Pfl7u4WMYBFBSPOzHp1fBXkZtDreuL2yl_"/>
+</div>
+<div class="p-6">
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase mb-1">Horology</p>
+<h4 class="font-h3 text-h3 text-white">1968 Vintage Chronograph</h4>
+</div>
+<span class="font-body-md text-white font-bold">$8,450</span>
+</div>
+<div class="flex gap-2">
+<span class="border border-white/10 px-3 py-1 text-[10px] text-white/60 tracking-widest uppercase">GRADE: A+</span>
+<span class="border border-white/10 px-3 py-1 text-[10px] text-white/60 tracking-widest uppercase">TIMEPIECE</span>
+</div>
+</div>
+</div>
+<!-- Asset Card 3 -->
+<div class="asset-card min-w-[320px] md:min-w-[400px] rounded-lg overflow-hidden snap-start">
+<div class="aspect-[4/5] bg-surface-container overflow-hidden">
+<img class="w-full h-full object-cover grayscale-[0.3] hover:grayscale-0 transition-all duration-700" data-alt="A minimalist professional studio shot of a rare first-edition trading card encased in a thick, clear acrylic protective slab. The slab has a subtle top-border highlight reflecting a clean studio light. The card features vibrant artwork that stands out against the muted, dark grayscale tones of the surrounding environment. The composition is clean and centered, emphasizing the card as a high-value asset in a private collection vault." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFg13HIMqcpBq-WiJted9H186cNgN2-6vVYs5nGE4nLAFgibf-XDb02rpaK2wt92crgHgqf6dd-nXaa9bYIYF4wkMcpMhk_0wQxgGCpqCIhvvMivIvmhc8cHlsvBj4-LQFq9d4L0vut1EjU66aLWeZYwgGBsglVWvPemCkH7fOcMI_Qv6B4rAZWbfw6rw1LxQHSIlpgg_GVCAXsPHz5TC85TK-5aX62pIkVTE5kh2GootlxZRWcAjCeI1oxugEa-cuF0ZzOjpVxDOw"/>
+</div>
+<div class="p-6">
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase mb-1">Trading Card</p>
+<h4 class="font-h3 text-h3 text-white">First Edition Shadowless Charizard</h4>
+</div>
+<span class="font-body-md text-white font-bold">$12,000</span>
+</div>
+<div class="flex gap-2">
+<span class="border border-white/10 px-3 py-1 text-[10px] text-white/60 tracking-widest uppercase">PSA 10 GEM MINT</span>
+<span class="border border-white/10 px-3 py-1 text-[10px] text-white/60 tracking-widest uppercase">TCG</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Floating Action Button -->
+<button class="fixed bottom-24 right-8 w-16 h-16 bg-white text-black rounded-full flex items-center justify-center shadow-2xl z-[60] active:scale-95 transition-transform duration-200">
+<span class="material-symbols-outlined text-3xl font-bold">add</span>
+</button>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden bg-black/90 backdrop-blur-2xl text-white fixed bottom-0 left-0 w-full h-20 flex justify-around items-center px-8 pb-4 border-t border-white/10 shadow-[0_-10px_20px_rgba(0,0,0,0.5)] z-50">
+<div class="flex flex-col items-center justify-center text-white scale-110 transition-all duration-300 ease-in-out cursor-pointer">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+</div>
+<div class="flex flex-col items-center justify-center text-white/30 hover:text-white/80 transition-all duration-300 ease-in-out cursor-pointer">
+<span class="material-symbols-outlined">analytics</span>
+</div>
+<div class="flex flex-col items-center justify-center text-white/30 hover:text-white/80 transition-all duration-300 ease-in-out cursor-pointer">
+<span class="material-symbols-outlined">add_circle</span>
+</div>
+<div class="flex flex-col items-center justify-center text-white/30 hover:text-white/80 transition-all duration-300 ease-in-out cursor-pointer">
+<span class="material-symbols-outlined">search</span>
+</div>
+<div class="flex flex-col items-center justify-center text-white/30 hover:text-white/80 transition-all duration-300 ease-in-out cursor-pointer">
+<span class="material-symbols-outlined">person</span>
+</div>
+</nav>
+<!-- NavigationDrawer (Hidden by default, structure provided) -->
+<aside class="hidden fixed inset-y-0 left-0 z-[60] p-8 bg-black h-full w-80 border-r border-white/10 shadow-2xl font-['Plus_Jakarta_Sans']">
+<div class="text-xl font-bold border-b border-white pb-4 mb-8 text-white">COLLECTIBLE VAULT</div>
+<div class="flex items-center gap-4 mb-12">
+<div class="w-12 h-12 rounded-full border border-white/20 overflow-hidden">
+<img alt="Collector Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-Np1SGKMhDCai6Hatj55VQwokl64cJDDES5mSInViaQVfc6WGy6aJP_h7YsrqyLlbVCBfFUl22uJwDXec-OZemVgdoUd88WmKjzBNSuxrJYNsUKHaJZ1hLki7Hrbv0r09z7kBsJZus_FOrzvHE-xXrz2MNtHX1V5utBWtO2M5ORbr9oQITOd4FHcqc8iMcaZI8ZFz96KnxiYVuiSHDGT0-K6hknUJRCEwErqwT2Cr4fi5AxXiih9oudr9cLW1MjV3UQtQ5Dk1HMV3"/>
+</div>
+<div>
+<p class="font-black text-white text-xs tracking-widest uppercase">VAULT MASTER</p>
+<p class="text-[10px] text-white/40 uppercase">Platinum Collector</p>
+</div>
+</div>
+<nav class="space-y-6">
+<div class="flex items-center gap-4 text-white font-black bg-white/5 p-3 -mx-3 transition-all duration-200 cursor-pointer">
+<span class="material-symbols-outlined text-sm">dashboard</span>
+<span class="uppercase tracking-[0.2em] text-[10px]">DASHBOARD</span>
+</div>
+<div class="flex items-center gap-4 text-white/40 hover:bg-white/10 hover:text-white p-3 -mx-3 transition-all duration-200 cursor-pointer">
+<span class="material-symbols-outlined text-sm">inventory_2</span>
+<span class="uppercase tracking-[0.2em] text-[10px]">COLLECTION</span>
+</div>
+<div class="flex items-center gap-4 text-white/40 hover:bg-white/10 hover:text-white p-3 -mx-3 transition-all duration-200 cursor-pointer">
+<span class="material-symbols-outlined text-sm">favorite</span>
+<span class="uppercase tracking-[0.2em] text-[10px]">WISHLIST</span>
+</div>
+<div class="flex items-center gap-4 text-white/40 hover:bg-white/10 hover:text-white p-3 -mx-3 transition-all duration-200 cursor-pointer">
+<span class="material-symbols-outlined text-sm">storefront</span>
+<span class="uppercase tracking-[0.2em] text-[10px]">MARKETPLACE</span>
+</div>
+<div class="flex items-center gap-4 text-white/40 hover:bg-white/10 hover:text-white p-3 -mx-3 transition-all duration-200 cursor-pointer">
+<span class="material-symbols-outlined text-sm">settings</span>
+<span class="uppercase tracking-[0.2em] text-[10px]">SETTINGS</span>
+</div>
+</nav>
+</aside>
+</body></html>

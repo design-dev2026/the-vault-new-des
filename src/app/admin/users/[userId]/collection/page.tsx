@@ -1,4 +1,6 @@
 import { serviceClient } from "@/lib/supabase/service";
+export const dynamic = "force-dynamic";
+
 import { notFound } from "next/navigation";
 import { ItemCard } from "@/components/collectors/item-card";
 import { ArrowLeft, User } from "lucide-react";

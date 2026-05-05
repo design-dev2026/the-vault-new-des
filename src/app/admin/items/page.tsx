@@ -1,4 +1,6 @@
 import { serviceClient } from "@/lib/supabase/service";
+export const dynamic = "force-dynamic";
+
 import { ItemsTable } from "./items-table";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 
