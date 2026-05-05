@@ -7,16 +7,23 @@ import Link from "next/link";
 import { useSupabase } from "@/components/providers/supabase-provider";
 
 export default function RootPage() {
-  const { session, loading } = useSupabase();
+  const { session } = useSupabase();
   const router = useRouter();
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    if (!loading && session) {
+    // Give auth state a moment to hydrate
+    const timer = setTimeout(() => setIsReady(true), 500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (isReady && session) {
       router.push("/app");
     }
-  }, [session, loading, router]);
+  }, [session, isReady, router]);
 
-  if (loading || session) {
+  if (!isReady || session) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
         <div className="w-8 h-8 border-2 border-white/20 border-t-white rounded-full animate-spin" />
