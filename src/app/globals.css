@@ -92,7 +92,7 @@
   }
   
   ::selection {
-    @apply bg-primary text-on-primary;
+    @apply bg-primary text-primary-foreground;
   }
 }
 

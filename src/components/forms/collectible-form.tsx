@@ -312,9 +312,9 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
     return (
       <div className="max-w-4xl mx-auto space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
         <div className="text-center space-y-4">
-          <span className="text-label-caps text-on-surface-variant">VAULT MANAGEMENT</span>
+          <span className="text-label-caps text-white/40">VAULT MANAGEMENT</span>
           <h1 className="text-5xl font-bold text-white uppercase tracking-tighter">SELECT CATEGORY</h1>
-          <p className="text-on-surface-variant text-lg">Choose the archival framework for your new asset.</p>
+          <p className="text-white/40 text-lg">Choose the archival framework for your new asset.</p>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -332,10 +332,10 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
               }}
             >
               <div className="mb-8 flex justify-center">
-                <cat.icon className="h-12 w-12 text-on-surface-variant group-hover:text-white transition-colors duration-500" />
+                <cat.icon className="h-12 w-12 text-white/40 group-hover:text-white transition-colors duration-500" />
               </div>
               <h2 className="text-xl font-bold text-white uppercase tracking-widest mb-4">{cat.name}</h2>
-              <p className="text-on-surface-variant text-xs font-medium uppercase tracking-wider leading-relaxed">{cat.desc}</p>
+              <p className="text-white/40 text-xs font-medium uppercase tracking-wider leading-relaxed">{cat.desc}</p>
             </div>
           ))}
         </div>
@@ -347,7 +347,7 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
     <div className="max-w-4xl mx-auto animate-in fade-in duration-700">
       <div className="mb-12">
         <div className="flex justify-between items-start">
-          <span className="text-label-caps text-on-surface-variant mb-2 block uppercase">ENTRY MANAGEMENT</span>
+          <span className="text-label-caps text-white/40 mb-2 block uppercase">ENTRY MANAGEMENT</span>
           {!isEdit && (
             <button 
               onClick={() => setStep(0)} 
@@ -360,7 +360,7 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
         <h1 className="text-5xl md:text-6xl font-bold text-white uppercase tracking-tighter italic">
           {isEdit ? "Modify Asset" : `Add ${form.getValues("category")}`}
         </h1>
-        <p className="text-on-surface-variant text-lg mt-4 max-w-2xl font-medium">
+        <p className="text-white/40 text-lg mt-4 max-w-2xl font-medium">
           Securely archive a new masterwork into the vault. Ensure all physical specifications and provenance records are verified for archival integrity.
         </p>
       </div>
@@ -380,7 +380,7 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
                 name="name"
                 render={({ field }) => (
                   <FormItem className="md:col-span-2">
-                    <FormLabel className="text-label-caps text-on-surface-variant uppercase tracking-widest">Item Title</FormLabel>
+                    <FormLabel className="text-label-caps text-white/40 uppercase tracking-widest">Item Title</FormLabel>
                     <FormControl>
                       <Input placeholder="e.g. The Mourning Apollo" {...field} />
                     </FormControl>
@@ -393,7 +393,7 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
                 name="manufacturer"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-label-caps text-on-surface-variant uppercase tracking-widest">Manufacturer / Studio</FormLabel>
+                    <FormLabel className="text-label-caps text-white/40 uppercase tracking-widest">Manufacturer / Studio</FormLabel>
                     <FormControl>
                       <Input placeholder="e.g. Sideshow Collectibles" {...field} />
                     </FormControl>
@@ -405,7 +405,7 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
                 name="artist_name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-label-caps text-on-surface-variant uppercase tracking-widest">Lead Artist</FormLabel>
+                    <FormLabel className="text-label-caps text-white/40 uppercase tracking-widest">Lead Artist</FormLabel>
                     <FormControl>
                       <Input placeholder="e.g. XM Studios" {...field} />
                     </FormControl>
@@ -421,7 +421,7 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
                   name="model_name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-label-caps text-on-surface-variant uppercase tracking-widest">Model Name</FormLabel>
+                      <FormLabel className="text-label-caps text-white/40 uppercase tracking-widest">Model Name</FormLabel>
                       <FormControl><Input placeholder="e.g. Custom '69 Chevy Pickup" {...field} /></FormControl>
                     </FormItem>
                   )}
@@ -431,7 +431,7 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
                   name="series"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-label-caps text-on-surface-variant uppercase tracking-widest">Hot Wheels Series</FormLabel>
+                      <FormLabel className="text-label-caps text-white/40 uppercase tracking-widest">Hot Wheels Series</FormLabel>
                       <FormControl><Input placeholder="e.g. HW Hot Trucks" {...field} /></FormControl>
                     </FormItem>
                   )}
@@ -453,7 +453,7 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
                 name="material"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-label-caps text-on-surface-variant uppercase tracking-widest">Material</FormLabel>
+                    <FormLabel className="text-label-caps text-white/40 uppercase tracking-widest">Material</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger className="bg-black border-[#333] h-12 text-white">
@@ -474,7 +474,7 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
                 name="height_cm"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-label-caps text-on-surface-variant uppercase tracking-widest">Height (cm)</FormLabel>
+                    <FormLabel className="text-label-caps text-white/40 uppercase tracking-widest">Height (cm)</FormLabel>
                     <FormControl><Input type="number" {...field} /></FormControl>
                   </FormItem>
                 )}
@@ -484,7 +484,7 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
                 name="weight_g"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-label-caps text-on-surface-variant uppercase tracking-widest">Weight (g)</FormLabel>
+                    <FormLabel className="text-label-caps text-white/40 uppercase tracking-widest">Weight (g)</FormLabel>
                     <FormControl><Input type="number" {...field} /></FormControl>
                   </FormItem>
                 )}
@@ -492,7 +492,7 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
             </div>
             
             <div className="mt-12 space-y-4">
-              <label className="text-label-caps text-on-surface-variant uppercase tracking-widest">Primary Visual Asset</label>
+              <label className="text-label-caps text-white/40 uppercase tracking-widest">Primary Visual Asset</label>
               <FormField
                 control={form.control}
                 name="image_url"
@@ -525,7 +525,7 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
                 name="purchase_date"
                 render={({ field }) => (
                   <FormItem className="flex flex-col">
-                    <FormLabel className="text-label-caps text-on-surface-variant uppercase tracking-widest">Acquisition Date</FormLabel>
+                    <FormLabel className="text-label-caps text-white/40 uppercase tracking-widest">Acquisition Date</FormLabel>
                     <Popover>
                       <PopoverTrigger asChild>
                         <FormControl>
@@ -560,7 +560,7 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
                 name="cost_price"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-label-caps text-on-surface-variant uppercase tracking-widest">Acquisition Value (USD)</FormLabel>
+                    <FormLabel className="text-label-caps text-white/40 uppercase tracking-widest">Acquisition Value (USD)</FormLabel>
                     <FormControl>
                       <Input type="number" placeholder="0.00" {...field} />
                     </FormControl>
@@ -583,7 +583,7 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
                 name="box_condition"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-label-caps text-on-surface-variant uppercase tracking-widest">Box Condition</FormLabel>
+                    <FormLabel className="text-label-caps text-white/40 uppercase tracking-widest">Box Condition</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger><SelectValue placeholder="Select condition" /></SelectTrigger>
@@ -602,7 +602,7 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
                 name="figure_condition"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-label-caps text-on-surface-variant uppercase tracking-widest">Figure Condition</FormLabel>
+                    <FormLabel className="text-label-caps text-white/40 uppercase tracking-widest">Figure Condition</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger><SelectValue placeholder="Select condition" /></SelectTrigger>
@@ -625,7 +625,7 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
                   name="condition"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-label-caps text-on-surface-variant uppercase tracking-widest">Overall Condition</FormLabel>
+                      <FormLabel className="text-label-caps text-white/40 uppercase tracking-widest">Overall Condition</FormLabel>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
                           <SelectTrigger><SelectValue placeholder="Select condition" /></SelectTrigger>
@@ -644,7 +644,7 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
                   name="blister_condition"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-label-caps text-on-surface-variant uppercase tracking-widest">Blister / Card Condition</FormLabel>
+                      <FormLabel className="text-label-caps text-white/40 uppercase tracking-widest">Blister / Card Condition</FormLabel>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
                           <SelectTrigger><SelectValue placeholder="Select blister condition" /></SelectTrigger>
@@ -767,7 +767,7 @@ function CollapsibleSection({ title, icon, children, open, onToggle, number }: {
         className="w-full flex justify-between items-center px-8 py-6 text-left hover:bg-white/5 transition-colors group"
       >
         <div className="flex items-center gap-6">
-          <span className="text-label-caps text-on-surface-variant/40">{number}</span>
+          <span className="text-label-caps text-white/20">{number}</span>
           <span className="text-xl font-bold text-white uppercase tracking-tight group-hover:tracking-wider transition-all duration-500">
             {title}
           </span>
