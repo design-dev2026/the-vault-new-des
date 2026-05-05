@@ -108,7 +108,7 @@ export default function ItemDetailPage() {
   if (loading) {
     return (
       <div className="flex h-[70vh] items-center justify-center">
-        <Loader2 className="h-10 w-10 animate-spin text-coral" />
+        <Loader2 className="h-8 w-8 animate-spin text-white/20" />
       </div>
     );
   }
@@ -147,38 +147,37 @@ export default function ItemDetailPage() {
   const gallery = [item.image_url, ...(item.gallery_urls || [])].filter(Boolean);
 
   return (
-    <div className="pb-20 md:pb-10">
+    <div className="pb-24 animate-in fade-in duration-1000">
       {/* Header Navigation */}
-      <div className="flex items-center justify-between mb-6 sticky top-0 z-20 bg-background/80 backdrop-blur-md py-4">
-        <Button variant="ghost" size="icon" onClick={() => router.back()} className="rounded-full">
-          <ArrowLeft className="h-5 w-5" />
-        </Button>
-        <div className="flex gap-2">
-          <Button variant="outline" size="sm" asChild className="hidden sm:flex">
-            <Link href={`/card/${id}`}>
-              <Share2 className="mr-2 h-4 w-4" />
-              Share Card
-            </Link>
-          </Button>
+      <div className="flex items-center justify-between mb-12 sticky top-0 z-20 bg-black/80 backdrop-blur-2xl py-4 -mx-6 px-6 md:-mx-16 md:px-16 border-b border-white/5">
+        <button onClick={() => router.back()} className="flex items-center gap-3 text-[10px] font-black text-white/40 hover:text-white uppercase tracking-[0.3em] transition-all group">
+          <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+          Back
+        </button>
+        <div className="flex gap-4">
+          <Link href={`/card/${id}`} className="hidden sm:flex items-center gap-3 px-6 py-3 border border-white/10 text-[10px] font-black text-white/60 hover:text-white hover:border-white uppercase tracking-[0.3em] transition-all">
+            <Share2 className="h-4 w-4" />
+            Share Card
+          </Link>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="icon" className="rounded-full">
-                <MoreVertical className="h-5 w-5" />
-              </Button>
+              <button className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/5 transition-all text-white/40 hover:text-white">
+                <MoreVertical className="h-4 w-4" />
+              </button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-40">
-              <DropdownMenuItem asChild>
-                <Link href={`/app/${id}/edit`} className="cursor-pointer">
-                  <Edit className="mr-2 h-4 w-4" />
-                  Edit Item
+            <DropdownMenuContent align="end" className="w-56 bg-black border-white/10 text-white p-2">
+              <DropdownMenuItem asChild className="focus:bg-white focus:text-black py-3 px-3 cursor-pointer">
+                <Link href={`/app/items/${id}/edit`}>
+                  <Edit className="mr-3 h-4 w-4" />
+                  <span className="text-[10px] font-black uppercase tracking-widest">Modify Entry</span>
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem 
-                className="text-destructive focus:text-destructive cursor-pointer"
+                className="text-red-400 focus:bg-red-400 focus:text-white py-3 px-3 cursor-pointer"
                 onClick={() => setIsDeleteDialogOpen(true)}
               >
-                <Trash2 className="mr-2 h-4 w-4" />
-                Delete Item
+                <Trash2 className="mr-3 h-4 w-4" />
+                <span className="text-[10px] font-black uppercase tracking-widest">Expunge Asset</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -187,15 +186,15 @@ export default function ItemDetailPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
         {/* Image Section */}
-        <div className="space-y-4">
-          <div className="relative aspect-square rounded-3xl overflow-hidden bg-muted shadow-2xl border">
+        <div className="space-y-6">
+          <div className="relative aspect-square rounded-2xl overflow-hidden bg-white/[0.02] border border-white/10">
             <AnimatePresence mode="wait">
               <motion.div
                 key={heroImage}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
+                transition={{ duration: 0.5 }}
                 className="relative w-full h-full"
               >
                 {heroImage ? (
@@ -208,8 +207,8 @@ export default function ItemDetailPage() {
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
                   />
                 ) : (
-                  <div className="flex h-full w-full items-center justify-center text-muted-foreground">
-                    <Package className="h-20 w-20 opacity-20" />
+                  <div className="flex h-full w-full items-center justify-center text-white/5">
+                    <Package className="h-24 w-24" />
                   </div>
                 )}
               </motion.div>
@@ -223,8 +222,8 @@ export default function ItemDetailPage() {
                   key={index}
                   onClick={() => setHeroImage(url)}
                   className={cn(
-                    "relative flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden border-2 transition-all",
-                    heroImage === url ? "border-coral scale-95" : "border-transparent opacity-60 hover:opacity-100"
+                    "relative flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all duration-500",
+                    heroImage === url ? "border-white scale-95" : "border-white/5 opacity-40 hover:opacity-100 grayscale hover:grayscale-0"
                   )}
                 >
                   <Image src={url} alt={`Thumb ${index}`} fill sizes="80px" className="object-cover" />
@@ -235,93 +234,88 @@ export default function ItemDetailPage() {
         </div>
 
         {/* Info Section */}
-        <div className="space-y-8">
-          <div>
-            <Badge variant="secondary" className="mb-2 bg-coral/10 text-coral hover:bg-coral/10">
-              {item.category.toUpperCase()}
-            </Badge>
-            <h1 className="text-4xl font-heading font-bold text-midnight dark:text-white leading-tight">
+        <div className="space-y-12">
+          <div className="space-y-4">
+            <span className="text-label-caps text-white/40 uppercase block tracking-[0.4em]">{item.category}</span>
+            <h1 className="text-5xl md:text-6xl font-bold text-white uppercase tracking-tighter italic leading-none">
               {item.name}
             </h1>
             {properties.series_name && (
-              <p className="text-xl text-muted-foreground mt-1">{properties.series_name}</p>
+              <p className="text-xl text-white/20 font-medium tracking-widest">{properties.series_name}</p>
             )}
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <Card className="bg-muted/30 border-none">
-              <CardContent className="p-4">
-                <p className="text-xs text-muted-foreground uppercase font-semibold">Current Value</p>
-                <p className="text-2xl font-bold text-teal mt-1">
-                  ${item.current_value?.toLocaleString() || item.cost_price?.toLocaleString() || "N/A"}
-                </p>
-              </CardContent>
-            </Card>
-            <Card className="bg-muted/30 border-none">
-              <CardContent className="p-4">
-                <p className="text-xs text-muted-foreground uppercase font-semibold">Investment</p>
-                <p className="text-2xl font-bold text-midnight dark:text-white mt-1">
-                  ${item.cost_price?.toLocaleString() || "N/A"}
-                </p>
-              </CardContent>
-            </Card>
+          <div className="grid grid-cols-2 gap-1">
+            <div className="bg-white text-black p-8 space-y-2">
+              <span className="text-label-caps text-black/40 uppercase block tracking-widest">Current Valuation</span>
+              <p className="text-4xl font-black italic tracking-tighter">
+                ${item.current_value?.toLocaleString() || item.cost_price?.toLocaleString() || "UNSET"}
+              </p>
+            </div>
+            <div className="bg-white/[0.02] border border-white/10 p-8 space-y-2">
+              <span className="text-label-caps text-white/40 uppercase block tracking-widest">Cost Basis</span>
+              <p className="text-4xl font-black text-white italic tracking-tighter">
+                ${item.cost_price?.toLocaleString() || "UNSET"}
+              </p>
+            </div>
           </div>
 
-          <div className="space-y-6">
-            <h2 className="text-xl font-heading font-bold flex items-center gap-2">
-              <Info className="h-5 w-5 text-coral" />
-              Specifications
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4">
+          <div className="space-y-8">
+            <div className="flex items-center gap-4">
+              <span className="text-label-caps text-white uppercase tracking-[0.3em]">Technical Specifications</span>
+              <div className="flex-1 h-[1px] bg-white/5"></div>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-6">
               {infoGrid.map((detail, idx) => (
-                <div key={idx} className="flex flex-col border-b border-muted py-2">
-                  <span className="text-xs text-muted-foreground uppercase tracking-wider">{detail.label}</span>
-                  <span className="font-medium mt-1">{detail.value}</span>
+                <div key={idx} className="flex flex-col border-b border-white/5 pb-3 space-y-1">
+                  <span className="text-label-caps text-white/40 uppercase tracking-widest">{detail.label}</span>
+                  <span className="font-bold text-white tracking-tight">{detail.value}</span>
                 </div>
               ))}
             </div>
           </div>
 
           {item.notes && (
-            <div className="space-y-4">
-              <h2 className="text-xl font-heading font-bold flex items-center gap-2">
-                <FileText className="h-5 w-5 text-coral" />
-                Notes
-              </h2>
-              <p className="text-muted-foreground whitespace-pre-wrap rounded-xl bg-muted/30 p-4 border italic">
+            <div className="space-y-6">
+              <div className="flex items-center gap-4">
+                <span className="text-label-caps text-white uppercase tracking-[0.3em]">Curator Notes</span>
+                <div className="flex-1 h-[1px] bg-white/5"></div>
+              </div>
+              <p className="text-white/40 whitespace-pre-wrap bg-white/[0.02] border border-white/10 rounded-2xl p-8 italic text-lg leading-relaxed">
                 "{item.notes}"
               </p>
             </div>
           )}
           
           <div className="sm:hidden pt-6">
-            <Button className="w-full" asChild>
-              <Link href={`/card/${id}`}>
-                <Share2 className="mr-2 h-4 w-4" />
-                Share Collection Card
-              </Link>
-            </Button>
+            <Link 
+              href={`/card/${id}`}
+              className="flex items-center justify-center gap-4 w-full h-16 bg-white text-black text-[10px] font-black uppercase tracking-[0.3em] rounded-xl hover:bg-neutral-200 transition-all"
+            >
+              <Share2 className="h-4 w-4" />
+              Share Provenance Card
+            </Link>
           </div>
         </div>
       </div>
 
       <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This will permanently delete "{item.name}" from your vault and all associated images from storage.
+        <AlertDialogContent className="bg-black border border-white/10 text-white max-w-md">
+          <AlertDialogHeader className="space-y-4">
+            <AlertDialogTitle className="text-2xl font-bold uppercase tracking-tighter italic">Confirm Expungement</AlertDialogTitle>
+            <AlertDialogDescription className="text-white/40 text-sm">
+              This will permanently erase <strong className="text-white italic">"{item.name}"</strong> from the archive, including all associated imagery. This is irreversible.
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
+          <AlertDialogFooter className="pt-8 border-t border-white/5 mt-8">
+            <AlertDialogCancel className="bg-transparent border-white/10 text-white hover:bg-white/5" disabled={isDeleting}>Cancel</AlertDialogCancel>
             <AlertDialogAction 
               onClick={handleDelete}
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              className="bg-white text-black hover:bg-neutral-200"
               disabled={isDeleting}
             >
               {isDeleting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Trash2 className="mr-2 h-4 w-4" />}
-              Delete Item
+              <span className="text-[10px] font-black uppercase tracking-[0.2em]">Execute Erase</span>
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

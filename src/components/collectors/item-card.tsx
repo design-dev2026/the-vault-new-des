@@ -16,10 +16,12 @@ interface Collectible {
 }
 
 export function ItemCard({ item, priority = false }: { item: Collectible, priority?: boolean }) {
+  const displayValue = item.current_value || item.cost_price || 0;
+  
   return (
-    <Card className="group overflow-hidden border-border transition-all hover:shadow-md hover:border-coral/20">
-      <Link href={`/app/${item.id}`}>
-        <div className="relative aspect-square overflow-hidden bg-muted">
+    <div className="group relative bg-[#0A0A0A] border border-white/5 p-5 rounded-2xl hover:border-white/20 transition-all duration-700 animate-in fade-in zoom-in-95">
+      <Link href={`/app/items/${item.id}`}>
+        <div className="aspect-[3/4] overflow-hidden mb-8 rounded-xl bg-[#131313] relative border border-white/5">
           {item.image_url ? (
             <Image
               src={item.image_url}
@@ -27,37 +29,48 @@ export function ItemCard({ item, priority = false }: { item: Collectible, priori
               fill
               priority={priority}
               sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
-              className="object-cover transition-transform duration-300 group-hover:scale-105"
+              className="object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100"
             />
           ) : (
-            <div className="flex h-full w-full items-center justify-center text-muted-foreground">
-              <Package className="h-12 w-12 opacity-20" />
+            <div className="flex h-full w-full items-center justify-center text-white/5">
+              <Package className="h-16 w-16 font-thin" />
             </div>
           )}
-          <div className="absolute top-2 right-2">
-            <Badge variant="secondary" className="bg-background/80 backdrop-blur-sm text-xs font-semibold">
-              {item.category}
-            </Badge>
+          <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-700"></div>
+        </div>
+        
+        <div className="space-y-4">
+          <div className="flex justify-between items-start">
+            <div className="flex-1 min-w-0 pr-4">
+              <span className="text-label-caps text-white/40 block mb-1 truncate">
+                {item.category}
+              </span>
+              <h4 className="text-white font-bold text-xl uppercase tracking-tighter truncate leading-none">
+                {item.name}
+              </h4>
+            </div>
+            <div className="text-right">
+              <span className="text-white font-black text-xl italic tracking-tighter block leading-none">
+                ${displayValue.toLocaleString()}
+              </span>
+              <span className="text-[8px] font-bold text-white/20 uppercase tracking-widest mt-1 block">EST. VALUE</span>
+            </div>
+          </div>
+          
+          <div className="flex gap-3 pt-2 border-t border-white/5">
+            <span className="text-[9px] font-black text-white/40 uppercase tracking-[0.2em]">
+              {item.properties?.condition || "ARCHIVAL MINT"}
+            </span>
+            <span className="w-[1px] h-3 bg-white/10"></span>
+            <span className="text-[9px] font-black text-white/40 uppercase tracking-[0.2em]">
+              {item.properties?.edition_number ? `ED. ${item.properties.edition_number}` : "UNIQUE"}
+            </span>
           </div>
         </div>
-        <CardContent className="p-4">
-          <h3 className="font-heading font-bold text-midnight dark:text-white line-clamp-1 group-hover:text-coral transition-colors">
-            {item.name}
-          </h3>
-          <div className="mt-2 flex items-center justify-between">
-            <div className="flex items-center text-sm font-bold text-teal">
-              <DollarSign className="h-3 w-3 mr-0.5" />
-              <span>{item.current_value?.toLocaleString() || item.cost_price?.toLocaleString() || "N/A"}</span>
-            </div>
-            {item.properties?.edition && (
-              <div className="flex items-center text-xs text-muted-foreground">
-                <Tag className="h-3 w-3 mr-1" />
-                <span>{item.properties.edition}</span>
-              </div>
-            )}
-          </div>
-        </CardContent>
       </Link>
-    </Card>
+
+      {/* Hover Light Accent */}
+      <div className="absolute -inset-px bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl pointer-events-none"></div>
+    </div>
   );
 }

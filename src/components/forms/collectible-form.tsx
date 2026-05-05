@@ -310,102 +310,79 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
 
   if (step === 0) {
     return (
-      <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-        <div className="text-center">
-          <h1 className="text-4xl font-heading font-bold text-midnight dark:text-white mb-2">Add New Collectible</h1>
-          <p className="text-muted-foreground">Select a category to get started.</p>
+      <div className="max-w-4xl mx-auto space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
+        <div className="text-center space-y-4">
+          <span className="text-label-caps text-on-surface-variant">VAULT MANAGEMENT</span>
+          <h1 className="text-5xl font-bold text-white uppercase tracking-tighter">SELECT CATEGORY</h1>
+          <p className="text-on-surface-variant text-lg">Choose the archival framework for your new asset.</p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card 
-            data-testid="category-card-statue"
-            className="group cursor-pointer hover:border-coral transition-all duration-300 overflow-hidden"
-            onClick={() => {
-              form.setValue("category", "statue");
-              setStep(1);
-            }}
-          >
-            <CardContent className="p-10 flex flex-col items-center justify-center text-center">
-              <div className="mb-6 rounded-full bg-coral/10 p-6 text-coral group-hover:bg-coral group-hover:text-white transition-all duration-300">
-                <Landmark className="h-12 w-12" />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {[
+            { id: "statue", name: "STATUE", icon: Landmark, desc: "Polystone & Resin masterworks." },
+            { id: "figure", name: "FIGURE", icon: Users, desc: "Articulated action masterpieces." },
+            { id: "hotwheel", name: "HOT WHEELS", icon: Car, desc: "Die-cast engineering marvels." }
+          ].map((cat) => (
+            <div 
+              key={cat.id}
+              className="group cursor-pointer bg-[#0A0A0A] border border-[#1A1A1A] p-10 rounded-lg hover:border-white transition-all duration-500 text-center"
+              onClick={() => {
+                form.setValue("category", cat.id as any);
+                setStep(1);
+              }}
+            >
+              <div className="mb-8 flex justify-center">
+                <cat.icon className="h-12 w-12 text-on-surface-variant group-hover:text-white transition-colors duration-500" />
               </div>
-              <h2 className="text-2xl font-bold font-heading mb-2">Statue</h2>
-              <p className="text-muted-foreground">Polystone, Resin, or Cold Cast masterpieces.</p>
-            </CardContent>
-          </Card>
-
-          <Card 
-            data-testid="category-card-figure"
-            className="group cursor-pointer hover:border-teal transition-all duration-300 overflow-hidden"
-            onClick={() => {
-              form.setValue("category", "figure");
-              setStep(1);
-            }}
-          >
-            <CardContent className="p-10 flex flex-col items-center justify-center text-center">
-              <div className="mb-6 rounded-full bg-teal/10 p-6 text-teal group-hover:bg-teal group-hover:text-white transition-all duration-300">
-                <Users className="h-12 w-12" />
-              </div>
-              <h2 className="text-2xl font-bold font-heading mb-2">Figure</h2>
-              <p className="text-muted-foreground">PVC, ABS, or Action figures with articulation.</p>
-            </CardContent>
-          </Card>
-
-          <Card 
-            data-testid="category-card-hotwheel"
-            className="group cursor-pointer hover:border-midnight transition-all duration-300 overflow-hidden"
-            onClick={() => {
-              form.setValue("category", "hotwheel");
-              setStep(1);
-            }}
-          >
-            <CardContent className="p-10 flex flex-col items-center justify-center text-center">
-              <div className="mb-6 rounded-full bg-midnight/10 p-6 text-midnight group-hover:bg-midnight group-hover:text-white transition-all duration-300">
-                <Car className="h-12 w-12" />
-              </div>
-              <h2 className="text-2xl font-bold font-heading mb-2">Hot Wheels</h2>
-              <p className="text-muted-foreground">Mattel die-cast cars, Treasure Hunts, and more.</p>
-            </CardContent>
-          </Card>
+              <h2 className="text-xl font-bold text-white uppercase tracking-widest mb-4">{cat.name}</h2>
+              <p className="text-on-surface-variant text-xs font-medium uppercase tracking-wider leading-relaxed">{cat.desc}</p>
+            </div>
+          ))}
         </div>
       </div>
     );
   }
 
   return (
-    <div className="max-w-4xl mx-auto animate-in fade-in duration-500">
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h1 className="text-3xl font-heading font-bold text-midnight dark:text-white">
-            {isEdit ? "Edit Collectible" : `Add ${form.getValues("category") === "statue" ? "Statue" : form.getValues("category") === "figure" ? "Figure" : "Hot Wheels"}`}
-          </h1>
-          <p className="text-muted-foreground">Fill in the details below to catalog your item.</p>
+    <div className="max-w-4xl mx-auto animate-in fade-in duration-700">
+      <div className="mb-12">
+        <div className="flex justify-between items-start">
+          <span className="text-label-caps text-on-surface-variant mb-2 block uppercase">ENTRY MANAGEMENT</span>
+          {!isEdit && (
+            <button 
+              onClick={() => setStep(0)} 
+              className="text-[10px] font-bold text-white/40 hover:text-white transition-colors uppercase tracking-widest"
+            >
+              CHANGE CATEGORY
+            </button>
+          )}
         </div>
-        {!isEdit && (
-          <Button variant="ghost" onClick={() => setStep(0)} className="text-muted-foreground">
-            Change Category
-          </Button>
-        )}
+        <h1 className="text-5xl md:text-6xl font-bold text-white uppercase tracking-tighter italic">
+          {isEdit ? "Modify Asset" : `Add ${form.getValues("category")}`}
+        </h1>
+        <p className="text-on-surface-variant text-lg mt-4 max-w-2xl font-medium">
+          Securely archive a new masterwork into the vault. Ensure all physical specifications and provenance records are verified for archival integrity.
+        </p>
       </div>
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          {/* Basic Info */}
           <CollapsibleSection
             title="Basic Information"
             icon={<Info className="h-5 w-5" />}
             open={openSections.basic}
             onToggle={() => toggleSection("basic")}
+            number="01"
           >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <FormField
                 control={form.control}
                 name="name"
                 render={({ field }) => (
                   <FormItem className="md:col-span-2">
-                    <FormLabel>Item Name *</FormLabel>
+                    <FormLabel className="text-label-caps text-on-surface-variant uppercase tracking-widest">Item Title</FormLabel>
                     <FormControl>
-                      <Input placeholder="e.g. Darth Vader Premium Format" {...field} />
+                      <Input placeholder="e.g. The Mourning Apollo" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -416,7 +393,7 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
                 name="manufacturer"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Manufacturer</FormLabel>
+                    <FormLabel className="text-label-caps text-on-surface-variant uppercase tracking-widest">Manufacturer / Studio</FormLabel>
                     <FormControl>
                       <Input placeholder="e.g. Sideshow Collectibles" {...field} />
                     </FormControl>
@@ -428,33 +405,9 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
                 name="artist_name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Artist / Line</FormLabel>
+                    <FormLabel className="text-label-caps text-on-surface-variant uppercase tracking-widest">Lead Artist</FormLabel>
                     <FormControl>
                       <Input placeholder="e.g. XM Studios" {...field} />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="license_holder"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>License</FormLabel>
-                    <FormControl>
-                      <Input placeholder="e.g. Star Wars" {...field} />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="series_name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Series</FormLabel>
-                    <FormControl>
-                      <Input placeholder="e.g. Mythos" {...field} />
                     </FormControl>
                   </FormItem>
                 )}
@@ -462,13 +415,13 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
             </div>
             
             {category === 'hotwheel' && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 pt-4 border-t border-dashed">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12 pt-12 border-t border-white/5">
                 <FormField
                   control={form.control}
                   name="model_name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Model Name</FormLabel>
+                      <FormLabel className="text-label-caps text-on-surface-variant uppercase tracking-widest">Model Name</FormLabel>
                       <FormControl><Input placeholder="e.g. Custom '69 Chevy Pickup" {...field} /></FormControl>
                     </FormItem>
                   )}
@@ -478,38 +431,8 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
                   name="series"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Hot Wheels Series</FormLabel>
+                      <FormLabel className="text-label-caps text-on-surface-variant uppercase tracking-widest">Hot Wheels Series</FormLabel>
                       <FormControl><Input placeholder="e.g. HW Hot Trucks" {...field} /></FormControl>
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="year"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Year</FormLabel>
-                      <FormControl><Input type="number" placeholder="e.g. 2025" {...field} value={field.value || ''} /></FormControl>
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="color"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Color</FormLabel>
-                      <FormControl><Input placeholder="e.g. Matte Black" {...field} /></FormControl>
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="tampo_print"
-                  render={({ field }) => (
-                    <FormItem className="md:col-span-2">
-                      <FormLabel>Tampo / Print Details</FormLabel>
-                      <FormControl><Input placeholder="e.g. Flames on hood" {...field} /></FormControl>
                     </FormItem>
                   )}
                 />
@@ -517,41 +440,29 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
             )}
           </CollapsibleSection>
 
-          {/* Physical Details */}
           <CollapsibleSection
             title="Physical Details"
             icon={<Maximize2 className="h-5 w-5" />}
             open={openSections.physical}
             onToggle={() => toggleSection("physical")}
+            number="02"
           >
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <FormField
-                control={form.control}
-                name="scale"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Scale</FormLabel>
-                    <FormControl>
-                      <Input placeholder="e.g. 1/4" {...field} />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <FormField
                 control={form.control}
                 name="material"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Material</FormLabel>
+                    <FormLabel className="text-label-caps text-on-surface-variant uppercase tracking-widest">Material</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger className="bg-black border-[#333] h-12 text-white">
                           <SelectValue placeholder="Select material" />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent>
+                      <SelectContent className="bg-black border-[#333] text-white">
                         {["Polystone", "Resin", "PVC", "ABS", "Cold Cast", "Vinyl", "Other"].map(m => (
-                          <SelectItem key={m} value={m.toLowerCase()}>{m}</SelectItem>
+                          <SelectItem key={m} value={m.toLowerCase()} className="hover:bg-white/10">{m}</SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
@@ -560,178 +471,84 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
               />
               <FormField
                 control={form.control}
-                name="sculptor"
+                name="height_cm"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Sculptor</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Artist name" {...field} />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-              <div className="grid grid-cols-3 gap-2 md:col-span-3">
-                <FormField
-                  control={form.control}
-                  name="height_cm"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Height (cm)</FormLabel>
-                      <FormControl><Input type="number" {...field} /></FormControl>
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="width_cm"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Width (cm)</FormLabel>
-                      <FormControl><Input type="number" {...field} /></FormControl>
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="depth_cm"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Depth (cm)</FormLabel>
-                      <FormControl><Input type="number" {...field} /></FormControl>
-                    </FormItem>
-                  )}
-                />
-              </div>
-            </div>
-
-            {category === 'hotwheel' && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 pt-4 border-t border-dashed">
-                <FormField
-                  control={form.control}
-                  name="wheel_type"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Wheel Type</FormLabel>
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
-                        <FormControl>
-                          <SelectTrigger><SelectValue placeholder="Select wheels" /></SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          {["5SP", "Real Riders", "PR5", "10SP", "OH5", "Aero", "Other"].map(w => (
-                            <SelectItem key={w} value={w}>{w}</SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </FormItem>
-                  )}
-                />
-              </div>
-            )}
-          </CollapsibleSection>
-
-          {/* Edition & Rarity */}
-          <CollapsibleSection
-            title="Edition & Rarity"
-            icon={<ShieldCheck className="h-5 w-5" />}
-            open={openSections.rarity}
-            onToggle={() => toggleSection("rarity")}
-          >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <FormField
-                control={form.control}
-                name="edition_run"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Total Edition Size (ES)</FormLabel>
-                    <FormControl>
-                      <Input type="number" placeholder="e.g. 500" {...field} />
-                    </FormControl>
-                    <FormDescription>Total number produced</FormDescription>
+                    <FormLabel className="text-label-caps text-on-surface-variant uppercase tracking-widest">Height (cm)</FormLabel>
+                    <FormControl><Input type="number" {...field} /></FormControl>
                   </FormItem>
                 )}
               />
               <FormField
                 control={form.control}
-                name="edition_number"
+                name="weight_g"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Edition Number</FormLabel>
-                    <FormControl>
-                      <Input type="number" placeholder="e.g. 125" {...field} />
-                    </FormControl>
-                    <FormDescription>Your specific number (e.g. 125 / 500)</FormDescription>
+                    <FormLabel className="text-label-caps text-on-surface-variant uppercase tracking-widest">Weight (g)</FormLabel>
+                    <FormControl><Input type="number" {...field} /></FormControl>
                   </FormItem>
                 )}
               />
             </div>
-
-            {category === 'hotwheel' && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 pt-4 border-t border-dashed">
-                <FormField
-                  control={form.control}
-                  name="toy_number"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Toy Number</FormLabel>
-                      <FormControl><Input placeholder="e.g. HTF56" {...field} /></FormControl>
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="is_treasure_hunt"
-                  render={({ field }) => (
-                    <FormItem className="flex items-center justify-between rounded-lg border p-4 shadow-sm bg-midnight/5">
-                      <div className="space-y-0.5">
-                        <FormLabel className="text-teal font-bold">Treasure Hunt</FormLabel>
-                        <FormDescription>Is this a TH or Super TH?</FormDescription>
-                      </div>
-                      <FormControl>
-                        <Switch checked={field.value} onCheckedChange={field.onChange} />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-              </div>
-            )}
+            
+            <div className="mt-12 space-y-4">
+              <label className="text-label-caps text-on-surface-variant uppercase tracking-widest">Primary Visual Asset</label>
+              <FormField
+                control={form.control}
+                name="image_url"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <ImageUploader 
+                        label="Drop high-resolution scan or browse files" 
+                        value={field.value || ""} 
+                        onChange={field.onChange} 
+                        className="border-2 border-dashed border-white/10 rounded-xl p-12 text-center hover:border-white/30 transition-colors cursor-pointer bg-white/[0.01]"
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            </div>
           </CollapsibleSection>
 
-          {/* Provenance & Value */}
           <CollapsibleSection
             title="Provenance & Value"
             icon={<CalendarIcon className="h-5 w-5" />}
             open={openSections.value}
             onToggle={() => toggleSection("value")}
+            number="03"
           >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <FormField
                 control={form.control}
                 name="purchase_date"
                 render={({ field }) => (
                   <FormItem className="flex flex-col">
-                    <FormLabel>Purchase Date</FormLabel>
+                    <FormLabel className="text-label-caps text-on-surface-variant uppercase tracking-widest">Acquisition Date</FormLabel>
                     <Popover>
                       <PopoverTrigger asChild>
                         <FormControl>
                           <Button
                             variant={"outline"}
                             className={cn(
-                              "w-full pl-3 text-left font-normal",
-                              !field.value && "text-muted-foreground"
+                              "w-full h-12 bg-black border-[#333] text-left font-normal text-white",
+                              !field.value && "text-white/20"
                             )}
                           >
-                            {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
+                            {field.value ? format(field.value, "PPP") : <span>Select Date</span>}
                             <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                           </Button>
                         </FormControl>
                       </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
+                      <PopoverContent className="w-auto p-0 bg-black border-[#333]" align="start">
                         <Calendar
                           mode="single"
                           selected={field.value}
                           onSelect={field.onChange}
                           disabled={(date) => date > new Date() || date < new Date("1900-01-01")}
                           initialFocus
+                          className="text-white"
                         />
                       </PopoverContent>
                     </Popover>
@@ -743,48 +560,9 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
                 name="cost_price"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Purchase Price ($)</FormLabel>
+                    <FormLabel className="text-label-caps text-on-surface-variant uppercase tracking-widest">Acquisition Value (USD)</FormLabel>
                     <FormControl>
-                      <Input type="number" {...field} />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="current_value"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Current Market Value ($)</FormLabel>
-                    <FormControl>
-                      <Input type="number" {...field} />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="purchase_location"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Retailer / Seller</FormLabel>
-                    <FormControl>
-                      <Input placeholder="e.g. BigBadToyStore" {...field} />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="is_insured"
-                render={({ field }) => (
-                  <FormItem className="flex items-center justify-between rounded-lg border p-4 shadow-sm">
-                    <div className="space-y-0.5">
-                      <FormLabel>Insured</FormLabel>
-                      <FormDescription>Item is covered by collectibles insurance</FormDescription>
-                    </div>
-                    <FormControl>
-                      <Switch checked={field.value} onCheckedChange={field.onChange} />
+                      <Input type="number" placeholder="0.00" {...field} />
                     </FormControl>
                   </FormItem>
                 )}
@@ -792,12 +570,12 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
             </div>
           </CollapsibleSection>
 
-          {/* Condition */}
           <CollapsibleSection
             title="Condition"
             icon={<CheckCircle2 className="h-5 w-5" />}
             open={openSections.condition}
             onToggle={() => toggleSection("condition")}
+            number="04"
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <FormField
@@ -805,7 +583,7 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
                 name="box_condition"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Box Condition</FormLabel>
+                    <FormLabel className="text-label-caps text-on-surface-variant uppercase tracking-widest">Box Condition</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger><SelectValue placeholder="Select condition" /></SelectTrigger>
@@ -824,7 +602,7 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
                 name="figure_condition"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Figure Condition</FormLabel>
+                    <FormLabel className="text-label-caps text-on-surface-variant uppercase tracking-widest">Figure Condition</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger><SelectValue placeholder="Select condition" /></SelectTrigger>
@@ -847,7 +625,7 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
                   name="condition"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Overall Condition</FormLabel>
+                      <FormLabel className="text-label-caps text-on-surface-variant uppercase tracking-widest">Overall Condition</FormLabel>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
                           <SelectTrigger><SelectValue placeholder="Select condition" /></SelectTrigger>
@@ -866,7 +644,7 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
                   name="blister_condition"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Blister / Card Condition</FormLabel>
+                      <FormLabel className="text-label-caps text-on-surface-variant uppercase tracking-widest">Blister / Card Condition</FormLabel>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
                           <SelectTrigger><SelectValue placeholder="Select blister condition" /></SelectTrigger>
@@ -884,12 +662,12 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
             )}
           </CollapsibleSection>
 
-          {/* Media */}
           <CollapsibleSection
             title="Photos & Media"
             icon={<ImageIcon className="h-5 w-5" />}
             open={openSections.media}
             onToggle={() => toggleSection("media")}
+            number="05"
           >
             <div className="space-y-6">
               <FormField
@@ -925,12 +703,12 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
             </div>
           </CollapsibleSection>
 
-          {/* Notes */}
           <CollapsibleSection
             title="Notes"
             icon={<FileText className="h-5 w-5" />}
             open={openSections.notes}
             onToggle={() => toggleSection("notes")}
+            number="06"
           >
             <FormField
               control={form.control}
@@ -949,25 +727,23 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
             />
           </CollapsibleSection>
 
-          <div className="flex gap-4 pt-6 sticky bottom-4 z-10 bg-background/80 backdrop-blur-sm p-4 border rounded-xl shadow-lg">
-            <Button 
+          <div className="flex flex-col md:flex-row gap-6 pt-12">
+            <button 
+              type="submit" 
+              className="bg-white text-black font-black py-5 px-12 rounded-lg hover:bg-neutral-200 transition-all active:scale-[0.98] uppercase text-sm tracking-[0.2em] flex-1 flex justify-center items-center"
+              disabled={isLoading}
+            >
+              {isLoading && <Loader2 className="mr-3 h-5 w-5 animate-spin" />}
+              {isEdit ? "Update Asset" : "Archive to Vault"}
+            </button>
+            <button 
               type="button" 
-              variant="outline" 
-              className="flex-1"
+              className="border border-white text-white font-black py-5 px-12 rounded-lg hover:bg-white/10 transition-all active:scale-[0.98] uppercase text-sm tracking-[0.2em]"
               onClick={() => router.back()}
               disabled={isLoading}
             >
-              Cancel
-            </Button>
-            <Button 
-              type="submit" 
-              className="flex-1 bg-coral hover:bg-coral/90" 
-              disabled={isLoading}
-            >
-              {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              <Save className="mr-2 h-4 w-4" />
-              {isEdit ? "Update Collectible" : "Add to Vault"}
-            </Button>
+              Cancel Entry
+            </button>
           </div>
         </form>
       </Form>
@@ -975,38 +751,46 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
   );
 }
 
-function CollapsibleSection({ title, icon, children, open, onToggle }: {
+function CollapsibleSection({ title, icon, children, open, onToggle, number }: {
   title: string;
   icon: React.ReactNode;
   children: React.ReactNode;
   open: boolean;
   onToggle: () => void;
+  number: string;
 }) {
   return (
-    <Collapsible open={open} onOpenChange={onToggle} className="border rounded-xl bg-card overflow-hidden transition-all duration-200">
-      <CollapsibleTrigger asChild>
-        <div className="flex items-center justify-between p-4 cursor-pointer hover:bg-muted/50 transition-colors">
-          <div className="flex items-center gap-3 font-heading font-bold text-midnight dark:text-white">
-            <div className="text-coral bg-coral/10 p-2 rounded-lg">
-              {icon}
-            </div>
+    <div className="bg-white/[0.03] backdrop-blur-3xl border border-[#333] rounded-lg overflow-hidden transition-all duration-500 mb-6">
+      <button 
+        type="button"
+        onClick={onToggle}
+        className="w-full flex justify-between items-center px-8 py-6 text-left hover:bg-white/5 transition-colors group"
+      >
+        <div className="flex items-center gap-6">
+          <span className="text-label-caps text-on-surface-variant/40">{number}</span>
+          <span className="text-xl font-bold text-white uppercase tracking-tight group-hover:tracking-wider transition-all duration-500">
             {title}
-          </div>
-          {open ? <ChevronUp className="h-5 w-5 text-muted-foreground" /> : <ChevronDown className="h-5 w-5 text-muted-foreground" />}
+          </span>
         </div>
-      </CollapsibleTrigger>
-      <CollapsibleContent>
-        <div className="p-4 pt-0 border-t bg-background/30">
+        <div className={cn("transition-transform duration-500", open ? "rotate-180" : "rotate-0")}>
+          <ChevronDown className="h-5 w-5 text-white/40 group-hover:text-white transition-colors" />
+        </div>
+      </button>
+      
+      <AnimatePresence>
+        {open && (
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.2 }}
-            className="pt-6"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           >
-            {children}
+            <div className="px-8 pb-10 border-t border-white/5 pt-10">
+              {children}
+            </div>
           </motion.div>
-        </div>
-      </CollapsibleContent>
-    </Collapsible>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }

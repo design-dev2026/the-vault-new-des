@@ -26,32 +26,35 @@ export default async function AdminUserCollectionPage({ params }: { params: Prom
     .order("created_at", { ascending: false });
 
   return (
-    <div className="space-y-8 pb-10">
+    <div className="space-y-16 pb-24 animate-in fade-in duration-1000">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <Button variant="ghost" size="icon" asChild className="rounded-full">
-            <Link href="/admin/users">
-              <ArrowLeft className="h-5 w-5" />
-            </Link>
-          </Button>
-          <div>
-            <h1 className="text-3xl font-heading font-bold text-midnight dark:text-white">
-              {profile.full_name || profile.username}'s Collection
-            </h1>
-            <p className="text-muted-foreground mt-1 flex items-center gap-2">
-              <User className="h-4 w-4" />
-              Viewing as System Admin (Read-only)
-            </p>
-          </div>
+        <div className="flex items-center gap-6">
+          <Link href="/admin/users" className="group flex items-center gap-3 text-[10px] font-black text-white/40 hover:text-white uppercase tracking-[0.3em] transition-all">
+            <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+            Back
+          </Link>
         </div>
       </div>
 
+      <header className="space-y-4 border-b border-white/5 pb-8">
+        <div className="flex items-center gap-4">
+          <User className="h-5 w-5 text-white/20" />
+          <span className="text-[10px] font-black text-white/40 uppercase tracking-[0.3em]">Read-Only Inspection</span>
+        </div>
+        <h1 className="text-6xl font-bold text-white uppercase tracking-tighter italic">
+          {profile.full_name || profile.username}
+        </h1>
+      </header>
+
       {items?.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-20 bg-muted/20 rounded-3xl border border-dashed text-center">
-          <p className="text-muted-foreground">This user has no collectibles in their vault yet.</p>
+        <div className="flex flex-col items-center justify-center py-40 text-center space-y-4">
+          <div className="w-24 h-24 border border-white/5 rounded-full flex items-center justify-center text-white/5">
+            <User className="h-12 w-12" />
+          </div>
+          <p className="text-label-caps text-white/20 uppercase tracking-[0.4em]">Empty archive — no assets registered</p>
         </div>
       ) : (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
           {items?.map((item: any) => (
             <ItemCard key={item.id} item={item} />
           ))}

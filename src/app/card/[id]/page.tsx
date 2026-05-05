@@ -23,7 +23,7 @@ export default async function CardPage({ params }: CardPageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-background py-10 px-4 md:py-20">
+    <div className="min-h-screen bg-black py-16 px-6 md:py-24">
       <ShareableCard item={item} />
     </div>
   );

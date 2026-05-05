@@ -42,73 +42,72 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background p-4">
-      <Card className="w-full max-w-md shadow-lg">
-        <CardHeader className="space-y-1 text-center">
-          <div className="flex justify-center mb-2">
-            <div className="rounded-xl bg-coral p-2 text-white">
-              <Mail className="h-6 w-6" />
-            </div>
+    <div className="relative min-h-screen w-full flex items-center justify-center bg-[radial-gradient(circle_at_center,#1a1a1a_0%,#000000_100%)] overflow-hidden px-6">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-white/5 blur-[120px] rounded-full pointer-events-none"></div>
+
+      <div className="relative z-10 w-full max-w-[440px] space-y-8 animate-in fade-in slide-in-from-bottom-8 duration-700">
+        <div className="text-center space-y-4">
+          <div className="inline-flex items-center justify-center w-16 h-16 border border-white/10 rounded-xl mb-4">
+            <Mail className="h-8 w-8 text-white font-thin" />
           </div>
-          <CardTitle className="text-2xl font-heading font-bold text-midnight dark:text-white">
-            Reset Password
-          </CardTitle>
-          <CardDescription>
-            {isSent 
-              ? "We've sent a password reset link to your email." 
-              : "Enter your email to receive a password reset link."}
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
+          <h1 className="text-4xl font-bold text-white uppercase tracking-tighter italic">Identity Recovery</h1>
+          <p className="text-label-caps text-white/40 tracking-[0.3em] uppercase">
+            {isSent ? "Recovery protocol transmitted" : "Provide your identity for credential reset"}
+          </p>
+        </div>
+
+        <div className="bg-white/[0.02] backdrop-blur-3xl border border-white/10 rounded-2xl p-8 md:p-10 space-y-8">
           {!isSent ? (
-            <form onSubmit={handleReset} className="space-y-4">
+            <form onSubmit={handleReset} className="space-y-6">
               <div className="space-y-2">
-                <label className="text-sm font-medium">Email Address</label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-2.5 h-5 w-5 text-muted-foreground" />
-                  <Input 
-                    type="email" 
-                    placeholder="name@example.com" 
-                    className="pl-10" 
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    disabled={isLoading}
-                  />
-                </div>
+                <label className="text-label-caps text-white/40 uppercase tracking-widest">Master Identity</label>
+                <input 
+                  type="email" 
+                  placeholder="identity@vault.com" 
+                  className="w-full bg-black/50 border border-white/10 h-14 px-4 text-white focus:border-white transition-all duration-500 rounded-xl outline-none placeholder:text-white/10" 
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  disabled={isLoading}
+                />
               </div>
-              <Button 
+              <button 
                 type="submit" 
-                className="w-full bg-coral hover:bg-coral/90" 
+                className="w-full bg-white text-black h-14 font-black uppercase tracking-[0.2em] text-xs rounded-xl hover:bg-neutral-200 transition-all active:scale-[0.98] flex items-center justify-center" 
                 disabled={isLoading}
               >
-                {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                Send Reset Link
-              </Button>
+                {isLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : "Transmit Recovery Protocol"}
+              </button>
             </form>
           ) : (
-            <div className="text-center py-4">
-              <p className="text-sm text-muted-foreground mb-6">
-                If an account exists for <strong>{email}</strong>, you will receive an email with instructions on how to reset your password shortly.
+            <div className="text-center py-8 space-y-8">
+              <p className="text-white/40 text-sm leading-relaxed">
+                If an account exists for <strong className="text-white italic">{email}</strong>, recovery instructions have been transmitted.
               </p>
-              <Button variant="outline" className="w-full" asChild>
-                <Link href="/auth/signin">
-                  Return to Sign In
-                </Link>
-              </Button>
+              <Link 
+                href="/auth/signin"
+                className="block w-full h-14 border border-white/10 text-[10px] font-black text-white uppercase tracking-[0.3em] rounded-xl hover:bg-white/5 transition-all flex items-center justify-center"
+              >
+                Return to Vault Access
+              </Link>
             </div>
           )}
-        </CardContent>
+        </div>
+
         {!isSent && (
-          <CardFooter>
-            <Button variant="ghost" className="w-full" asChild>
-              <Link href="/auth/signin" className="flex items-center">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Back to Sign In
-              </Link>
-            </Button>
-          </CardFooter>
+          <div className="flex flex-col items-center">
+            <Link href="/auth/signin" className="group flex items-center gap-3 text-[10px] font-bold text-white/40 hover:text-white uppercase tracking-widest transition-all">
+              <ArrowLeft className="h-3 w-3 transition-transform group-hover:-translate-x-1" />
+              Back to Vault Access
+            </Link>
+          </div>
         )}
-      </Card>
+      </div>
+
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-4 opacity-20">
+        <div className="h-[1px] w-12 bg-white"></div>
+        <span className="text-[8px] tracking-[1em] text-white uppercase">IDENTITY VERIFICATION</span>
+        <div className="h-[1px] w-12 bg-white"></div>
+      </div>
     </div>
   );
 }

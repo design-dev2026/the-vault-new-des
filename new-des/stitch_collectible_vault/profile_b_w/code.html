@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>COLLECTIBLE VAULT | Vault Master Profile</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-dim": "#131313",
+                    "error-container": "#93000a",
+                    "inverse-surface": "#e2e2e2",
+                    "surface-variant": "#353535",
+                    "secondary-fixed-dim": "#c8c6c5",
+                    "primary-fixed": "#e2e2e2",
+                    "outline": "#8e9192",
+                    "error": "#ffb4ab",
+                    "background": "#131313",
+                    "primary-fixed-dim": "#c6c6c7",
+                    "on-error": "#690005",
+                    "on-tertiary": "#2f3131",
+                    "primary": "#ffffff",
+                    "on-surface-variant": "#c4c7c8",
+                    "outline-variant": "#444748",
+                    "secondary-container": "#474746",
+                    "surface-container-highest": "#353535",
+                    "surface-container-lowest": "#0e0e0e",
+                    "surface-bright": "#393939",
+                    "primary-container": "#e2e2e2",
+                    "tertiary-container": "#e2e2e2",
+                    "secondary-fixed": "#e5e2e1",
+                    "on-tertiary-container": "#636565",
+                    "surface-container-low": "#1b1b1b",
+                    "tertiary": "#ffffff",
+                    "on-secondary-container": "#b7b5b4",
+                    "on-secondary-fixed": "#1c1b1b",
+                    "on-tertiary-fixed-variant": "#454747",
+                    "secondary": "#c8c6c5",
+                    "inverse-primary": "#5d5f5f",
+                    "surface-container-high": "#2a2a2a",
+                    "surface": "#131313",
+                    "on-surface": "#e2e2e2",
+                    "on-error-container": "#ffdad6",
+                    "on-primary-fixed-variant": "#454747",
+                    "tertiary-fixed-dim": "#c6c6c7",
+                    "surface-container": "#1f1f1f",
+                    "on-primary": "#2f3131",
+                    "tertiary-fixed": "#e2e2e2",
+                    "on-primary-fixed": "#1a1c1c",
+                    "on-secondary": "#313030",
+                    "on-tertiary-fixed": "#1a1c1c",
+                    "inverse-on-surface": "#303030",
+                    "on-primary-container": "#636565",
+                    "surface-tint": "#c6c6c7",
+                    "on-background": "#e2e2e2",
+                    "on-secondary-fixed-variant": "#474746"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-max": "1440px",
+                    "gutter": "24px",
+                    "margin-mobile": "20px",
+                    "margin-desktop": "64px",
+                    "unit": "4px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Plus Jakarta Sans"],
+                    "h1": ["Plus Jakarta Sans"],
+                    "label-caps": ["Plus Jakarta Sans"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "h3": ["Plus Jakarta Sans"],
+                    "h2": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                    "h1": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "700"}],
+                    "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                    "h3": ["24px", {"lineHeight": "1.3", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "h2": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.03em", "fontWeight": "700"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(40px);
+            border: 1px solid #1A1A1A;
+            border-top: 1px solid #333333;
+        }
+        .asset-card {
+            background: #0A0A0A;
+            border: 1px solid #1A1A1A;
+            transition: border-color 0.3s ease;
+        }
+        .asset-card:hover {
+            border-color: #FFFFFF;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md selection:bg-primary selection:text-on-primary overflow-x-hidden">
+<!-- TOP APP BAR -->
+<header class="bg-black/80 backdrop-blur-xl text-white fixed top-0 w-full z-50 border-b border-white/10">
+<div class="flex justify-between items-center px-6 h-16 max-w-[1440px] mx-auto">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined cursor-pointer active:opacity-70 text-white" data-icon="menu">menu</span>
+<h1 class="text-lg font-black tracking-tighter text-white">COLLECTIBLE VAULT</h1>
+</div>
+<nav class="hidden md:flex gap-8 items-center">
+<span class="font-['Plus_Jakarta_Sans'] tracking-widest uppercase text-xs font-bold text-white/40 hover:text-white transition-colors duration-300 cursor-pointer">DASHBOARD</span>
+<span class="font-['Plus_Jakarta_Sans'] tracking-widest uppercase text-xs font-bold text-white/40 hover:text-white transition-colors duration-300 cursor-pointer">COLLECTION</span>
+<span class="font-['Plus_Jakarta_Sans'] tracking-widest uppercase text-xs font-bold text-white hover:text-white transition-colors duration-300 cursor-pointer">PROFILE</span>
+</nav>
+<div class="w-8 h-8 rounded-full border border-white/20 overflow-hidden cursor-pointer active:opacity-70">
+<img alt="User Profile" class="w-full h-full object-cover grayscale" data-alt="A professional high-contrast grayscale studio portrait of a sophisticated man with sharp features. The lighting is dramatic, using a single key light to create deep shadows and bright highlights, emphasizing a luxury gallery aesthetic. The background is a solid deep charcoal black. The overall mood is mysterious, secure, and authoritative, fitting for a high-end vault administrator." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJw3cQQgPDc7GKyQZK8kwBhBHEj0zQS4ddalEF6O7g2nqIhsjgqkjw6NH_tkjUQwBt_kF1WzuBy1SNb0i7WhcBEfqBfOUEvmixNwxII-Gar7PStInjNpThSmYO1dKrgtfMlUQ5PWsMlS5DRU_It_z29q6uCBvHUV4QZLH7MNvJNMa0zs7XygFCN8JCCXey_eeb6A_vx5FZPPMECm1cOFLPbDkWnzYS7PG44SGLsDJGe7Pk1mtGLolNiWiA00hpfubNwSizWaTJEiGx"/>
+</div>
+</div>
+</header>
+<!-- SIDE NAVIGATION (WEB) -->
+<aside class="hidden lg:flex fixed inset-y-0 left-0 z-[60] w-80 bg-black border-r border-white/10 flex-col p-8 transition-all duration-200">
+<div class="text-xl font-bold border-b border-white pb-4 mb-8 font-['Plus_Jakarta_Sans'] text-white">
+            VAULT CORE
+        </div>
+<div class="flex flex-col gap-2 flex-grow">
+<div class="flex items-center gap-4 p-4 text-white/40 hover:bg-white/10 hover:text-white transition-all duration-200 cursor-pointer group">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-['Plus_Jakarta_Sans'] uppercase tracking-[0.2em] text-[10px]">DASHBOARD</span>
+</div>
+<div class="flex items-center gap-4 p-4 text-white/40 hover:bg-white/10 hover:text-white transition-all duration-200 cursor-pointer group">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-['Plus_Jakarta_Sans'] uppercase tracking-[0.2em] text-[10px]">COLLECTION</span>
+</div>
+<div class="flex items-center gap-4 p-4 text-white/40 hover:bg-white/10 hover:text-white transition-all duration-200 cursor-pointer group">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+<span class="font-['Plus_Jakarta_Sans'] uppercase tracking-[0.2em] text-[10px]">WISHLIST</span>
+</div>
+<div class="flex items-center gap-4 p-4 text-white font-black bg-white/5 transition-all duration-200 cursor-pointer group">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-['Plus_Jakarta_Sans'] uppercase tracking-[0.2em] text-[10px]">PROFILE</span>
+</div>
+<div class="flex items-center gap-4 p-4 text-white/40 hover:bg-white/10 hover:text-white transition-all duration-200 cursor-pointer group">
+<span class="material-symbols-outlined" data-icon="storefront">storefront</span>
+<span class="font-['Plus_Jakarta_Sans'] uppercase tracking-[0.2em] text-[10px]">MARKETPLACE</span>
+</div>
+<div class="flex items-center gap-4 p-4 text-white/40 hover:bg-white/10 hover:text-white transition-all duration-200 cursor-pointer group">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-['Plus_Jakarta_Sans'] uppercase tracking-[0.2em] text-[10px]">SETTINGS</span>
+</div>
+</div>
+<div class="mt-auto border-t border-white/10 pt-8">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-surface-container rounded-lg overflow-hidden border border-white/10">
+<img alt="Collector Profile" class="w-full h-full object-cover grayscale" data-alt="A close-up grayscale portrait of a distinguished male collector, styled with high-contrast noir lighting. The subject is wearing a high-collared black garment, looking slightly off-camera with an expression of stoic confidence. The image is rendered in a sharp, minimalist photography style with significant negative space in the background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTrCDILg59Q7jBaiuqdi7bBgeVCbBzMAwOlJF2pUkU2CBLvQYjYer0wprPwVLAVIvgd-8SLajyzEO1hqDbuC1KqKnfIRPYhU8Ck5BxNV9IQucF6sgz8QkoswMrPW6DU_LxzRdJtrkyI96ituKJ8JdfSp2GxDrPvDhUI1mHyUED78mSqw2ILfWlJRxze3Xuie-xFOeLpMaY-LD-DMjR3DW7x9sHWx6dD4bYevN-UjrlWpNGdTpuM3f7OxQbF9RCnkrbM9n_-nza36B2"/>
+</div>
+<div>
+<p class="font-['Plus_Jakarta_Sans'] uppercase tracking-[0.2em] text-[10px] text-white font-black">VAULT MASTER</p>
+<p class="font-['Plus_Jakarta_Sans'] uppercase tracking-[0.2em] text-[8px] text-white/40">Tier: Platinum</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- MAIN CONTENT CANVAS -->
+<main class="lg:ml-80 pt-24 pb-32 px-6 lg:px-margin-desktop max-w-[1440px]">
+<!-- PROFILE HERO SECTION -->
+<section class="mb-20">
+<div class="flex flex-col md:flex-row items-center md:items-end gap-10">
+<div class="relative group">
+<div class="w-48 h-48 rounded-full border-2 border-white/10 p-2 transition-colors duration-500 group-hover:border-white">
+<div class="w-full h-full rounded-full overflow-hidden bg-surface-container-highest">
+<img alt="Avatar" class="w-full h-full object-cover grayscale" data-alt="A premium, full-head grayscale portrait of a man with intense eyes and a sharp jawline, set against a dark void. The lighting is cinematic, utilizing chiaroscuro techniques to highlight textures of skin and fabric in monochromatic tones. This high-end visual represents the elite security and privacy of a digital asset vault." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEgsFObBHiBxI6cyryp29X9mUXSR4wLqEzJpoUToasdCRhYStU2xw4PK24WTOrzqVhNZKW20YBkYFU5nnpW5fFRC6y9JQwub50kLDqxr9FMzkCigQP5h5JFpE6YFoNLVNpx6YSGViDhnVHkQhTcnbuUIFRwvY9ZlegQH9zE3HnjuTgtsfDWs8R6U9XPRIOSdA1V4B8CMdVxfAIFbNoPoOh-DU9I3kqtvfQdw7t_0Ao4qErYAUTsT-iAJo2_-ZR3OBGfw8c7z9mwqxh"/>
+</div>
+</div>
+<button class="absolute bottom-2 right-2 bg-white text-black p-2 rounded-full shadow-xl hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-sm" data-icon="edit">edit</span>
+</button>
+</div>
+<div class="text-center md:text-left flex-grow">
+<span class="font-label-caps text-primary/40">COLLECTOR IDENTITY</span>
+<h2 class="font-h1 text-white mb-2 uppercase">VAULT MASTER</h2>
+<p class="font-body-lg text-white/60 max-w-xl">Curating the world's most exceptional digital and physical assets since 2018. Focused on archival integrity and provenance.</p>
+</div>
+<div class="flex gap-4">
+<button class="px-8 py-3 bg-white text-black font-label-caps hover:bg-white/90 transition-colors rounded-sm">EDIT PROFILE</button>
+<button class="px-4 py-3 border border-white/20 text-white font-label-caps hover:bg-white/5 transition-colors rounded-sm">
+<span class="material-symbols-outlined" data-icon="share">share</span>
+</button>
+</div>
+</div>
+</section>
+<!-- BENTO STATS GRID -->
+<section class="grid grid-cols-1 md:grid-cols-4 gap-gutter mb-20">
+<div class="md:col-span-2 glass-panel p-8 rounded-lg">
+<span class="font-label-caps text-white/40">TOTAL VAULT VALUATION</span>
+<div class="flex items-baseline gap-2 mt-4">
+<h3 class="font-h1 text-white">$1,248,500</h3>
+<span class="text-green-500 font-label-caps text-[10px]">+12.4% THIS MONTH</span>
+</div>
+<div class="mt-8 h-2 w-full bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-white w-3/4"></div>
+</div>
+<p class="mt-4 font-label-caps text-[10px] text-white/30">PORTFOLIO DENSITY: HIGH</p>
+</div>
+<div class="asset-card p-8 rounded-lg flex flex-col justify-between">
+<span class="font-label-caps text-white/40">TOTAL ASSETS</span>
+<h3 class="font-h1 text-white">142</h3>
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full border border-black bg-white/10"></div>
+<div class="w-8 h-8 rounded-full border border-black bg-white/20"></div>
+<div class="w-8 h-8 rounded-full border border-black bg-white/30"></div>
+<div class="w-8 h-8 rounded-full border border-black bg-white/40 flex items-center justify-center text-[8px] font-bold">+138</div>
+</div>
+</div>
+<div class="asset-card p-8 rounded-lg flex flex-col justify-between">
+<span class="font-label-caps text-white/40">SECURE TRANSACTIONS</span>
+<h3 class="font-h1 text-white">89</h3>
+<span class="material-symbols-outlined text-white/20 self-end text-4xl" data-icon="verified_user">verified_user</span>
+</div>
+</section>
+<!-- SETTINGS LIST -->
+<section class="max-w-4xl">
+<div class="mb-8 border-b border-white/10 pb-4">
+<h3 class="font-h3 text-white uppercase tracking-widest">VAULT SETTINGS</h3>
+</div>
+<div class="flex flex-col divide-y divide-white/5">
+<!-- Setting Item -->
+<div class="group py-6 flex items-center justify-between cursor-pointer hover:px-4 transition-all duration-300">
+<div class="flex items-center gap-6">
+<span class="material-symbols-outlined text-white/40 group-hover:text-white" data-icon="account_circle">account_circle</span>
+<div>
+<p class="font-label-caps text-white text-body-md uppercase">ACCOUNT DETAILS</p>
+<p class="text-white/40 text-sm mt-1">Manage your legal identity and public aliases.</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-white/20 group-hover:text-white group-hover:translate-x-2 transition-all" data-icon="chevron_right">chevron_right</span>
+</div>
+<!-- Setting Item -->
+<div class="group py-6 flex items-center justify-between cursor-pointer hover:px-4 transition-all duration-300">
+<div class="flex items-center gap-6">
+<span class="material-symbols-outlined text-white/40 group-hover:text-white" data-icon="dark_mode">dark_mode</span>
+<div>
+<p class="font-label-caps text-white text-body-md uppercase">THEME INTERFACE</p>
+<p class="text-white/40 text-sm mt-1">Current: Ultra-Dark Glassmorphism</p>
+</div>
+</div>
+<div class="w-12 h-6 bg-white rounded-full p-1 flex justify-end">
+<div class="w-4 h-4 bg-black rounded-full"></div>
+</div>
+</div>
+<!-- Setting Item -->
+<div class="group py-6 flex items-center justify-between cursor-pointer hover:px-4 transition-all duration-300">
+<div class="flex items-center gap-6">
+<span class="material-symbols-outlined text-white/40 group-hover:text-white" data-icon="security">security</span>
+<div>
+<p class="font-label-caps text-white text-body-md uppercase">SECURITY PROTOCOLS</p>
+<p class="text-white/40 text-sm mt-1">Biometric authentication and 2FA status.</p>
+</div>
+</div>
+<span class="font-label-caps text-white bg-white/10 px-3 py-1 rounded-sm text-[10px]">ENHANCED</span>
+</div>
+<!-- Setting Item -->
+<div class="group py-6 flex items-center justify-between cursor-pointer hover:px-4 transition-all duration-300">
+<div class="flex items-center gap-6">
+<span class="material-symbols-outlined text-white/40 group-hover:text-white" data-icon="notifications">notifications</span>
+<div>
+<p class="font-label-caps text-white text-body-md uppercase">NOTIFICATIONS</p>
+<p class="text-white/40 text-sm mt-1">Asset alerts and marketplace bid updates.</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-white/20 group-hover:text-white group-hover:translate-x-2 transition-all" data-icon="chevron_right">chevron_right</span>
+</div>
+<!-- Setting Item -->
+<div class="group py-6 flex items-center justify-between cursor-pointer hover:px-4 transition-all duration-300">
+<div class="flex items-center gap-6">
+<span class="material-symbols-outlined text-error group-hover:opacity-80" data-icon="logout">logout</span>
+<div>
+<p class="font-label-caps text-error text-body-md uppercase">TERMINATE SESSION</p>
+<p class="text-white/20 text-sm mt-1">Safely disconnect from the vault server.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BOTTOM NAV BAR (MOBILE) -->
+<footer class="md:hidden fixed bottom-0 left-0 w-full h-20 bg-black/90 backdrop-blur-2xl flex justify-around items-center px-8 pb-4 z-50 border-t border-white/10 shadow-[0_-10px_20px_rgba(0,0,0,0.5)]">
+<div class="flex flex-col items-center justify-center text-white/30 transition-all duration-300 ease-in-out hover:text-white/80 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+</div>
+<div class="flex flex-col items-center justify-center text-white/30 transition-all duration-300 ease-in-out hover:text-white/80 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+</div>
+<div class="flex flex-col items-center justify-center text-white/30 transition-all duration-300 ease-in-out hover:text-white/80 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
+</div>
+<div class="flex flex-col items-center justify-center text-white/30 transition-all duration-300 ease-in-out hover:text-white/80 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</div>
+<div class="flex flex-col items-center justify-center text-white scale-110 transition-all duration-300 ease-in-out cursor-pointer">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</div>
+</footer>
+</body></html>

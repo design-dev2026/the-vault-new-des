@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>COLLECTIBLE VAULT - Registration</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(40px);
+            border: 1px solid #1A1A1A;
+        }
+        .input-glow:focus {
+            outline: none;
+            border-color: #ffffff;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#131313",
+                        "error-container": "#93000a",
+                        "inverse-surface": "#e2e2e2",
+                        "surface-variant": "#353535",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "primary-fixed": "#e2e2e2",
+                        "outline": "#8e9192",
+                        "error": "#ffb4ab",
+                        "background": "#131313",
+                        "primary-fixed-dim": "#c6c6c7",
+                        "on-error": "#690005",
+                        "on-tertiary": "#2f3131",
+                        "primary": "#ffffff",
+                        "on-surface-variant": "#c4c7c8",
+                        "outline-variant": "#444748",
+                        "secondary-container": "#474746",
+                        "surface-container-highest": "#353535",
+                        "surface-container-lowest": "#0e0e0e",
+                        "surface-bright": "#393939",
+                        "primary-container": "#e2e2e2",
+                        "tertiary-container": "#e2e2e2",
+                        "secondary-fixed": "#e5e2e1",
+                        "on-tertiary-container": "#636565",
+                        "surface-container-low": "#1b1b1b",
+                        "tertiary": "#ffffff",
+                        "on-secondary-container": "#b7b5b4",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "on-tertiary-fixed-variant": "#454747",
+                        "secondary": "#c8c6c5",
+                        "inverse-primary": "#5d5f5f",
+                        "surface-container-high": "#2a2a2a",
+                        "surface": "#131313",
+                        "on-surface": "#e2e2e2",
+                        "on-error-container": "#ffdad6",
+                        "on-primary-fixed-variant": "#454747",
+                        "tertiary-fixed-dim": "#c6c6c7",
+                        "surface-container": "#1f1f1f",
+                        "on-primary": "#2f3131",
+                        "tertiary-fixed": "#e2e2e2",
+                        "on-primary-fixed": "#1a1c1c",
+                        "on-secondary": "#313030",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "inverse-on-surface": "#303030",
+                        "on-primary-container": "#636565",
+                        "surface-tint": "#c6c6c7",
+                        "on-background": "#e2e2e2",
+                        "on-secondary-fixed-variant": "#474746"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-max": "1440px",
+                        "gutter": "24px",
+                        "margin-mobile": "20px",
+                        "margin-desktop": "64px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "h1": ["Plus Jakarta Sans"],
+                        "label-caps": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "h3": ["Plus Jakarta Sans"],
+                        "h2": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                        "h1": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "700"}],
+                        "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                        "h3": ["24px", {"lineHeight": "1.3", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "h2": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.03em", "fontWeight": "700"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface-lowest text-on-surface min-h-screen selection:bg-white selection:text-black">
+<!-- TopAppBar Fragment (Simplified for Auth Flow) -->
+<header class="bg-black/80 backdrop-blur-xl text-white fixed top-0 w-full z-50 border-b border-white/10 flex justify-between items-center px-6 h-16 max-w-[1440px] mx-auto left-0 right-0">
+<div class="text-lg font-black tracking-tighter text-white cursor-pointer active:opacity-70">
+            COLLECTIBLE VAULT
+        </div>
+<div class="font-['Plus_Jakarta_Sans'] tracking-widest uppercase text-xs font-bold text-white/40 hover:text-white transition-colors duration-300 cursor-pointer">
+            Sign In
+        </div>
+</header>
+<main class="flex flex-col md:flex-row min-h-screen pt-16">
+<!-- Visual Sidebar (Aesthetic Anchor) -->
+<div class="hidden md:flex md:w-1/2 relative overflow-hidden bg-black items-center justify-center border-r border-white/10">
+<div class="absolute inset-0 z-0">
+<img alt="Vault texture" class="w-full h-full object-cover opacity-40 grayscale" data-alt="A macro photograph of a sleek, black carbon fiber texture with subtle white light reflecting off its weave. The lighting is cold and clinical, highlighting the precision of the material. The overall composition is abstract and minimalist, conveying a sense of high-tech security and luxury gallery aesthetics. No colors are present, maintaining a strict monochromatic black and white palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4GaiIdp0DC0xNowdI4hooyUD6JEa-XdLPoYsuS53VqTYZpdHkNi4ZETjLlgeE7llQRoGYL2VAnDZpIsHGP-XzuOOS5U0CHCizH67FTBMaYHL7mz_H6hDyK3mE0-MbLqXpCCPLFvuny-ZTqkySQn5BWxJ9poiAHJRXSy42yKx0X394ywB7FhHQunCMHMp0EWoo0prwQFJwlMx--HI7mpuVXlGDtXPazLScyqNm5Trlh0v_FXSCOlfg_4uTvEh_LWVZgWDH-QuuhiKE"/>
+</div>
+<div class="relative z-10 px-12 max-w-lg">
+<h1 class="font-h1 text-h1 mb-6 text-white">SECURE YOUR LEGACY.</h1>
+<p class="font-body-lg text-body-lg text-white/60">Enter the world's most exclusive digital asset depository. Precision tracking for the modern collector.</p>
+<div class="mt-12 flex gap-8">
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-white/40 mb-2">ASSETS UNDER CARE</span>
+<span class="font-h3 text-h3 text-white">$1.2B+</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-white/40 mb-2">VAULT UPTIME</span>
+<span class="font-h3 text-h3 text-white">99.9%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Registration Canvas -->
+<div class="w-full md:w-1/2 flex items-center justify-center p-8 md:p-24 bg-surface-lowest">
+<div class="w-full max-w-md space-y-12">
+<div class="space-y-4">
+<h2 class="font-h2 text-h2 text-white">Initialize Vault Access</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Complete the protocol to begin your collection journey.</p>
+</div>
+<!-- Registration Form -->
+<form class="space-y-6">
+<div class="space-y-2">
+<label class="font-label-caps text-label-caps text-white/60">Full Name</label>
+<input class="w-full bg-black border border-outline-variant rounded-lg px-4 py-4 text-white font-body-md focus:border-white focus:ring-0 transition-all duration-300 input-glow placeholder:text-white/20" placeholder="ALEXANDER VANCE" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="font-label-caps text-label-caps text-white/60">Email Address</label>
+<input class="w-full bg-black border border-outline-variant rounded-lg px-4 py-4 text-white font-body-md focus:border-white focus:ring-0 transition-all duration-300 input-glow placeholder:text-white/20" placeholder="collector@vault.io" type="email"/>
+</div>
+<div class="space-y-2 relative">
+<label class="font-label-caps text-label-caps text-white/60">Security Cipher</label>
+<input class="w-full bg-black border border-outline-variant rounded-lg px-4 py-4 text-white font-body-md focus:border-white focus:ring-0 transition-all duration-300 input-glow placeholder:text-white/20" placeholder="••••••••••••" type="password"/>
+<span class="material-symbols-outlined absolute right-4 bottom-4 text-white/40 cursor-pointer hover:text-white transition-colors" data-icon="visibility">visibility</span>
+</div>
+<button class="w-full bg-white text-black font-label-caps py-5 rounded-lg hover:bg-white/90 active:scale-[0.98] transition-all duration-200 tracking-widest" type="submit">
+                        ESTABLISH ACCOUNT
+                    </button>
+</form>
+<div class="relative flex items-center py-4">
+<div class="flex-grow border-t border-white/10"></div>
+<span class="flex-shrink mx-4 font-label-caps text-white/20">OR AUTHENTICATE WITH</span>
+<div class="flex-grow border-t border-white/10"></div>
+</div>
+<!-- Social Auth Cluster -->
+<div class="grid grid-cols-2 gap-4">
+<button class="flex items-center justify-center gap-3 border border-outline-variant rounded-lg py-4 hover:bg-white/5 hover:border-white transition-all duration-300">
+<span class="material-symbols-outlined text-white" data-icon="fingerprint">fingerprint</span>
+<span class="font-label-caps text-white">BIOMETRIC</span>
+</button>
+<button class="flex items-center justify-center gap-3 border border-outline-variant rounded-lg py-4 hover:bg-white/5 hover:border-white transition-all duration-300">
+<span class="material-symbols-outlined text-white" data-icon="key">key</span>
+<span class="font-label-caps text-white">PASSKEY</span>
+</button>
+</div>
+<div class="pt-8 text-center">
+<p class="font-body-md text-white/40">
+                        By initializing access, you agree to the 
+                        <a class="text-white hover:underline underline-offset-4" href="#">Terms of Custody</a> 
+                        and 
+                        <a class="text-white hover:underline underline-offset-4" href="#">Privacy Protocol</a>.
+                    </p>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Separation Logic (Auth Screen Suppression of Nav) -->
+<!-- Navigation is suppressed per "Shell Visibility & Relevance" rule for Transactional/Sign-up screens -->
+<!-- Status Bar (Bento-style Minimal Indicator) -->
+<footer class="fixed bottom-0 w-full h-12 bg-black border-t border-white/5 px-6 flex items-center justify-between z-50">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+<span class="font-label-caps text-[10px] text-white/40 tracking-[0.2em]">SYSTEM SECURE</span>
+</div>
+<span class="h-4 w-[1px] bg-white/10"></span>
+<span class="font-label-caps text-[10px] text-white/40 tracking-[0.2em]">ENCRYPTION: AES-256</span>
+</div>
+<div class="font-label-caps text-[10px] text-white/40 tracking-[0.2em]">© 2024 COLLECTIBLE VAULT</div>
+</footer>
+</body></html>

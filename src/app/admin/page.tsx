@@ -50,128 +50,115 @@ export default async function AdminOverviewPage() {
   const signupsToday = signupData[format(now, "yyyy-MM-dd")] || 0;
 
   return (
-    <div className="space-y-8 pb-10">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-heading font-bold text-midnight dark:text-white">Admin Overview</h1>
-          <p className="text-muted-foreground mt-1">Platform-wide analytics and performance.</p>
-        </div>
-        <div className="bg-coral/10 text-coral px-4 py-2 rounded-xl flex items-center gap-2 border border-coral/20">
-          <ShieldCheck className="h-5 w-5" />
-          <span className="font-bold text-sm tracking-tight uppercase">System Secure</span>
+    <div className="space-y-16 pb-24 animate-in fade-in duration-1000">
+      <div className="flex items-center justify-between border-b border-white/5 pb-8">
+        <header className="space-y-4">
+          <span className="text-label-caps text-white/40 block tracking-[0.4em] uppercase">Platform Intelligence</span>
+          <h1 className="text-6xl font-bold text-white uppercase tracking-tighter italic leading-none">Command Overview</h1>
+        </header>
+        <div className="bg-white text-black px-6 py-3 rounded-sm flex items-center gap-3">
+          <ShieldCheck className="h-4 w-4" />
+          <span className="font-black text-[10px] tracking-[0.2em] uppercase">System Optimal</span>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-1">
         <StatCard 
           title="Total Collectors" 
           value={totalUsers.toLocaleString()} 
           icon={Users} 
-          trend="+12% from last month" 
-          color="coral"
+          trend="+12% ARCHIVAL GROWTH" 
         />
         <StatCard 
           title="Total Collectibles" 
           value={totalItems.toLocaleString()} 
           icon={Package} 
-          trend="+5% from last week" 
-          color="teal"
+          trend="+5% INVENTORY INCREASE" 
         />
         <StatCard 
           title="Assets Value" 
           value={`$${(totalValue / 1000000).toFixed(2)}M`} 
           icon={DollarSign} 
-          trend="+8% ROI avg" 
-          color="midnight"
+          trend="+8% ROI PERFORMANCE" 
         />
         <StatCard 
           title="New Signups" 
           value={signupsToday.toString()} 
           icon={UserPlus} 
-          trend="Today so far" 
-          color="coral"
+          trend="CURRENT SESSION GAIN" 
         />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <Card className="lg:col-span-2">
-          <CardHeader>
-            <CardTitle>Signup Growth</CardTitle>
-            <CardDescription>New user registrations over the last 30 days</CardDescription>
-          </CardHeader>
-          <CardContent className="h-[350px] w-full pt-4">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <div className="lg:col-span-8 bg-white/[0.02] border border-white/10 rounded-2xl p-10 space-y-8">
+          <div className="space-y-2">
+            <span className="text-label-caps text-white uppercase tracking-[0.3em]">Archival Trajectory</span>
+            <p className="text-[10px] text-white/40 uppercase tracking-widest font-bold">New user registrations (30D)</p>
+          </div>
+          <div className="h-[350px] w-full pt-4">
             <OverviewCharts data={last30Days} />
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>System Status</CardTitle>
-            <CardDescription>Service health and performance</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="space-y-2">
-              <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground font-medium">Database Load</span>
-                <span className="font-bold">12%</span>
+        <div className="lg:col-span-4 bg-white/[0.02] border border-white/10 rounded-2xl p-10 space-y-12">
+          <div className="space-y-2">
+            <span className="text-label-caps text-white uppercase tracking-[0.3em]">System Integrity</span>
+            <p className="text-[10px] text-white/40 uppercase tracking-widest font-bold">Node health and load metrics</p>
+          </div>
+          
+          <div className="space-y-8">
+            <div className="space-y-3">
+              <div className="flex justify-between items-end">
+                <span className="text-label-caps text-white/40 uppercase text-[9px] tracking-widest">Database Load</span>
+                <span className="text-xs font-black text-white italic">12.4%</span>
               </div>
-              <div className="h-2 w-full bg-muted rounded-full overflow-hidden">
-                <div className="h-full bg-teal w-[12%]" />
-              </div>
-            </div>
-            <div className="space-y-2">
-              <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground font-medium">Storage Used</span>
-                <span className="font-bold">45.2 GB</span>
-              </div>
-              <div className="h-2 w-full bg-muted rounded-full overflow-hidden">
-                <div className="h-full bg-coral w-[45%]" />
+              <div className="h-[2px] w-full bg-white/5 overflow-hidden">
+                <div className="h-full bg-white w-[12%] shadow-[0_0_10px_rgba(255,255,255,0.5)]" />
               </div>
             </div>
-            <div className="pt-4 border-t space-y-4">
-              <div className="flex items-center gap-3">
-                <div className="w-2 h-2 rounded-full bg-teal animate-pulse" />
-                <span className="text-sm font-medium">Supabase Auth API Online</span>
+            
+            <div className="space-y-3">
+              <div className="flex justify-between items-end">
+                <span className="text-label-caps text-white/40 uppercase text-[9px] tracking-widest">Storage Capacity</span>
+                <span className="text-xs font-black text-white italic">45.2 GB</span>
               </div>
-              <div className="flex items-center gap-3">
-                <div className="w-2 h-2 rounded-full bg-teal animate-pulse" />
-                <span className="text-sm font-medium">Edge Functions Stable</span>
+              <div className="h-[2px] w-full bg-white/5 overflow-hidden">
+                <div className="h-full bg-white w-[45%] shadow-[0_0_10px_rgba(255,255,255,0.5)]" />
               </div>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+
+          <div className="pt-12 border-t border-white/5 space-y-6">
+            <div className="flex items-center gap-4">
+              <div className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+              <span className="text-[10px] font-black text-white/60 uppercase tracking-[0.2em]">Auth API Synchronized</span>
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+              <span className="text-[10px] font-black text-white/60 uppercase tracking-[0.2em]">Edge Nodes Stable</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
 }
 
-function StatCard({ title, value, icon: Icon, trend, color }: any) {
+function StatCard({ title, value, icon: Icon, trend }: any) {
   return (
-    <Card className="relative overflow-hidden group">
-      <CardContent className="p-6">
-        <div className="flex items-center justify-between">
-          <p className="text-sm font-medium text-muted-foreground uppercase tracking-wider">{title}</p>
-          <div className={cn(
-            "p-2 rounded-lg",
-            color === "coral" ? "bg-coral/10 text-coral" : 
-            color === "teal" ? "bg-teal/10 text-teal" : "bg-midnight/10 text-midnight dark:bg-white/10 dark:text-white"
-          )}>
-            <Icon className="h-5 w-5" />
-          </div>
-        </div>
-        <div className="mt-4">
-          <h3 className="text-3xl font-bold tracking-tight">{value}</h3>
-          <p className="text-xs text-muted-foreground mt-1 flex items-center">
-            <ArrowUpRight className="h-3 w-3 mr-1 text-teal" />
-            {trend}
-          </p>
-        </div>
-        <div className={cn(
-          "absolute bottom-0 left-0 h-1 transition-all duration-500 w-0 group-hover:w-full",
-          color === "coral" ? "bg-coral" : color === "teal" ? "bg-teal" : "bg-midnight dark:bg-white"
-        )} />
-      </CardContent>
-    </Card>
+    <div className="bg-white/[0.02] border border-white/10 p-10 space-y-8 group hover:bg-white/[0.04] transition-all duration-700">
+      <div className="flex items-center justify-between">
+        <span className="text-label-caps text-white/40 uppercase block tracking-widest">{title}</span>
+        <Icon className="h-4 w-4 text-white/20 group-hover:text-white transition-colors" />
+      </div>
+      <div className="space-y-2">
+        <h3 className="text-5xl font-black text-white tracking-tighter italic leading-none">{value}</h3>
+        <p className="text-[8px] font-black text-white/20 uppercase tracking-[0.2em] flex items-center group-hover:text-white/60 transition-colors">
+          <ArrowUpRight className="h-3 w-3 mr-2" />
+          {trend}
+        </p>
+      </div>
+    </div>
   );
 }
 

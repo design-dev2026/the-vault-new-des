@@ -1,4 +1,5 @@
-import { AppSidebar } from "@/components/collectors/app-sidebar";
+import { TopAppBar } from "@/components/layout/top-app-bar";
+import { BottomNavBar } from "@/components/layout/bottom-nav-bar";
 import { PageTransition } from "@/components/layout/page-transition";
 
 export default function AppLayout({
@@ -7,20 +8,16 @@ export default function AppLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex min-h-screen bg-background">
-      <AppSidebar />
-      <div className="flex-1 flex flex-col min-h-screen overflow-hidden">
-        <header className="md:hidden flex items-center justify-between p-4 border-b bg-card">
-          <div className="flex items-center gap-2 font-heading font-bold text-xl text-coral">
-            <span>The Vault</span>
-          </div>
-        </header>
-        <main className="flex-1 overflow-y-auto pb-20 md:pb-0">
-          <div className="container mx-auto px-4 py-8 max-w-7xl">
-            <PageTransition>{children}</PageTransition>
-          </div>
-        </main>
-      </div>
+    <div className="min-h-screen bg-black text-white font-sans">
+      <TopAppBar />
+      
+      <main className="pt-28 pb-32 px-6 md:px-16 max-w-[1440px] mx-auto min-h-screen">
+        <PageTransition>
+          {children}
+        </PageTransition>
+      </main>
+
+      <BottomNavBar />
     </div>
   );
 }

@@ -7,37 +7,35 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 
 export default function MagicLinkPage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background p-4">
-      <Card className="w-full max-w-md shadow-lg text-center">
-        <CardHeader className="space-y-1">
-          <div className="flex justify-center mb-4">
-            <div className="rounded-full bg-teal/10 p-6 text-teal">
-              <Mail className="h-12 w-12 animate-bounce" />
-            </div>
+    <div className="relative min-h-screen w-full flex items-center justify-center bg-[radial-gradient(circle_at_center,#1a1a1a_0%,#000000_100%)] overflow-hidden px-6">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-white/5 blur-[120px] rounded-full pointer-events-none"></div>
+
+      <div className="relative z-10 w-full max-w-[440px] space-y-8 animate-in fade-in slide-in-from-bottom-8 duration-700 text-center">
+        <div className="space-y-6">
+          <div className="inline-flex items-center justify-center w-20 h-20 border border-white/10 rounded-full">
+            <Mail className="h-10 w-10 text-white animate-bounce" />
           </div>
-          <CardTitle className="text-2xl font-heading font-bold text-midnight dark:text-white">
-            Check your email
-          </CardTitle>
-          <CardDescription className="text-base">
-            We sent a magic link to your email address. Click the link to sign in instantly.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <p className="text-sm text-muted-foreground">
-            Can't find it? Check your spam folder or try resending the link.
+          <h1 className="text-4xl font-bold text-white uppercase tracking-tighter italic">Signal Transmitted</h1>
+          <p className="text-label-caps text-white/40 tracking-[0.3em] uppercase">
+            A secure access link has been dispatched to your identity
           </p>
-          <Button variant="outline" className="w-full">
-            <Send className="mr-2 h-4 w-4" />
-            Resend Link
-          </Button>
-        </CardContent>
-        <CardFooter className="flex justify-center border-t pt-6">
-          <Link href="/auth/signin" className="flex items-center text-sm text-muted-foreground hover:text-midnight dark:hover:text-white transition-colors">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Sign In
-          </Link>
-        </CardFooter>
-      </Card>
+        </div>
+
+        <div className="bg-white/[0.02] backdrop-blur-3xl border border-white/10 rounded-2xl p-8 md:p-10 space-y-8">
+          <p className="text-white/40 text-sm leading-relaxed">
+            Check your inbox and spam folder. Click the encrypted link to gain immediate access.
+          </p>
+          <button className="w-full h-14 border border-white/10 text-[10px] font-black text-white uppercase tracking-[0.3em] rounded-xl hover:bg-white/5 transition-all flex items-center justify-center gap-3">
+            <Send className="h-4 w-4" />
+            Retransmit Protocol
+          </button>
+        </div>
+
+        <Link href="/auth/signin" className="group inline-flex items-center gap-3 text-[10px] font-bold text-white/40 hover:text-white uppercase tracking-widest transition-all">
+          <ArrowLeft className="h-3 w-3 transition-transform group-hover:-translate-x-1" />
+          Return to Vault Access
+        </Link>
+      </div>
     </div>
   );
 }

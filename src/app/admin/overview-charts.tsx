@@ -8,31 +8,32 @@ export function OverviewCharts({ data }: { data: any[] }) {
       <AreaChart data={data}>
         <defs>
           <linearGradient id="colorCount" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="#FF6B6B" stopOpacity={0.3}/>
-            <stop offset="95%" stopColor="#FF6B6B" stopOpacity={0}/>
+            <stop offset="5%" stopColor="#ffffff" stopOpacity={0.1}/>
+            <stop offset="95%" stopColor="#ffffff" stopOpacity={0}/>
           </linearGradient>
         </defs>
-        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#eee" />
+        <CartesianGrid strokeDasharray="1 10" vertical={false} stroke="#333" />
         <XAxis 
           dataKey="date" 
           axisLine={false} 
           tickLine={false} 
-          tick={{ fontSize: 12, fill: "#888" }}
+          tick={{ fontSize: 9, fill: "#666", fontWeight: "bold" }}
           dy={10}
         />
         <YAxis 
           axisLine={false} 
           tickLine={false} 
-          tick={{ fontSize: 12, fill: "#888" }}
+          tick={{ fontSize: 9, fill: "#666", fontWeight: "bold" }}
         />
         <Tooltip 
-          contentStyle={{ borderRadius: "12px", border: "none", boxShadow: "0 4px 12px rgba(0,0,0,0.1)" }}
+          contentStyle={{ backgroundColor: "#000", border: "1px solid #333", borderRadius: "0px", fontSize: "10px" }}
+          itemStyle={{ color: "#fff", textTransform: "uppercase", fontWeight: "bold" }}
         />
         <Area 
           type="monotone" 
           dataKey="count" 
-          stroke="#FF6B6B" 
-          strokeWidth={3}
+          stroke="#ffffff" 
+          strokeWidth={2}
           fillOpacity={1} 
           fill="url(#colorCount)" 
         />

@@ -37,21 +37,19 @@ export default async function AdminUsersPage() {
   }) || [];
 
   return (
-    <div className="space-y-8 pb-10">
-      <div>
-        <h1 className="text-3xl font-heading font-bold text-midnight dark:text-white">User Management</h1>
-        <p className="text-muted-foreground mt-1">Monitor and manage collector accounts.</p>
-      </div>
+    <div className="space-y-16 pb-24 animate-in fade-in duration-1000">
+      <header className="space-y-4">
+        <span className="text-label-caps text-white/40 block tracking-[0.4em] uppercase">Identity Oversight</span>
+        <h1 className="text-6xl font-bold text-white uppercase tracking-tighter italic">User Management</h1>
+      </header>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Collectors ({users.length})</CardTitle>
-          <CardDescription>View and manage permissions for all users on the platform.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <UsersTable users={users} />
-        </CardContent>
-      </Card>
+      <div className="space-y-8">
+        <div className="flex items-center justify-between border-b border-white/5 pb-4">
+          <span className="text-label-caps text-white uppercase tracking-[0.3em]">Registered Collectors ({users.length})</span>
+          <span className="text-[10px] font-bold text-white/20 uppercase tracking-widest">Master Ledger</span>
+        </div>
+        <UsersTable users={users} />
+      </div>
     </div>
   );
 }

@@ -22,21 +22,19 @@ export default async function AdminItemsPage() {
     .order("created_at", { ascending: false });
 
   return (
-    <div className="space-y-8 pb-10">
-      <div>
-        <h1 className="text-3xl font-heading font-bold text-midnight dark:text-white">Item Moderation</h1>
-        <p className="text-muted-foreground mt-1">Global view of all collectibles across the platform.</p>
-      </div>
+    <div className="space-y-16 pb-24 animate-in fade-in duration-1000">
+      <header className="space-y-4">
+        <span className="text-label-caps text-white/40 block tracking-[0.4em] uppercase">Archival Oversight</span>
+        <h1 className="text-6xl font-bold text-white uppercase tracking-tighter italic">Item Moderation</h1>
+      </header>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Global Inventory ({items?.length || 0})</CardTitle>
-          <CardDescription>Monitor content and moderate items if necessary.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <ItemsTable initialItems={items || []} />
-        </CardContent>
-      </Card>
+      <div className="space-y-8">
+        <div className="flex items-center justify-between border-b border-white/5 pb-4">
+          <span className="text-label-caps text-white uppercase tracking-[0.3em]">Global Inventory ({items?.length || 0})</span>
+          <span className="text-[10px] font-bold text-white/20 uppercase tracking-widest">Asset Ledger</span>
+        </div>
+        <ItemsTable initialItems={items || []} />
+      </div>
     </div>
   );
 }

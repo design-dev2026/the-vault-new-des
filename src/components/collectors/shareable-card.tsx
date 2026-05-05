@@ -28,7 +28,7 @@ export function ShareableCard({ item }: ShareableCardProps) {
     try {
       const dataUrl = await toPng(cardRef.current, {
         cacheBust: true,
-        backgroundColor: "#ffffff",
+        backgroundColor: "#000000",
         pixelRatio: 2,
       });
       
@@ -46,15 +46,12 @@ export function ShareableCard({ item }: ShareableCardProps) {
   const properties = item.properties || {};
 
   return (
-    <div className="max-w-md mx-auto space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="max-w-md mx-auto space-y-8 animate-in fade-in duration-1000">
       {/* Card Container for Export */}
       <div 
         ref={cardRef} 
-        className="relative aspect-[4/5] rounded-[32px] overflow-hidden bg-white shadow-2xl border-8 border-white group"
+        className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-black border border-white/10 group"
       >
-        {/* Background Gradient Border Effect */}
-        <div className="absolute inset-0 bg-gradient-to-br from-coral/20 via-transparent to-teal/20 pointer-events-none" />
-        
         {/* Main Image */}
         <div className="absolute inset-0">
           {item.image_url ? (
@@ -67,80 +64,79 @@ export function ShareableCard({ item }: ShareableCardProps) {
               className="object-cover"
             />
           ) : (
-            <div className="w-full h-full bg-muted flex items-center justify-center">
-              <Share2 className="h-20 w-20 text-muted-foreground/20" />
+            <div className="w-full h-full bg-white/[0.02] flex items-center justify-center">
+              <Share2 className="h-20 w-20 text-white/5" />
             </div>
           )}
         </div>
 
         {/* Content Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-midnight via-midnight/20 to-transparent flex flex-col justify-end p-8">
-          <Badge className="w-fit mb-3 bg-coral hover:bg-coral border-none">
-            {item.category.toUpperCase()}
-          </Badge>
-          <h1 className="text-3xl font-heading font-bold text-white mb-2 leading-tight">
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent flex flex-col justify-end p-8">
+          <span className="text-[10px] font-black text-white/40 uppercase tracking-[0.4em] mb-3">
+            {item.category}
+          </span>
+          <h1 className="text-3xl font-bold text-white uppercase tracking-tighter italic leading-none mb-4">
             {item.name}
           </h1>
           
-          <div className="flex flex-wrap gap-4 text-white/80 text-sm mb-4">
+          <div className="flex flex-wrap gap-6 text-white/60 text-sm mb-6">
             {item.category === "hotwheel" ? (
               <>
-                <div className="flex flex-col">
-                  <span className="text-[10px] uppercase opacity-60 tracking-wider font-bold">Series</span>
-                  <span className="font-medium">{properties.series || "Hot Wheels"}</span>
+                <div className="flex flex-col gap-1">
+                  <span className="text-[8px] font-black uppercase tracking-[0.3em] text-white/20">Series</span>
+                  <span className="text-xs font-bold text-white">{properties.series || "Hot Wheels"}</span>
                 </div>
-                <div className="flex flex-col">
-                  <span className="text-[10px] uppercase opacity-60 tracking-wider font-bold">Year</span>
-                  <span className="font-medium">{properties.year || "N/A"}</span>
+                <div className="flex flex-col gap-1">
+                  <span className="text-[8px] font-black uppercase tracking-[0.3em] text-white/20">Year</span>
+                  <span className="text-xs font-bold text-white">{properties.year || "N/A"}</span>
                 </div>
-                <div className="flex flex-col">
-                  <span className="text-[10px] uppercase opacity-60 tracking-wider font-bold">Scale</span>
-                  <span className="font-medium">{properties.scale || "1:64"}</span>
+                <div className="flex flex-col gap-1">
+                  <span className="text-[8px] font-black uppercase tracking-[0.3em] text-white/20">Scale</span>
+                  <span className="text-xs font-bold text-white">{properties.scale || "1:64"}</span>
                 </div>
               </>
             ) : (
               <>
                 {properties.art_style && (
-                  <div className="flex flex-col">
-                    <span className="text-[10px] uppercase opacity-60 tracking-wider font-bold">Art Style</span>
-                    <span className="font-medium">{properties.art_style}</span>
+                  <div className="flex flex-col gap-1">
+                    <span className="text-[8px] font-black uppercase tracking-[0.3em] text-white/20">Art Style</span>
+                    <span className="text-xs font-bold text-white">{properties.art_style}</span>
                   </div>
                 )}
                 {properties.pose && (
-                  <div className="flex flex-col">
-                    <span className="text-[10px] uppercase opacity-60 tracking-wider font-bold">Pose</span>
-                    <span className="font-medium">{properties.pose}</span>
+                  <div className="flex flex-col gap-1">
+                    <span className="text-[8px] font-black uppercase tracking-[0.3em] text-white/20">Pose</span>
+                    <span className="text-xs font-bold text-white">{properties.pose}</span>
                   </div>
                 )}
               </>
             )}
           </div>
 
-          <div className="flex items-center justify-between mt-4 border-t border-white/10 pt-4">
-            <div className="text-[10px] uppercase tracking-[0.2em] font-black text-white/40">
-              Shared from <span className="text-coral">The Vault</span>
+          <div className="flex items-center justify-between border-t border-white/10 pt-4">
+            <div className="text-[8px] uppercase tracking-[0.4em] font-black text-white/20">
+              Provenance Verified · <span className="text-white">VAULT</span>
             </div>
           </div>
         </div>
       </div>
 
       {/* Action Buttons */}
-      <div className="grid grid-cols-2 gap-4">
-        <Button 
-          onClick={copyLink} 
-          variant="outline" 
-          className="rounded-2xl h-14 font-bold border-2"
+      <div className="grid grid-cols-2 gap-1">
+        <button 
+          onClick={copyLink}
+          className="h-16 border border-white/10 bg-white/[0.02] text-[10px] font-black text-white uppercase tracking-[0.3em] hover:bg-white/5 transition-all flex items-center justify-center gap-3"
         >
-          <Copy className="mr-2 h-5 w-5" />
+          <Copy className="h-4 w-4" />
           Copy Link
-        </Button>
-        <Button 
+        </button>
+        <button 
           onClick={downloadImage}
-          className="rounded-2xl h-14 font-bold bg-midnight text-white hover:bg-midnight/90"
+          className="h-16 bg-white text-black text-[10px] font-black uppercase tracking-[0.3em] hover:bg-neutral-200 transition-all flex items-center justify-center gap-3"
         >
-          <Download className="mr-2 h-5 w-5" />
+          <Download className="h-4 w-4" />
           Download
-        </Button>
+        </button>
       </div>
     </div>
   );

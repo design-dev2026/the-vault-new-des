@@ -95,127 +95,117 @@ export default function PortfolioPage() {
   }
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-700 pb-10">
-      <div>
-        <h1 className="text-3xl font-heading font-bold text-midnight dark:text-white">Collection Portfolio</h1>
-        <p className="text-muted-foreground mt-1">Detailed financial analysis of your vault.</p>
-      </div>
+    <div className="space-y-16 animate-in fade-in duration-1000 pb-24">
+      {/* Editorial Header */}
+      <header className="space-y-4">
+        <span className="text-label-caps text-white/40 block tracking-[0.4em] uppercase">Financial Intelligence</span>
+        <h1 className="text-6xl font-bold text-white uppercase tracking-tighter italic leading-none">Portfolio Dossier</h1>
+        <p className="text-xl text-white/40 max-w-2xl font-medium">Real-time valuation and growth metrics for the vault's assets.</p>
+      </header>
 
-      {/* Hero Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card className="md:col-span-2 bg-gradient-to-br from-midnight to-midnight/80 text-white border-none shadow-xl overflow-hidden relative group">
-          <CardContent className="p-8">
-            <p className="text-sm font-medium text-white/60 uppercase tracking-widest">Total Collection Value</p>
+      {/* Vault Statement (Hero Stats) */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-1">
+        <div className="md:col-span-2 bg-white text-black p-10 space-y-8 flex flex-col justify-between">
+          <div>
+            <span className="text-label-caps text-black/60 uppercase block tracking-widest">Total Vault Valuation</span>
             <div className="mt-4 flex items-baseline gap-2">
-              <span className="text-5xl font-bold font-heading">
+              <span className="text-7xl font-black italic tracking-tighter">
                 $<AnimatedNumber value={stats.totalValue} />
               </span>
             </div>
-            <div className="mt-8 flex gap-6">
-              <div>
-                <p className="text-xs text-white/40 uppercase">Profit/Loss</p>
-                <p className={cn("text-lg font-bold flex items-center", stats.profitLoss >= 0 ? "text-teal" : "text-coral")}>
-                  {stats.profitLoss >= 0 ? <TrendingUp className="mr-1 h-4 w-4" /> : <TrendingDown className="mr-1 h-4 w-4" />}
-                  ${Math.abs(stats.profitLoss).toLocaleString()}
-                </p>
-              </div>
-              <div>
-                <p className="text-xs text-white/40 uppercase">ROI</p>
-                <p className={cn("text-lg font-bold", stats.roi >= 0 ? "text-teal" : "text-coral")}>
-                  {stats.roi.toFixed(1)}%
-                </p>
-              </div>
-            </div>
-          </CardContent>
-          <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
-            <BarChart3 className="h-32 w-32" />
           </div>
-        </Card>
-
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <p className="text-sm font-medium text-muted-foreground uppercase">Investment</p>
-              <DollarSign className="h-5 w-5 text-muted-foreground" />
+          <div className="flex gap-12 border-t border-black/10 pt-8">
+            <div>
+              <span className="text-label-caps text-black/40 uppercase block mb-2">Net Growth</span>
+              <p className={cn("text-2xl font-bold tracking-tighter italic", stats.profitLoss >= 0 ? "text-black" : "text-neutral-500")}>
+                {stats.profitLoss >= 0 ? "+" : ""}${Math.abs(stats.profitLoss).toLocaleString()}
+              </p>
             </div>
-            <h3 className="text-2xl font-bold mt-4">${stats.totalInvestment.toLocaleString()}</h3>
-            <p className="text-xs text-muted-foreground mt-1">Total cost basis</p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <p className="text-sm font-medium text-muted-foreground uppercase">Item Count</p>
-              <Package className="h-5 w-5 text-muted-foreground" />
+            <div>
+              <span className="text-label-caps text-black/40 uppercase block mb-2">ROI Performance</span>
+              <p className={cn("text-2xl font-bold tracking-tighter italic", stats.roi >= 0 ? "text-black" : "text-neutral-500")}>
+                {stats.roi.toFixed(1)}%
+              </p>
             </div>
-            <h3 className="text-2xl font-bold mt-4">{items.length}</h3>
-            <p className="text-xs text-muted-foreground mt-1">Collectibles tracked</p>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
+
+        <div className="bg-white/[0.02] border border-white/10 p-10 space-y-6">
+          <div className="flex items-center justify-between">
+            <span className="text-label-caps text-white/40 uppercase block">Investment</span>
+            <DollarSign className="h-4 w-4 text-white/20" />
+          </div>
+          <h3 className="text-4xl font-bold text-white tracking-tighter italic">${stats.totalInvestment.toLocaleString()}</h3>
+          <p className="text-[10px] font-bold text-white/20 uppercase tracking-widest">Total Cost Basis</p>
+        </div>
+
+        <div className="bg-white/[0.02] border border-white/10 p-10 space-y-6">
+          <div className="flex items-center justify-between">
+            <span className="text-label-caps text-white/40 uppercase block">Archival Count</span>
+            <Package className="h-4 w-4 text-white/20" />
+          </div>
+          <h3 className="text-4xl font-bold text-white tracking-tighter italic">{items.length}</h3>
+          <p className="text-[10px] font-bold text-white/20 uppercase tracking-widest">Assets Documented</p>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Value Over Time Chart */}
-        <Card className="lg:col-span-2">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <TrendingUp className="h-5 w-5 text-coral" />
-              Growth Over Time
-            </CardTitle>
-            <CardDescription>Cumulative collection value based on purchase dates</CardDescription>
-          </CardHeader>
-          <CardContent className="h-[350px] w-full pt-4">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        {/* Growth Curve */}
+        <div className="lg:col-span-8 bg-white/[0.02] border border-white/10 rounded-2xl p-8 space-y-8">
+          <div className="flex items-center justify-between">
+            <div className="space-y-1">
+              <span className="text-label-caps text-white uppercase tracking-[0.3em]">Performance Curve</span>
+              <p className="text-[10px] text-white/40 uppercase tracking-widest font-bold">Historical Cumulative Value</p>
+            </div>
+            <TrendingUp className="h-4 w-4 text-white/20" />
+          </div>
+          <div className="h-[400px] w-full pt-4">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={stats.valueOverTime}>
                 <defs>
                   <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#FF6B6B" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="#FF6B6B" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="#ffffff" stopOpacity={0.1}/>
+                    <stop offset="95%" stopColor="#ffffff" stopOpacity={0}/>
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#eee" />
+                <CartesianGrid strokeDasharray="1 10" vertical={false} stroke="#333" />
                 <XAxis 
                   dataKey="date" 
                   axisLine={false} 
                   tickLine={false} 
-                  tick={{ fontSize: 12, fill: "#888" }}
+                  tick={{ fontSize: 9, fill: "#666", fontWeight: "bold" }}
                   dy={10}
                 />
                 <YAxis 
                   axisLine={false} 
                   tickLine={false} 
-                  tick={{ fontSize: 12, fill: "#888" }}
+                  tick={{ fontSize: 9, fill: "#666", fontWeight: "bold" }}
                   tickFormatter={(value) => `$${value}`}
                 />
                 <Tooltip 
-                  contentStyle={{ borderRadius: "12px", border: "none", boxShadow: "0 4px 12px rgba(0,0,0,0.1)" }}
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  formatter={(value: any) => [`$${value?.toLocaleString()}`, "Value"]}
+                  contentStyle={{ backgroundColor: "#000", border: "1px solid #333", borderRadius: "0px", fontSize: "10px" }}
+                  itemStyle={{ color: "#fff", textTransform: "uppercase", fontWeight: "bold" }}
                 />
                 <Area 
                   type="monotone" 
                   dataKey="value" 
-                  stroke="#FF6B6B" 
-                  strokeWidth={3}
+                  stroke="#ffffff" 
+                  strokeWidth={2}
                   fillOpacity={1} 
                   fill="url(#colorValue)" 
                 />
               </AreaChart>
             </ResponsiveContainer>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
-        {/* Category Breakdown */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <PieChartIcon className="h-5 w-5 text-teal" />
-              Category Allocation
-            </CardTitle>
-            <CardDescription>Value distribution by type</CardDescription>
-          </CardHeader>
-          <CardContent className="h-[300px]">
+        {/* Allocation */}
+        <div className="lg:col-span-4 bg-white/[0.02] border border-white/10 rounded-2xl p-8 space-y-8">
+          <div className="space-y-1">
+            <span className="text-label-caps text-white uppercase tracking-[0.3em]">Asset Allocation</span>
+            <p className="text-[10px] text-white/40 uppercase tracking-widest font-bold">Value Distribution</p>
+          </div>
+          <div className="h-[250px] relative">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
@@ -223,89 +213,83 @@ export default function PortfolioPage() {
                   cx="50%"
                   cy="50%"
                   innerRadius={60}
-                  outerRadius={80}
-                  paddingAngle={5}
+                  outerRadius={90}
+                  paddingAngle={8}
                   dataKey="value"
                 >
                   {stats.categoryData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    <Cell key={`cell-${index}`} fill={["#ffffff", "#666666", "#333333", "#111111"][index % 4]} />
                   ))}
                 </Pie>
-                <Tooltip 
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  formatter={(value: any) => [`$${value?.toLocaleString()}`, "Value"]}
-                />
               </PieChart>
             </ResponsiveContainer>
-            <div className="mt-4 space-y-2">
-              {stats.categoryData.map((entry, index) => (
-                <div key={entry.name} className="flex items-center justify-between text-sm">
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full" style={{ backgroundColor: COLORS[index % COLORS.length] }} />
-                    <span className="capitalize">{entry.name}s</span>
-                  </div>
-                  <span className="font-bold">${(entry.value as any).toLocaleString()}</span>
+          </div>
+          <div className="space-y-4">
+            {stats.categoryData.map((entry, index) => (
+              <div key={entry.name} className="flex items-center justify-between border-b border-white/5 pb-2">
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 rounded-full" style={{ backgroundColor: ["#ffffff", "#666666", "#333333", "#111111"][index % 4] }} />
+                  <span className="text-[10px] font-bold text-white uppercase tracking-widest">{entry.name}s</span>
                 </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+                <span className="text-xs font-black text-white italic tracking-tighter">${(entry.value as any).toLocaleString()}</span>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
-      {/* Top Assets Table */}
-      <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
-          <div>
-            <CardTitle>Top Value Collectibles</CardTitle>
-            <CardDescription>Highest value items in your collection</CardDescription>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="relative overflow-x-auto">
-            <table className="w-full text-sm text-left">
-              <thead className="text-xs text-muted-foreground uppercase bg-muted/50 rounded-lg">
-                <tr>
-                  <th className="px-6 py-3 font-medium">Item</th>
-                  <th className="px-6 py-3 font-medium">Category</th>
-                  <th className="px-6 py-3 font-medium text-right">Investment</th>
-                  <th className="px-6 py-3 font-medium text-right">Current Value</th>
-                  <th className="px-6 py-3 font-medium text-right">Return</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y">
-                {stats.topItems.map((item) => {
-                  const itemProfit = (item.current_value || item.cost_price || 0) - (item.cost_price || 0);
-                  const itemRoi = item.cost_price && item.cost_price > 0 ? (itemProfit / item.cost_price) * 100 : 0;
-                  return (
-                    <tr key={item.id} className="hover:bg-muted/30 transition-colors">
-                      <td className="px-6 py-4 font-bold text-midnight dark:text-white">
-                        {item.name}
-                      </td>
-                      <td className="px-6 py-4">
-                        <Badge variant="outline" className="capitalize">{item.category}</Badge>
-                      </td>
-                      <td className="px-6 py-4 text-right">
-                        ${item.cost_price?.toLocaleString() || "N/A"}
-                      </td>
-                      <td className="px-6 py-4 text-right font-bold text-teal">
-                        ${(item.current_value || item.cost_price || 0).toLocaleString()}
-                      </td>
-                      <td className="px-6 py-4 text-right">
-                        <span className={cn(
-                          "px-2 py-1 rounded text-xs font-bold",
-                          itemRoi >= 0 ? "bg-teal/10 text-teal" : "bg-coral/10 text-coral"
-                        )}>
-                          {itemRoi >= 0 ? "+" : ""}{itemRoi.toFixed(1)}%
-                        </span>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        </CardContent>
-      </Card>
+      {/* Inventory Ledger */}
+      <div className="space-y-8">
+        <div className="flex items-center gap-4">
+          <span className="text-label-caps text-white uppercase tracking-[0.3em]">Inventory Ledger</span>
+          <div className="flex-1 h-[1px] bg-white/5"></div>
+        </div>
+        <div className="bg-white/[0.02] border border-white/5 overflow-hidden">
+          <table className="w-full text-left">
+            <thead className="bg-white/5">
+              <tr>
+                <th className="px-8 py-4 text-[10px] font-black text-white/40 uppercase tracking-[0.2em]">Asset Name</th>
+                <th className="px-8 py-4 text-[10px] font-black text-white/40 uppercase tracking-[0.2em]">Category</th>
+                <th className="px-8 py-4 text-[10px] font-black text-white/40 uppercase tracking-[0.2em] text-right">Investment</th>
+                <th className="px-8 py-4 text-[10px] font-black text-white/40 uppercase tracking-[0.2em] text-right">Current Valuation</th>
+                <th className="px-8 py-4 text-[10px] font-black text-white/40 uppercase tracking-[0.2em] text-right">Net Return</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/5">
+              {stats.topItems.map((item) => {
+                const itemProfit = (item.current_value || item.cost_price || 0) - (item.cost_price || 0);
+                const itemRoi = item.cost_price && item.cost_price > 0 ? (itemProfit / item.cost_price) * 100 : 0;
+                return (
+                  <tr key={item.id} className="hover:bg-white/[0.03] transition-colors group">
+                    <td className="px-8 py-6 font-bold text-white uppercase tracking-tight group-hover:text-white transition-all">
+                      {item.name}
+                    </td>
+                    <td className="px-8 py-6">
+                      <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest border border-white/10 px-3 py-1 rounded-full">
+                        {item.category}
+                      </span>
+                    </td>
+                    <td className="px-8 py-6 text-right text-white/60 font-medium">
+                      ${item.cost_price?.toLocaleString() || "UNSET"}
+                    </td>
+                    <td className="px-8 py-6 text-right font-black text-white italic tracking-tighter">
+                      ${(item.current_value || item.cost_price || 0).toLocaleString()}
+                    </td>
+                    <td className="px-8 py-6 text-right">
+                      <span className={cn(
+                        "text-[10px] font-black uppercase tracking-widest italic",
+                        itemRoi >= 0 ? "text-white" : "text-white/20"
+                      )}>
+                        {itemRoi >= 0 ? "+" : ""}{itemRoi.toFixed(1)}%
+                      </span>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 }
