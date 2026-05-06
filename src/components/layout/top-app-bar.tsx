@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, User } from "lucide-react";
+import { User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useSupabase } from "@/components/providers/supabase-provider";
 import { useEffect, useState } from "react";
@@ -38,9 +38,6 @@ export function TopAppBar() {
     >
       <div className="flex justify-between items-center px-8 h-full max-w-[1440px] mx-auto">
         <div className="flex items-center gap-4">
-          <button className="md:hidden text-white active:opacity-70">
-            <Menu className="h-5 w-5" />
-          </button>
           <Link href="/app" className="flex items-center gap-3 cursor-pointer group">
             <div className="w-8 h-8 bg-white rounded-sm flex items-center justify-center group-hover:rotate-90 transition-transform duration-700">
               <div className="w-4 h-4 border-2 border-black"></div>
