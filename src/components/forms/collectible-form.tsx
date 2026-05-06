@@ -342,23 +342,32 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
             </div>
           </CollapsibleSection>
 
-          <div className="flex flex-col md:flex-row gap-6 pt-12">
-            <button 
-              type="submit" 
-              className="bg-white text-black font-black py-5 px-12 rounded hover:bg-neutral-200 transition-all active:scale-[0.98] uppercase text-sm tracking-[0.2em] flex-1 flex justify-center items-center"
-              disabled={isLoading}
-            >
-              {isLoading && <Loader2 className="mr-3 h-5 w-5 animate-spin" />}
-              {isEdit ? "Update Asset" : "Archive to Vault"}
-            </button>
-            <button 
-              type="button" 
-              className="border border-white/10 text-white/60 font-black py-5 px-12 rounded hover:bg-white/5 transition-all active:scale-[0.98] uppercase text-sm tracking-[0.2em]"
-              onClick={() => router.back()}
-              disabled={isLoading}
-            >
-              Cancel Entry
-            </button>
+          {/* Sticky Action Bar for Mobile */}
+          <div className="fixed bottom-24 left-0 w-full bg-black/60 backdrop-blur-3xl border-t border-white/10 p-6 z-40 md:static md:bg-transparent md:backdrop-blur-none md:border-none md:p-0 md:mt-12 animate-in slide-in-from-bottom-full duration-700">
+            <div className="max-w-4xl mx-auto flex flex-col md:flex-row gap-6">
+              <button 
+                type="submit" 
+                className="bg-white text-black font-black py-5 px-12 rounded hover:bg-neutral-200 transition-all active:scale-[0.98] uppercase text-sm tracking-[0.2em] flex-1 flex justify-center items-center gap-3"
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <LucideIcons.Loader2 className="h-5 w-5 animate-spin" />
+                ) : (
+                  <>
+                    <LucideIcons.ShieldCheck className="h-5 w-5" />
+                    {isEdit ? "Update Archive" : "Archive to Vault"}
+                  </>
+                )}
+              </button>
+              
+              <button
+                type="button"
+                onClick={() => isEdit ? router.back() : setStep(0)}
+                className="border border-white/10 text-white font-bold py-5 px-12 rounded hover:bg-white/5 transition-all uppercase text-xs tracking-widest"
+              >
+                {isEdit ? "Cancel" : "Change Category"}
+              </button>
+            </div>
           </div>
         </form>
       </Form>

@@ -24,6 +24,11 @@ export default function SupabaseProvider({
   useEffect(() => {
     if (!supabase) return;
 
+    // Initial session fetch
+    supabase.auth.getSession().then(({ data: { session: initialSession } }) => {
+      setSession(initialSession);
+    });
+
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((event, newSession) => {
