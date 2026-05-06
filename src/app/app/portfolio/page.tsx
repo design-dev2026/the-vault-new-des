@@ -204,7 +204,8 @@ export default function PortfolioPage() {
                   fill="url(#colorValue)" 
                 />
               </AreaChart>
-            )}
+            </ResponsiveContainer>
+          )}
           </div>
         </div>
 
@@ -232,7 +233,8 @@ export default function PortfolioPage() {
                   ))}
                 </Pie>
               </PieChart>
-            )}
+            </ResponsiveContainer>
+          )}
           </div>
           <div className="space-y-4">
             {stats.categoryData.map((entry, index) => (
