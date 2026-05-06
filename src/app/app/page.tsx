@@ -76,7 +76,7 @@ export default function Home() {
   const categories = Array.from(new Set(items.map(i => i.category)));
   const allocationData = categories.map(cat => ({
     name: cat.toUpperCase(),
-    value: items.filter(i => i.category === cat).reduce((acc, i) => acc + (Number(i.current_value) || 0), 0)
+    value: items.filter(i => i.category === cat).reduce((acc, i) => acc + (Number(i.current_value) || Number(i.cost_price) || 0), 0)
   })).sort((a, b) => b.value - a.value);
 
   const COLORS = ["#FFFFFF", "#353535", "#1F1F1F", "#8E9192"];
@@ -167,10 +167,10 @@ export default function Home() {
         </div>
 
         {/* Category Allocation */}
-        <div className="lg:col-span-4 bg-white text-black p-10 space-y-12">
+        <div className="lg:col-span-4 glass-vault p-10 space-y-12">
           <div className="space-y-2">
-            <span className="text-label-caps text-black/60 uppercase tracking-[0.3em]">Allocation</span>
-            <p className="text-[10px] text-black/40 uppercase tracking-widest font-bold">Asset Type Distribution</p>
+            <span className="text-label-caps text-white uppercase tracking-[0.3em]">Allocation</span>
+            <p className="text-[10px] text-white/40 uppercase tracking-widest font-bold">Asset Type Distribution</p>
           </div>
           
           <div className="h-56 w-full relative">
@@ -182,31 +182,32 @@ export default function Home() {
                   outerRadius={85}
                   paddingAngle={8}
                   dataKey="value"
+                  stroke="none"
                 >
                   {allocationData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={["#000000", "#333333", "#666666", "#999999"][index % 4]} />
+                    <Cell key={`cell-${index}`} fill={["#FFFFFF", "#8E9192", "#353535", "#1A1A1A"][index % 4]} />
                   ))}
                 </Pie>
               </PieChart>
             </ResponsiveContainer>
             <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-              <span className="text-black font-black text-3xl italic tracking-tighter">
-                {allocationData.length > 0 ? Math.round((allocationData[0].value / totalValue) * 100) : 0}%
+              <span className="text-white font-black text-3xl italic tracking-tighter">
+                {totalValue > 0 && allocationData.length > 0 ? Math.round((allocationData[0].value / totalValue) * 100) : 0}%
               </span>
-              <span className="text-[8px] font-black text-black/40 uppercase tracking-[0.2em]">
+              <span className="text-[8px] font-black text-white/40 uppercase tracking-[0.2em]">
                 {allocationData[0]?.name || "EMPTY"}
               </span>
             </div>
           </div>
           
-          <div className="space-y-4 border-t border-black/10 pt-8">
+          <div className="space-y-4 border-t border-white/5 pt-8">
             {allocationData.slice(0, 3).map((entry, index) => (
               <div key={entry.name} className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 rounded-full" style={{ backgroundColor: ["#000000", "#333333", "#666666", "#999999"][index % 4] }} />
-                  <span className="text-[10px] font-black uppercase tracking-widest">{entry.name}</span>
+                  <div className="w-2 h-2 rounded-full" style={{ backgroundColor: ["#FFFFFF", "#8E9192", "#353535", "#1A1A1A"][index % 4] }} />
+                  <span className="text-[10px] font-black uppercase tracking-widest text-white/60">{entry.name}</span>
                 </div>
-                <span className="font-black italic tracking-tighter">
+                <span className="font-black italic tracking-tighter text-white">
                   ${entry.value.toLocaleString()}
                 </span>
               </div>
