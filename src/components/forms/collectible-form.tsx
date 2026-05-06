@@ -4,112 +4,77 @@ import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import * as z from "zod";
+import { z } from "zod";
+import { format } from "date-fns";
+import { toast } from "sonner";
 import { 
   Loader2, 
   ChevronDown, 
-  ChevronUp, 
-  Info, 
-  Maximize2, 
   ShieldCheck, 
-  FileText, 
-  Landmark, 
-  Users,
-  Calendar as CalendarIcon,
-  Save,
-  CheckCircle2,
   Image as ImageIcon,
-  Car
+  Package
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { toast } from "sonner";
 
-import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
+import { 
+  Form, 
+  FormControl, 
+  FormField, 
+  FormItem, 
+  FormLabel, 
+  FormMessage 
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { 
-  Collapsible, 
-  CollapsibleContent, 
-  CollapsibleTrigger 
-} from "@/components/ui/collapsible";
-import { Card, CardContent } from "@/components/ui/card";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+  Select, 
+  SelectContent, 
+  SelectItem, 
+  SelectTrigger, 
+  SelectValue 
+} from "@/components/ui/select";
+import { 
+  Popover, 
+  PopoverContent, 
+  PopoverTrigger 
+} from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import { format } from "date-fns";
-import { cn } from "@/lib/utils";
 import { useSupabase } from "@/components/providers/supabase-provider";
+import { cn } from "@/lib/utils";
 import { ImageUploader, MultiImageUploader } from "./image-uploader";
+import { 
+  CATEGORY_REGISTRY, 
+  CategorySlug, 
+  CategoryConfig,
+  Field as RegistryField,
+  Section as RegistrySection
+} from "@/registry/category-registry";
+import { ManufacturerSelect } from "./manufacturer-select";
+import * as LucideIcons from "lucide-react";
 
+// Dynamically build a schema that accepts any key-value pair for properties
+// but keeps core fields validated.
 const formSchema = z.object({
   name: z.string().min(1, "Name is required"),
-  category: z.enum(["statue", "figure", "hotwheel"]),
-  // Basic Info
-  artist_name: z.string().optional(),
-  manufacturer: z.string().optional(),
-  license_holder: z.string().optional(),
-  series_name: z.string().optional(),
-  edition: z.string().optional(),
-  art_style: z.string().optional(),
-  pose: z.string().optional(),
-  // Physical Details
-  scale: z.string().optional(),
-  material: z.string().optional(),
-  height_cm: z.coerce.number().optional(),
-  width_cm: z.coerce.number().optional(),
-  depth_cm: z.coerce.number().optional(),
-  weight_g: z.coerce.number().optional(),
-  sculptor: z.string().optional(),
-  // Edition & Rarity
-  edition_run: z.coerce.number().int().optional(),
-  edition_number: z.coerce.number().int().optional(),
-  // Provenance & Value
+  category: z.string(),
   purchase_date: z.date().optional(),
-  cost_price: z.coerce.number().optional(),
-  current_value: z.coerce.number().optional(),
-  original_retail_price: z.coerce.number().optional(),
-  purchase_location: z.string().optional(),
-  purchase_receipt_url: z.string().optional(),
-  is_insured: z.boolean().default(false),
-  // Condition
-  box_condition: z.string().optional(),
-  figure_condition: z.string().optional(),
-  authenticity: z.string().optional(),
-  // Media
+  cost_price: z.coerce.number().optional().nullable(),
+  current_value: z.coerce.number().optional().nullable(),
   image_url: z.string().optional(),
   gallery_urls: z.array(z.string()).default([]),
-  // Notes
   notes: z.string().optional(),
-  // Hot Wheels Specific
-  model_name: z.string().optional(),
-  series: z.string().optional(),
-  year: z.coerce.number().nullable().optional(),
-  color: z.string().optional(),
-  tampo_print: z.string().optional(),
-  wheel_type: z.string().optional(),
-  condition: z.string().optional(),
-  blister_condition: z.string().optional(),
-  toy_number: z.string().optional(),
-  is_treasure_hunt: z.boolean().default(false),
-});
+  // All other fields will be handled dynamically in the properties object
+}).passthrough(); // Allow any other fields for dynamic form binding
 
-type FormValues = z.infer<typeof formSchema>;
+type FormValues = z.infer<typeof formSchema> & Record<string, any>;
 
 interface CollectibleFormProps {
   initialData?: {
     id?: string;
     name?: string;
-    category?: "statue" | "figure" | "hotwheel";
+    category?: string;
     purchase_date?: string;
     cost_price?: number;
     current_value?: number;
@@ -124,122 +89,60 @@ interface CollectibleFormProps {
 export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
   const [step, setStep] = useState(initialData ? 1 : 0);
   const [isLoading, setIsLoading] = useState(false);
-  const [openSections, setOpenSections] = useState<Record<string, boolean>>({
-    basic: true,
-    physical: true,
-    rarity: true,
-    value: true,
-    condition: true,
-    media: true,
-    notes: true,
-  });
+  const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
 
   const router = useRouter();
   const searchParams = useSearchParams();
   const { supabase, session } = useSupabase();
   
-  useEffect(() => {
-    if (searchParams.get("open") === "true") {
-      setOpenSections({
-        basic: true,
-        physical: true,
-        rarity: true,
-        value: true,
-        condition: true,
-        media: true,
-        notes: true,
-      });
-    }
-  }, [searchParams]);
-
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema) as any,
     defaultValues: (initialData ? {
       name: initialData.name ?? "",
       category: initialData.category ?? "statue",
-      artist_name: initialData.properties?.artist_name ?? "",
-      manufacturer: initialData.properties?.manufacturer ?? "",
-      license_holder: initialData.properties?.license_holder ?? "",
-      series_name: initialData.properties?.series_name ?? "",
-      edition: initialData.properties?.edition ?? "",
-      art_style: initialData.properties?.art_style ?? "",
-      pose: initialData.properties?.pose ?? "",
-      model_name: initialData.properties?.model_name ?? "",
-      series: initialData.properties?.series ?? "",
-      year: initialData.properties?.year ?? null,
-      color: initialData.properties?.color ?? "",
-      tampo_print: initialData.properties?.tampo_print ?? "",
-      wheel_type: initialData.properties?.wheel_type ?? "",
-      condition: initialData.properties?.condition ?? "Carded Mint",
-      blister_condition: initialData.properties?.blister_condition ?? "Unpunched",
-      toy_number: initialData.properties?.toy_number ?? "",
-      is_treasure_hunt: initialData.properties?.is_treasure_hunt ?? false,
-      scale: initialData.properties?.scale ?? "",
-      material: initialData.properties?.material ?? "",
-      height_cm: initialData.properties?.height_cm ?? null,
-      width_cm: initialData.properties?.width_cm ?? null,
-      depth_cm: initialData.properties?.depth_cm ?? null,
-      weight_g: initialData.properties?.weight_g ?? null,
-      sculptor: initialData.properties?.sculptor ?? "",
-      edition_run: initialData.properties?.edition_run ?? null,
-      edition_number: initialData.properties?.edition_number ?? null,
       purchase_date: initialData.purchase_date ? new Date(initialData.purchase_date) : undefined,
       cost_price: initialData.cost_price ?? null,
       current_value: initialData.current_value ?? null,
-      original_retail_price: initialData.properties?.original_retail_price ?? null,
-      purchase_location: initialData.properties?.purchase_location ?? "",
-      is_insured: initialData.properties?.is_insured ?? false,
-      box_condition: initialData.properties?.box_condition ?? "",
-      figure_condition: initialData.properties?.figure_condition ?? "",
-      authenticity: initialData.properties?.authenticity ?? "",
       image_url: initialData.image_url ?? "",
       gallery_urls: initialData.gallery_urls ?? [],
       notes: initialData?.notes ?? "",
+      ...initialData.properties,
     } : {
       name: "",
-      category: "statue" as const,
-      artist_name: "",
-      manufacturer: "",
-      license_holder: "",
-      series_name: "",
-      edition: "",
-      art_style: "",
-      pose: "",
-      model_name: "",
-      series: "",
-      year: null,
-      color: "",
-      tampo_print: "",
-      wheel_type: "",
-      condition: "Carded Mint",
-      blister_condition: "Unpunched",
-      toy_number: "",
-      is_treasure_hunt: false,
-      scale: "",
-      material: "",
-      height_cm: null,
-      width_cm: null,
-      depth_cm: null,
-      weight_g: null,
-      sculptor: "",
-      edition_run: null,
-      edition_number: null,
+      category: "statue",
       purchase_date: undefined,
       cost_price: null,
       current_value: null,
-      original_retail_price: null,
-      purchase_location: "",
-      is_insured: false,
-      box_condition: "",
-      figure_condition: "",
-      authenticity: "",
       image_url: "",
       gallery_urls: [],
       notes: "",
     }) as any,
   });
 
-  const category = form.watch("category");
+  const category = form.watch("category") as CategorySlug;
+  const config = CATEGORY_REGISTRY[category];
+
+  useEffect(() => {
+    if (config) {
+      const initialOpenState: Record<string, boolean> = {};
+      config.sections.forEach((_, index) => {
+        initialOpenState[`section-${index}`] = true;
+      });
+      initialOpenState['media'] = true;
+      setOpenSections(initialOpenState);
+    }
+  }, [config]);
+
+  useEffect(() => {
+    if (searchParams.get("open") === "true" && config) {
+      const allOpen: Record<string, boolean> = {};
+      config.sections.forEach((_, index) => {
+        allOpen[`section-${index}`] = true;
+      });
+      allOpen['media'] = true;
+      setOpenSections(allOpen);
+    }
+  }, [searchParams, config]);
 
   const toggleSection = (section: string) => {
     setOpenSections(prev => ({ ...prev, [section]: !prev[section] }));
@@ -253,7 +156,7 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
 
     setIsLoading(true);
     
-    // Separate core fields from properties
+    // Core fields extracted from the flat values object
     const { 
       name, 
       category, 
@@ -263,16 +166,28 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
       notes, 
       image_url, 
       gallery_urls,
-      ...properties 
+      ...rest 
     } = values;
+
+    // Build properties object by checking which fields belong to this category in the registry
+    const properties: Record<string, any> = {};
+    if (config) {
+      config.sections.forEach(section => {
+        section.fields.forEach(field => {
+          if (rest[field.key] !== undefined) {
+            properties[field.key] = rest[field.key];
+          }
+        });
+      });
+    }
 
     const data = {
       user_id: session.user.id,
       name,
       category,
       purchase_date: purchase_date ? format(purchase_date, "yyyy-MM-dd") : null,
-      cost_price,
-      current_value,
+      cost_price: cost_price || null,
+      current_value: current_value || null,
       notes,
       image_url,
       gallery_urls,
@@ -317,31 +232,31 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
           <p className="text-white/40 text-lg">Choose the archival framework for your new asset.</p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {[
-            { id: "statue", name: "STATUE", icon: Landmark, desc: "Polystone & Resin masterworks." },
-            { id: "figure", name: "FIGURE", icon: Users, desc: "Articulated action masterpieces." },
-            { id: "hotwheel", name: "HOT WHEELS", icon: Car, desc: "Die-cast engineering marvels." }
-          ].map((cat) => (
-            <div 
-              key={cat.id}
-              className="group cursor-pointer bg-[#0A0A0A] border border-[#1A1A1A] p-10 rounded-lg hover:border-white transition-all duration-500 text-center"
-              onClick={() => {
-                form.setValue("category", cat.id as any);
-                setStep(1);
-              }}
-            >
-              <div className="mb-8 flex justify-center">
-                <cat.icon className="h-12 w-12 text-white/40 group-hover:text-white transition-colors duration-500" />
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8">
+          {(Object.entries(CATEGORY_REGISTRY) as [CategorySlug, CategoryConfig][]).map(([slug, cat]) => {
+            const IconComponent = (LucideIcons as any)[cat.icon] || LucideIcons.Package;
+            return (
+              <div 
+                key={slug}
+                className="group cursor-pointer bg-white/[0.02] border border-white/10 p-6 md:p-8 rounded hover:border-white transition-all duration-500 text-center"
+                onClick={() => {
+                  form.setValue("category", slug);
+                  setStep(1);
+                }}
+              >
+                <div className="mb-4 md:mb-6 flex justify-center">
+                  <IconComponent className="h-8 w-8 md:h-10 md:w-10 text-white/40 group-hover:text-white transition-colors duration-500" />
+                </div>
+                <h2 className="text-xs md:text-sm font-black text-white uppercase tracking-widest">{cat.label}</h2>
               </div>
-              <h2 className="text-xl font-bold text-white uppercase tracking-widest mb-4">{cat.name}</h2>
-              <p className="text-white/40 text-xs font-medium uppercase tracking-wider leading-relaxed">{cat.desc}</p>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     );
   }
+
+  if (!config) return null;
 
   return (
     <div className="max-w-4xl mx-auto animate-in fade-in duration-700">
@@ -358,7 +273,7 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
           )}
         </div>
         <h1 className="text-5xl md:text-6xl font-bold text-white uppercase tracking-tighter italic">
-          {isEdit ? "Modify Asset" : `Add ${form.getValues("category")}`}
+          {isEdit ? "Modify Asset" : `Add ${config.label}`}
         </h1>
         <p className="text-white/40 text-lg mt-4 max-w-2xl font-medium">
           Securely archive a new masterwork into the vault. Ensure all physical specifications and provenance records are verified for archival integrity.
@@ -367,316 +282,40 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <CollapsibleSection
-            title="Basic Information"
-            icon={<Info className="h-5 w-5" />}
-            open={openSections.basic}
-            onToggle={() => toggleSection("basic")}
-            number="01"
-          >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem className="md:col-span-2">
-                    <FormLabel className="text-label-caps text-white/40 uppercase tracking-widest">Item Title</FormLabel>
-                    <FormControl>
-                      <Input placeholder="e.g. The Mourning Apollo" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="manufacturer"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-label-caps text-white/40 uppercase tracking-widest">Manufacturer / Studio</FormLabel>
-                    <FormControl>
-                      <Input placeholder="e.g. Sideshow Collectibles" {...field} />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="artist_name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-label-caps text-white/40 uppercase tracking-widest">Lead Artist</FormLabel>
-                    <FormControl>
-                      <Input placeholder="e.g. XM Studios" {...field} />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-            </div>
-            
-            {category === 'hotwheel' && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12 pt-12 border-t border-white/5">
-                <FormField
-                  control={form.control}
-                  name="model_name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-label-caps text-white/40 uppercase tracking-widest">Model Name</FormLabel>
-                      <FormControl><Input placeholder="e.g. Custom '69 Chevy Pickup" {...field} /></FormControl>
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="series"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-label-caps text-white/40 uppercase tracking-widest">Hot Wheels Series</FormLabel>
-                      <FormControl><Input placeholder="e.g. HW Hot Trucks" {...field} /></FormControl>
-                    </FormItem>
-                  )}
-                />
+          {config.sections.map((section, sIndex) => (
+            <CollapsibleSection
+              key={section.title}
+              title={section.title}
+              icon={<LucideIcons.ShieldCheck className="h-5 w-5" />}
+              open={openSections[`section-${sIndex}`]}
+              onToggle={() => toggleSection(`section-${sIndex}`)}
+              number={String(sIndex + 1).padStart(2, '0')}
+            >
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {section.fields.map((field) => (
+                  <DynamicFormField key={field.key} field={field} control={form.control} category={category} watch={form.watch} />
+                ))}
               </div>
-            )}
-          </CollapsibleSection>
-
-          <CollapsibleSection
-            title="Physical Details"
-            icon={<Maximize2 className="h-5 w-5" />}
-            open={openSections.physical}
-            onToggle={() => toggleSection("physical")}
-            number="02"
-          >
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <FormField
-                control={form.control}
-                name="material"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-label-caps text-white/40 uppercase tracking-widest">Material</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger className="bg-black border-[#333] h-12 text-white">
-                          <SelectValue placeholder="Select material" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent className="bg-black border-[#333] text-white">
-                        {["Polystone", "Resin", "PVC", "ABS", "Cold Cast", "Vinyl", "Other"].map(m => (
-                          <SelectItem key={m} value={m.toLowerCase()} className="hover:bg-white/10">{m}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="height_cm"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-label-caps text-white/40 uppercase tracking-widest">Height (cm)</FormLabel>
-                    <FormControl><Input type="number" {...field} /></FormControl>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="weight_g"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-label-caps text-white/40 uppercase tracking-widest">Weight (g)</FormLabel>
-                    <FormControl><Input type="number" {...field} /></FormControl>
-                  </FormItem>
-                )}
-              />
-            </div>
-            
-            <div className="mt-12 space-y-4">
-              <label className="text-label-caps text-white/40 uppercase tracking-widest">Primary Visual Asset</label>
-              <FormField
-                control={form.control}
-                name="image_url"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <ImageUploader 
-                        label="Drop high-resolution scan or browse files" 
-                        value={field.value || ""} 
-                        onChange={field.onChange} 
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-            </div>
-          </CollapsibleSection>
-
-          <CollapsibleSection
-            title="Provenance & Value"
-            icon={<CalendarIcon className="h-5 w-5" />}
-            open={openSections.value}
-            onToggle={() => toggleSection("value")}
-            number="03"
-          >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <FormField
-                control={form.control}
-                name="purchase_date"
-                render={({ field }) => (
-                  <FormItem className="flex flex-col">
-                    <FormLabel className="text-label-caps text-white/40 uppercase tracking-widest">Acquisition Date</FormLabel>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <FormControl>
-                          <Button
-                            variant={"outline"}
-                            className={cn(
-                              "w-full h-12 bg-black border-[#333] text-left font-normal text-white",
-                              !field.value && "text-white/20"
-                            )}
-                          >
-                            {field.value ? format(field.value, "PPP") : <span>Select Date</span>}
-                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0 bg-black border-[#333]" align="start">
-                        <Calendar
-                          mode="single"
-                          selected={field.value}
-                          onSelect={field.onChange}
-                          disabled={(date) => date > new Date() || date < new Date("1900-01-01")}
-                          initialFocus
-                          className="text-white"
-                        />
-                      </PopoverContent>
-                    </Popover>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="cost_price"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-label-caps text-white/40 uppercase tracking-widest">Acquisition Value (USD)</FormLabel>
-                    <FormControl>
-                      <Input type="number" placeholder="0.00" {...field} />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-            </div>
-          </CollapsibleSection>
-
-          <CollapsibleSection
-            title="Condition"
-            icon={<CheckCircle2 className="h-5 w-5" />}
-            open={openSections.condition}
-            onToggle={() => toggleSection("condition")}
-            number="04"
-          >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <FormField
-                control={form.control}
-                name="box_condition"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-label-caps text-white/40 uppercase tracking-widest">Box Condition</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger><SelectValue placeholder="Select condition" /></SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {["Mint", "Good (C9)", "Fair (C8)", "Worn", "No Box"].map(c => (
-                          <SelectItem key={c} value={c.toLowerCase()}>{c}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="figure_condition"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-label-caps text-white/40 uppercase tracking-widest">Figure Condition</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger><SelectValue placeholder="Select condition" /></SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {["Mint", "Like New", "Displayed", "Damaged", "Repaired"].map(c => (
-                          <SelectItem key={c} value={c.toLowerCase()}>{c}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </FormItem>
-                )}
-              />
-            </div>
-
-            {category === 'hotwheel' && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 pt-4 border-t border-dashed">
-                <FormField
-                  control={form.control}
-                  name="condition"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-label-caps text-white/40 uppercase tracking-widest">Overall Condition</FormLabel>
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
-                        <FormControl>
-                          <SelectTrigger><SelectValue placeholder="Select condition" /></SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          {["Carded Mint", "Carded Near Mint", "Loose Mint", "Loose Worn"].map(c => (
-                            <SelectItem key={c} value={c}>{c}</SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="blister_condition"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-label-caps text-white/40 uppercase tracking-widest">Blister / Card Condition</FormLabel>
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
-                        <FormControl>
-                          <SelectTrigger><SelectValue placeholder="Select blister condition" /></SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          {["Unpunched", "Punched", "None (Loose)"].map(c => (
-                            <SelectItem key={c} value={c}>{c}</SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </FormItem>
-                  )}
-                />
-              </div>
-            )}
-          </CollapsibleSection>
+            </CollapsibleSection>
+          ))}
 
           <CollapsibleSection
             title="Photos & Media"
-            icon={<ImageIcon className="h-5 w-5" />}
+            icon={<LucideIcons.Image className="h-5 w-5" />}
             open={openSections.media}
             onToggle={() => toggleSection("media")}
-            number="05"
+            number={String(config.sections.length + 1).padStart(2, '0')}
           >
-            <div className="space-y-6">
+            <div className="space-y-8">
               <FormField
                 control={form.control}
                 name="image_url"
                 render={({ field }) => (
                   <FormItem>
+                    <FormLabel className="text-label-caps text-white/40 uppercase tracking-widest">Primary Thumbnail</FormLabel>
                     <FormControl>
                       <ImageUploader 
-                        label="Primary Thumbnail Image" 
+                        label="Drop high-resolution scan or browse files" 
                         value={field.value || ""} 
                         onChange={field.onChange} 
                       />
@@ -689,9 +328,10 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
                 name="gallery_urls"
                 render={({ field }) => (
                   <FormItem>
+                    <FormLabel className="text-label-caps text-white/40 uppercase tracking-widest">Archive Gallery</FormLabel>
                     <FormControl>
                       <MultiImageUploader 
-                        label="Gallery Images" 
+                        label="Add supplemental visual records" 
                         value={field.value || []} 
                         onChange={field.onChange} 
                       />
@@ -702,34 +342,10 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
             </div>
           </CollapsibleSection>
 
-          <CollapsibleSection
-            title="Notes"
-            icon={<FileText className="h-5 w-5" />}
-            open={openSections.notes}
-            onToggle={() => toggleSection("notes")}
-            number="06"
-          >
-            <FormField
-              control={form.control}
-              name="notes"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Textarea 
-                      placeholder="Add any extra details, history, or damage reports..." 
-                      className="min-h-[120px]"
-                      {...field} 
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-          </CollapsibleSection>
-
           <div className="flex flex-col md:flex-row gap-6 pt-12">
             <button 
               type="submit" 
-              className="bg-white text-black font-black py-5 px-12 rounded-lg hover:bg-neutral-200 transition-all active:scale-[0.98] uppercase text-sm tracking-[0.2em] flex-1 flex justify-center items-center"
+              className="bg-white text-black font-black py-5 px-12 rounded hover:bg-neutral-200 transition-all active:scale-[0.98] uppercase text-sm tracking-[0.2em] flex-1 flex justify-center items-center"
               disabled={isLoading}
             >
               {isLoading && <Loader2 className="mr-3 h-5 w-5 animate-spin" />}
@@ -737,7 +353,7 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
             </button>
             <button 
               type="button" 
-              className="border border-white text-white font-black py-5 px-12 rounded-lg hover:bg-white/10 transition-all active:scale-[0.98] uppercase text-sm tracking-[0.2em]"
+              className="border border-white/10 text-white/60 font-black py-5 px-12 rounded hover:bg-white/5 transition-all active:scale-[0.98] uppercase text-sm tracking-[0.2em]"
               onClick={() => router.back()}
               disabled={isLoading}
             >
@@ -750,6 +366,109 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
   );
 }
 
+function DynamicFormField({ field, control, category, watch }: { 
+  field: RegistryField; 
+  control: any; 
+  category: string;
+  watch: any;
+}) {
+  const isVisible = !field.dependsOn || !!watch(field.dependsOn);
+
+  if (!isVisible) return null;
+
+  return (
+    <FormField
+      control={control}
+      name={field.key}
+      render={({ field: formField }) => (
+        <FormItem className={cn(field.type === 'textarea' && "md:col-span-2")}>
+          <FormLabel className="text-label-caps text-white/40 uppercase tracking-widest">{field.label}</FormLabel>
+          <FormControl>
+            {(() => {
+              switch (field.type) {
+                case 'text':
+                  return <Input placeholder={field.placeholder} {...formField} value={formField.value || ''} />;
+                case 'number':
+                  return <Input type="number" placeholder={field.placeholder} {...formField} value={formField.value === null ? '' : formField.value} />;
+                case 'textarea':
+                  return <Textarea placeholder={field.placeholder} className="min-h-[100px]" {...formField} value={formField.value || ''} />;
+                case 'switch':
+                  return (
+                    <div className="flex items-center space-x-2 pt-2">
+                      <Switch 
+                        checked={formField.value} 
+                        onCheckedChange={formField.onChange} 
+                      />
+                      <span className="text-[10px] font-bold text-white/60 uppercase tracking-widest">
+                        {formField.value ? 'Enabled' : 'Disabled'}
+                      </span>
+                    </div>
+                  );
+                case 'select':
+                  return (
+                    <Select onValueChange={formField.onChange} value={formField.value || ''}>
+                      <FormControl>
+                        <SelectTrigger className="bg-black border-white/10 h-12 text-white">
+                          <SelectValue placeholder={`Select ${field.label.toLowerCase()}`} />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent className="bg-black border-white/10 text-white">
+                        {field.options?.map(opt => (
+                          <SelectItem key={opt} value={opt} className="hover:bg-white/10">{opt}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  );
+                case 'date':
+                  return (
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant={"outline"}
+                            className={cn(
+                              "w-full h-12 bg-black border-white/10 text-left font-normal text-white",
+                              !formField.value && "text-white/20"
+                            )}
+                          >
+                            {formField.value ? format(new Date(formField.value), "PPP") : <span>Select Date</span>}
+                            <LucideIcons.Calendar className="ml-auto h-4 w-4 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0 bg-black border-white/10" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={formField.value ? new Date(formField.value) : undefined}
+                          onSelect={formField.onChange}
+                          disabled={(date) => date > new Date() || date < new Date("1900-01-01")}
+                          initialFocus
+                          className="text-white"
+                        />
+                      </PopoverContent>
+                    </Popover>
+                  );
+                case 'manufacturer':
+                  return (
+                    <ManufacturerSelect 
+                      category={category} 
+                      value={formField.value} 
+                      onChange={formField.onChange} 
+                      placeholder={`Search ${field.label.toLowerCase()}...`}
+                    />
+                  );
+                default:
+                  return <Input {...formField} />;
+              }
+            })()}
+          </FormControl>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
+  );
+}
+
 function CollapsibleSection({ title, icon, children, open, onToggle, number }: {
   title: string;
   icon: React.ReactNode;
@@ -759,7 +478,7 @@ function CollapsibleSection({ title, icon, children, open, onToggle, number }: {
   number: string;
 }) {
   return (
-    <div className="bg-white/[0.03] backdrop-blur-3xl border border-[#333] rounded-lg overflow-hidden transition-all duration-500 mb-6">
+    <div className="glass-vault rounded overflow-hidden transition-all duration-500 mb-6">
       <button 
         type="button"
         onClick={onToggle}
@@ -772,7 +491,7 @@ function CollapsibleSection({ title, icon, children, open, onToggle, number }: {
           </span>
         </div>
         <div className={cn("transition-transform duration-500", open ? "rotate-180" : "rotate-0")}>
-          <ChevronDown className="h-5 w-5 text-white/40 group-hover:text-white transition-colors" />
+          <LucideIcons.ChevronDown className="h-5 w-5 text-white/40 group-hover:text-white transition-colors" />
         </div>
       </button>
       
@@ -793,3 +512,4 @@ function CollapsibleSection({ title, icon, children, open, onToggle, number }: {
     </div>
   );
 }
+

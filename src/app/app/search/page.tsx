@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { ItemCard } from "@/components/collectors/item-card";
 import { useSupabase } from "@/components/providers/supabase-provider";
 import { Skeleton } from "@/components/ui/skeleton";
+import { CATEGORY_REGISTRY, CategorySlug } from "@/registry/category-registry";
 import {
   Sheet,
   SheetContent,
@@ -141,9 +142,9 @@ export default function SearchPage() {
                     </SelectTrigger>
                     <SelectContent className="bg-black border-white/10 text-white">
                       <SelectItem value="all">Unfiltered Archive</SelectItem>
-                      <SelectItem value="statue">Archival Statues</SelectItem>
-                      <SelectItem value="figure">Action Figures</SelectItem>
-                      <SelectItem value="hotwheel">Automotive Scale</SelectItem>
+                      {Object.entries(CATEGORY_REGISTRY).map(([slug, config]) => (
+                        <SelectItem key={slug} value={slug}>{config.label}</SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 </div>

@@ -80,37 +80,67 @@ export function ShareableCard({ item }: ShareableCardProps) {
           </h1>
           
           <div className="flex flex-wrap gap-6 text-white/60 text-sm mb-6">
-            {item.category === "hotwheel" ? (
-              <>
-                <div className="flex flex-col gap-1">
-                  <span className="text-[8px] font-black uppercase tracking-[0.3em] text-white/20">Series</span>
-                  <span className="text-xs font-bold text-white">{properties.series || "Hot Wheels"}</span>
+            {(() => {
+              const props = item.properties || {};
+              const fields = [];
+              
+              switch (item.category) {
+                case "statue":
+                  fields.push({ label: "Art Style", value: props.art_style });
+                  fields.push({ label: "Pose", value: props.pose });
+                  fields.push({ label: "Scale", value: props.scale });
+                  break;
+                case "figure":
+                  fields.push({ label: "Type", value: props.figure_type });
+                  fields.push({ label: "Brand", value: props.manufacturer });
+                  fields.push({ label: "Scale", value: props.scale });
+                  break;
+                case "hotwheel":
+                  fields.push({ label: "Series", value: props.series });
+                  fields.push({ label: "Year", value: props.year });
+                  fields.push({ label: "Model", value: props.model_name });
+                  break;
+                case "lego":
+                  fields.push({ label: "Theme", value: props.theme });
+                  fields.push({ label: "Set No", value: props.set_number });
+                  fields.push({ label: "Pieces", value: props.piece_count });
+                  break;
+                case "trading_card":
+                  fields.push({ label: "Card Type", value: props.card_type });
+                  fields.push({ label: "Rarity", value: props.rarity });
+                  fields.push({ label: "Set", value: props.set_name });
+                  break;
+                case "sneakers":
+                  fields.push({ label: "Model", value: props.model });
+                  fields.push({ label: "Colour", value: props.colourway });
+                  fields.push({ label: "Brand", value: props.brand });
+                  break;
+                case "video_game":
+                  fields.push({ label: "Platform", value: props.platform });
+                  fields.push({ label: "Region", value: props.region });
+                  fields.push({ label: "Condition", value: props.condition });
+                  break;
+                case "watch":
+                  fields.push({ label: "Brand", value: props.brand });
+                  fields.push({ label: "Model", value: props.model });
+                  fields.push({ label: "Movement", value: props.movement_type });
+                  break;
+                case "designer_toy":
+                  fields.push({ label: "Artist", value: props.artist_studio });
+                  fields.push({ label: "Series", value: props.series_name });
+                  fields.push({ label: "Year", value: props.year_released });
+                  break;
+                default:
+                  fields.push({ label: "Category", value: item.category });
+              }
+
+              return fields.filter(f => f.value).map((f, i) => (
+                <div key={i} className="flex flex-col gap-1">
+                  <span className="text-[8px] font-black uppercase tracking-[0.3em] text-white/20">{f.label}</span>
+                  <span className="text-xs font-bold text-white uppercase">{f.value}</span>
                 </div>
-                <div className="flex flex-col gap-1">
-                  <span className="text-[8px] font-black uppercase tracking-[0.3em] text-white/20">Year</span>
-                  <span className="text-xs font-bold text-white">{properties.year || "N/A"}</span>
-                </div>
-                <div className="flex flex-col gap-1">
-                  <span className="text-[8px] font-black uppercase tracking-[0.3em] text-white/20">Scale</span>
-                  <span className="text-xs font-bold text-white">{properties.scale || "1:64"}</span>
-                </div>
-              </>
-            ) : (
-              <>
-                {properties.art_style && (
-                  <div className="flex flex-col gap-1">
-                    <span className="text-[8px] font-black uppercase tracking-[0.3em] text-white/20">Art Style</span>
-                    <span className="text-xs font-bold text-white">{properties.art_style}</span>
-                  </div>
-                )}
-                {properties.pose && (
-                  <div className="flex flex-col gap-1">
-                    <span className="text-[8px] font-black uppercase tracking-[0.3em] text-white/20">Pose</span>
-                    <span className="text-xs font-bold text-white">{properties.pose}</span>
-                  </div>
-                )}
-              </>
-            )}
+              ));
+            })()}
           </div>
 
           <div className="flex items-center justify-between border-t border-white/10 pt-4">
