@@ -9,7 +9,8 @@ import { useEffect, useState } from "react";
 
 export function TopAppBar() {
   const pathname = usePathname();
-  const { user, profile } = useSupabase();
+  const { session } = useSupabase();
+  const profile = session?.user?.user_metadata;
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
