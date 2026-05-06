@@ -30,9 +30,11 @@ import {
 export default function Home() {
   const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [hasMounted, setHasMounted] = useState(false);
   const { supabase, session } = useSupabase();
 
   useEffect(() => {
+    setHasMounted(true);
     let isMounted = true;
 
     async function fetchItems() {
@@ -140,9 +142,10 @@ export default function Home() {
             </div>
           </div>
           
-          <div className="h-[350px] w-full">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={chartData}>
+          <div className="h-[350px] w-full min-h-0">
+            {hasMounted && (
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={chartData}>
                 <defs>
                   <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#FFFFFF" stopOpacity={0.05}/>
@@ -165,7 +168,8 @@ export default function Home() {
                   fill="url(#colorValue)" 
                 />
               </AreaChart>
-            </ResponsiveContainer>
+              </ResponsiveContainer>
+            )}
           </div>
         </div>
 
@@ -176,9 +180,10 @@ export default function Home() {
             <p className="text-[10px] text-white/40 uppercase tracking-widest font-bold">Asset Type Distribution</p>
           </div>
           
-          <div className="h-56 w-full relative">
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
+          <div className="h-56 w-full relative min-h-0">
+            {hasMounted && (
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
                 <Pie
                   data={allocationData}
                   innerRadius={65}
@@ -192,7 +197,8 @@ export default function Home() {
                   ))}
                 </Pie>
               </PieChart>
-            </ResponsiveContainer>
+              </ResponsiveContainer>
+            )}
             <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
               <span className="text-white font-black text-3xl italic tracking-tighter">
                 {totalValue > 0 && allocationData.length > 0 ? Math.round((allocationData[0].value / totalValue) * 100) : 0}%

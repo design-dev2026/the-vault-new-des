@@ -40,9 +40,11 @@ const COLORS = ["#FF6B6B", "#4ECDC4", "#1A1A2E", "#2D3436", "#95A5A6"];
 export default function PortfolioPage() {
   const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [hasMounted, setHasMounted] = useState(false);
   const { supabase, session } = useSupabase();
 
   useEffect(() => {
+    setHasMounted(true);
     let isMounted = true;
     const timeout = setTimeout(() => {
       if (isMounted && loading) setLoading(false);
@@ -165,9 +167,10 @@ export default function PortfolioPage() {
             </div>
             <TrendingUp className="h-4 w-4 text-white/20" />
           </div>
-          <div className="h-[400px] w-full pt-4">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={stats.valueOverTime}>
+          <div className="h-[400px] w-full pt-4 min-h-0">
+            {hasMounted && (
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={stats.valueOverTime}>
                 <defs>
                   <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#ffffff" stopOpacity={0.1}/>
@@ -201,7 +204,7 @@ export default function PortfolioPage() {
                   fill="url(#colorValue)" 
                 />
               </AreaChart>
-            </ResponsiveContainer>
+            )}
           </div>
         </div>
 
@@ -211,9 +214,10 @@ export default function PortfolioPage() {
             <span className="text-label-caps text-white uppercase tracking-[0.3em]">Asset Allocation</span>
             <p className="text-[10px] text-white/40 uppercase tracking-widest font-bold">Value Distribution</p>
           </div>
-          <div className="h-[250px] relative">
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
+          <div className="h-[250px] relative min-h-0">
+            {hasMounted && (
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
                 <Pie
                   data={stats.categoryData}
                   cx="50%"
@@ -228,7 +232,7 @@ export default function PortfolioPage() {
                   ))}
                 </Pie>
               </PieChart>
-            </ResponsiveContainer>
+            )}
           </div>
           <div className="space-y-4">
             {stats.categoryData.map((entry, index) => (
