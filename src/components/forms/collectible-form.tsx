@@ -259,7 +259,7 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
   if (!config) return null;
 
   return (
-    <div className="max-w-4xl mx-auto animate-in fade-in duration-700">
+    <div className="max-w-4xl mx-auto animate-in fade-in duration-700 pb-32">
       <div className="mb-12">
         <div className="flex justify-between items-start">
           <span className="text-label-caps text-white/40 mb-2 block uppercase">ENTRY MANAGEMENT</span>

@@ -90,7 +90,7 @@ export default async function ItemPage({
                 src={item.image_url}
                 alt={item.name}
                 fill
-                className="object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100"
+                className="object-cover transition-all duration-1000 scale-105 group-hover:scale-100"
                 priority
               />
             ) : (
@@ -113,7 +113,7 @@ export default async function ItemPage({
                     src={url}
                     alt={`${item.name} gallery ${i}`}
                     fill
-                    className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
+                    className="object-cover transition-all duration-500"
                   />
                 </div>
               ))}

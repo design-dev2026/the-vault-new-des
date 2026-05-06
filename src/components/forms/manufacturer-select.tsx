@@ -10,6 +10,7 @@ import {
   CommandGroup,
   CommandInput,
   CommandItem,
+  CommandList,
 } from "@/components/ui/command";
 import {
   Popover,
@@ -76,48 +77,50 @@ export function ManufacturerSelect({ category, value, onChange, placeholder }: M
           {loading ? <Loader2 className="ml-2 h-4 w-4 animate-spin shrink-0 opacity-50" /> : <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-full p-0 bg-black border-[#333] text-white">
+      <PopoverContent className="w-[--radix-popover-trigger-width] p-0 bg-black border-[#333] text-white" align="start" sideOffset={4}>
         <Command className="bg-black text-white">
           <CommandInput 
             placeholder="Search manufacturers..." 
             className="h-12 border-none focus:ring-0" 
             onValueChange={setInputValue}
           />
-          <CommandEmpty className="p-4 flex flex-col gap-4">
-            <p className="text-xs text-white/40">No manufacturer found.</p>
-            {inputValue && (
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="w-full border-dashed border-white/20 hover:border-white h-10 gap-2"
-                onClick={handleCreate}
-              >
-                <Plus className="h-3 w-3" />
-                Create "{inputValue}"
-              </Button>
-            )}
-          </CommandEmpty>
-          <CommandGroup>
-            {manufacturers.map((m) => (
-              <CommandItem
-                key={m.id}
-                value={m.name}
-                onSelect={(currentValue) => {
-                  onChange(currentValue);
-                  setOpen(false);
-                }}
-                className="hover:bg-white/10 cursor-pointer h-10"
-              >
-                <Check
-                  className={cn(
-                    "mr-2 h-4 w-4",
-                    value === m.name ? "opacity-100" : "opacity-0"
-                  )}
-                />
-                {m.name}
-              </CommandItem>
-            ))}
-          </CommandGroup>
+          <CommandList className="max-h-60 overflow-y-auto">
+            <CommandEmpty className="p-4 flex flex-col gap-4">
+              <p className="text-xs text-white/40">No manufacturer found.</p>
+              {inputValue && (
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="w-full border-dashed border-white/20 hover:border-white h-10 gap-2"
+                  onClick={handleCreate}
+                >
+                  <Plus className="h-3 w-3" />
+                  Create "{inputValue}"
+                </Button>
+              )}
+            </CommandEmpty>
+            <CommandGroup>
+              {manufacturers.map((m) => (
+                <CommandItem
+                  key={m.id}
+                  value={m.name}
+                  onSelect={(currentValue) => {
+                    onChange(currentValue);
+                    setOpen(false);
+                  }}
+                  className="hover:bg-white/10 cursor-pointer h-10"
+                >
+                  <Check
+                    className={cn(
+                      "mr-2 h-4 w-4",
+                      value === m.name ? "opacity-100" : "opacity-0"
+                    )}
+                  />
+                  {m.name}
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </CommandList>
         </Command>
       </PopoverContent>
     </Popover>

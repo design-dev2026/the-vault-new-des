@@ -29,7 +29,7 @@ export function ItemCard({ item, priority = false }: { item: Collectible, priori
               fill
               priority={priority}
               sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
-              className="object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100"
+              className="object-cover transition-all duration-1000 scale-105 group-hover:scale-100"
             />
           ) : (
             <div className="flex h-full w-full items-center justify-center text-white/5">

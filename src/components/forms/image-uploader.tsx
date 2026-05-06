@@ -68,7 +68,7 @@ export function ImageUploader({ value, onChange, label, className }: ImageUpload
       )}>
         {value ? (
           <div className="relative w-full h-full group">
-            <Image src={value} alt="Preview" fill className="object-cover grayscale hover:grayscale-0 transition-all duration-1000" />
+            <Image src={value} alt="Preview" fill className="object-cover transition-all duration-1000" />
             <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
               <button
                 type="button"
@@ -182,7 +182,7 @@ export function MultiImageUploader({ value, onChange, label, className }: MultiI
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
         {value.map((url, index) => (
           <div key={url} className="relative aspect-square overflow-hidden rounded-xl border border-white/10 bg-white/5 group">
-            <Image src={url} alt={`Preview ${index}`} fill sizes="(max-width: 640px) 50vw, 150px" className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
+            <Image src={url} alt={`Preview ${index}`} fill sizes="(max-width: 640px) 50vw, 150px" className="object-cover transition-all duration-700" />
             <button
               type="button"
               className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-[8px] font-black text-white uppercase tracking-widest"
