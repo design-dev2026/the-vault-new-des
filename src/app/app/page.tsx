@@ -33,9 +33,11 @@ export default function Home() {
   const { supabase, session } = useSupabase();
 
   useEffect(() => {
+    let isMounted = true;
+
     async function fetchItems() {
-      if (!session?.user?.id) {
-        setLoading(false);
+      if (!session?.user?.id || items.length > 0) {
+        if (!session?.user?.id) setLoading(false);
         return;
       }
       
@@ -45,18 +47,19 @@ export default function Home() {
           .select("*")
           .order("current_value", { ascending: false });
 
-        if (!error && data) {
+        if (isMounted && !error && data) {
           setItems(data);
         }
       } catch (e) {
         console.error("Error fetching items:", e);
       } finally {
-        setLoading(false);
+        if (isMounted) setLoading(false);
       }
     }
 
     fetchItems();
-  }, [supabase, session]);
+    return () => { isMounted = false; };
+  }, [supabase, session?.user?.id]); // Only depend on the user ID string
 
   const totalValue = items.reduce((acc, item) => acc + (Number(item.current_value) || Number(item.cost_price) || 0), 0);
   const totalInvestment = items.reduce((acc, item) => acc + (Number(item.cost_price) || 0), 0);

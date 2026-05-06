@@ -43,13 +43,14 @@ export default function PortfolioPage() {
   const { supabase, session } = useSupabase();
 
   useEffect(() => {
+    let isMounted = true;
     const timeout = setTimeout(() => {
-      if (loading) setLoading(false);
+      if (isMounted && loading) setLoading(false);
     }, 10000);
 
     async function fetchItems() {
-      if (!session?.user?.id) {
-        setLoading(false);
+      if (!session?.user?.id || items.length > 0) {
+        if (!session?.user?.id && isMounted) setLoading(false);
         return;
       }
       try {
@@ -58,19 +59,24 @@ export default function PortfolioPage() {
           .select("*")
           .eq("user_id", session.user.id);
 
-        if (!error && data) {
+        if (isMounted && !error && data) {
           setItems(data);
         }
       } catch (e) {
         console.error("Error fetching portfolio items:", e);
       } finally {
-        setLoading(false);
-        clearTimeout(timeout);
+        if (isMounted) {
+          setLoading(false);
+          clearTimeout(timeout);
+        }
       }
     }
     fetchItems();
-    return () => clearTimeout(timeout);
-  }, [supabase, session]);
+    return () => {
+      isMounted = false;
+      clearTimeout(timeout);
+    };
+  }, [supabase, session?.user?.id]);
 
   const stats = useCollectionStats(items);
 
