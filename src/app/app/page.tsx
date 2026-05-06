@@ -261,7 +261,7 @@ export default function Home() {
       </section>
 
       {/* High-End Floating Action */}
-      <div className="fixed bottom-12 right-12 z-50">
+      <div className="fixed bottom-32 right-8 md:right-12 md:bottom-12 z-50">
         <Link 
           href="/app/add" 
           className="flex items-center gap-4 bg-white text-black pl-8 pr-6 py-4 rounded-full shadow-[0_20px_50px_rgba(255,255,255,0.1)] hover:scale-105 transition-all active:scale-95 group"
