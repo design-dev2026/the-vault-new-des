@@ -126,7 +126,7 @@ export default function ProfilePage() {
               
               <Dialog open={isOpen} onOpenChange={setIsOpen}>
                 <DialogTrigger asChild>
-                  <button className="p-2 rounded-full border border-white/10 text-white/20 hover:text-white hover:border-white transition-all opacity-0 group-hover/title:opacity-100">
+                  <button className="p-2 rounded-full border border-white/10 text-white/60 hover:text-white hover:border-white transition-all opacity-40 group-hover/title:opacity-100">
                     <Edit3 className="h-4 w-4" />
                   </button>
                 </DialogTrigger>

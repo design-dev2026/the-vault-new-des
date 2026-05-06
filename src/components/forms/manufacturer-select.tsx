@@ -34,6 +34,8 @@ export function ManufacturerSelect({ category, value, onChange, placeholder }: M
   const [loading, setLoading] = React.useState(true);
   const [inputValue, setInputValue] = React.useState("");
 
+  const { supabase } = useSupabase();
+
   React.useEffect(() => {
     async function load() {
       setLoading(true);
@@ -53,7 +55,7 @@ export function ManufacturerSelect({ category, value, onChange, placeholder }: M
     if (!inputValue) return;
     
     try {
-      const newMfr = await createManufacturer(inputValue, category);
+      const newMfr = await createManufacturer(supabase, inputValue, category);
       setManufacturers(prev => [...prev, newMfr]);
       onChange(newMfr.name);
       setOpen(false);

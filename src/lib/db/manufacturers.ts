@@ -1,4 +1,4 @@
-import { createClient } from "@supabase/supabase-js";
+import { SupabaseClient } from "@supabase/supabase-js";
 
 // Uses public anon key for reading
 export const getManufacturersClient = () => {
@@ -9,6 +9,8 @@ export const getManufacturersClient = () => {
     auth: { autoRefreshToken: false, persistSession: false },
   });
 };
+
+import { createClient } from "@supabase/supabase-js";
 
 export async function fetchManufacturersByCategory(category: string) {
   const supabase = getManufacturersClient();
@@ -25,8 +27,7 @@ export async function fetchManufacturersByCategory(category: string) {
   return data;
 }
 
-export async function createManufacturer(name: string, category: string) {
-  const supabase = getManufacturersClient();
+export async function createManufacturer(supabase: SupabaseClient, name: string, category: string) {
   const { data, error } = await supabase
     .from("manufacturers")
     .insert([{ name, category }])
