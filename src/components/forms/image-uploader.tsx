@@ -12,9 +12,10 @@ interface ImageUploaderProps {
   value: string;
   onChange: (url: string) => void;
   label: string;
+  className?: string;
 }
 
-export function ImageUploader({ value, onChange, label }: ImageUploaderProps) {
+export function ImageUploader({ value, onChange, label, className }: ImageUploaderProps) {
   const [isUploading, setIsUploading] = useState(false);
   const { supabase } = useSupabase();
 
@@ -22,10 +23,9 @@ export function ImageUploader({ value, onChange, label }: ImageUploaderProps) {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // MIME type validation
     const allowedTypes = ["image/jpeg", "image/png", "image/webp", "image/avif", "image/svg+xml"];
     if (!allowedTypes.includes(file.type)) {
-      toast.error(`Unsupported file type. Allowed: JPEG, PNG, WebP, AVIF, SVG.`);
+      toast.error(`Unsupported format. Protocol error.`);
       return;
     }
 
@@ -53,44 +53,45 @@ export function ImageUploader({ value, onChange, label }: ImageUploaderProps) {
 
       onChange(publicUrl);
     } catch (error: any) {
-      toast.error(`Upload failed: ${error.message}`);
-      console.error("Error uploading image:", error.message);
+      toast.error(`Ingestion failed: ${error.message}`);
     } finally {
       setIsUploading(false);
     }
   }, [supabase, onChange]);
 
   return (
-    <div className="space-y-2">
-      <label className="text-sm font-medium">{label}</label>
+    <div className={cn("space-y-4", className)}>
+      <label className="text-label-caps text-white/40 uppercase tracking-widest block">{label}</label>
       <div className={cn(
-        "relative flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-muted-foreground/25 p-6 transition-all",
-        value ? "bg-muted/50" : "hover:border-coral/50 hover:bg-muted/30"
+        "relative flex flex-col items-center justify-center rounded-2xl border border-white/10 transition-all duration-700 bg-white/[0.02] backdrop-blur-3xl overflow-hidden",
+        value ? "h-80" : "h-64 hover:border-white/40 hover:bg-white/[0.05]"
       )}>
         {value ? (
-          <div className="relative aspect-square w-full max-w-[200px] overflow-hidden rounded-md border shadow-sm">
-            <Image src={value} alt="Preview" fill sizes="200px" className="object-cover" />
-            <Button
-              type="button"
-              variant="destructive"
-              size="icon"
-              className="absolute right-1 top-1 h-6 w-6 rounded-full"
-              onClick={() => onChange("")}
-            >
-              <X className="h-4 w-4" />
-            </Button>
+          <div className="relative w-full h-full group">
+            <Image src={value} alt="Preview" fill className="object-cover grayscale hover:grayscale-0 transition-all duration-1000" />
+            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+              <button
+                type="button"
+                className="bg-white text-black px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest transform translate-y-4 group-hover:translate-y-0 transition-all duration-500"
+                onClick={() => onChange("")}
+              >
+                Expunge Asset
+              </button>
+            </div>
           </div>
         ) : (
-          <div className="flex flex-col items-center text-center">
+          <div className="flex flex-col items-center text-center p-8 space-y-4">
             {isUploading ? (
-              <Loader2 className="h-10 w-10 animate-spin text-coral" />
+              <Loader2 className="h-10 w-10 animate-spin text-white" />
             ) : (
               <>
-                <div className="mb-2 rounded-full bg-muted p-3">
-                  <Upload className="h-6 w-6 text-muted-foreground" />
+                <div className="w-16 h-16 rounded-full border border-white/10 flex items-center justify-center text-white/20">
+                  <Upload className="h-6 w-6" />
                 </div>
-                <p className="text-sm font-medium">Click or drag to upload</p>
-                <p className="text-xs text-muted-foreground mt-1">PNG, JPG, WEBP up to 5MB</p>
+                <div className="space-y-1">
+                  <p className="text-xs font-black text-white uppercase tracking-widest">Initialization Protocol</p>
+                  <p className="text-[10px] text-white/20 uppercase tracking-widest">DRAG ASSET OR SELECT MANUALLY</p>
+                </div>
               </>
             )}
             <input
@@ -111,9 +112,10 @@ interface MultiImageUploaderProps {
   value: string[];
   onChange: (urls: string[]) => void;
   label: string;
+  className?: string;
 }
 
-export function MultiImageUploader({ value, onChange, label }: MultiImageUploaderProps) {
+export function MultiImageUploader({ value, onChange, label, className }: MultiImageUploaderProps) {
   const [isUploading, setIsUploading] = useState(false);
   const { supabase } = useSupabase();
 
@@ -127,8 +129,6 @@ export function MultiImageUploader({ value, onChange, label }: MultiImageUploade
     for (let i = 0; i < files.length; i++) {
       if (allowedTypes.includes(files[i].type)) {
         validFiles.push(files[i]);
-      } else {
-        toast.error(`Skipped unsupported file: ${files[i].name}`);
       }
     }
 
@@ -164,8 +164,7 @@ export function MultiImageUploader({ value, onChange, label }: MultiImageUploade
       }
       onChange(newUrls);
     } catch (error: any) {
-      toast.error(`Upload failed: ${error.message}`);
-      console.error("Error uploading images:", error.message);
+      toast.error(`Multi-ingestion failed: ${error.message}`);
     } finally {
       setIsUploading(false);
     }
@@ -178,30 +177,30 @@ export function MultiImageUploader({ value, onChange, label }: MultiImageUploade
   };
 
   return (
-    <div className="space-y-4">
-      <label className="text-sm font-medium">{label}</label>
+    <div className={cn("space-y-6", className)}>
+      <label className="text-label-caps text-white/40 uppercase tracking-widest block">{label}</label>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
         {value.map((url, index) => (
-          <div key={url} className="relative aspect-square overflow-hidden rounded-md border bg-muted shadow-sm group">
-            <Image src={url} alt={`Preview ${index}`} fill sizes="(max-width: 640px) 50vw, 150px" className="object-cover" />
-            <Button
+          <div key={url} className="relative aspect-square overflow-hidden rounded-xl border border-white/10 bg-white/5 group">
+            <Image src={url} alt={`Preview ${index}`} fill sizes="(max-width: 640px) 50vw, 150px" className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
+            <button
               type="button"
-              variant="destructive"
-              size="icon"
-              className="absolute right-1 top-1 h-6 w-6 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+              className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-[8px] font-black text-white uppercase tracking-widest"
               onClick={() => removeImage(index)}
             >
-              <X className="h-4 w-4" />
-            </Button>
+              Remove
+            </button>
           </div>
         ))}
-        <div className="relative aspect-square flex flex-col items-center justify-center rounded-md border-2 border-dashed border-muted-foreground/25 hover:border-coral/50 hover:bg-muted/30 transition-all cursor-pointer">
+        <div className="relative aspect-square flex flex-col items-center justify-center rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/20 transition-all duration-500 cursor-pointer overflow-hidden">
           {isUploading ? (
-            <Loader2 className="h-6 w-6 animate-spin text-coral" />
+            <Loader2 className="h-6 w-6 animate-spin text-white" />
           ) : (
             <>
-              <PlusCircle className="h-6 w-6 text-muted-foreground" />
-              <span className="text-[10px] mt-1 text-muted-foreground">Add More</span>
+              <div className="w-10 h-10 rounded-full border border-white/5 flex items-center justify-center text-white/20">
+                <PlusCircle className="h-5 w-5" />
+              </div>
+              <span className="text-[8px] mt-2 text-white/40 font-black uppercase tracking-widest">Add Asset</span>
             </>
           )}
           <input
@@ -217,4 +216,5 @@ export function MultiImageUploader({ value, onChange, label }: MultiImageUploade
     </div>
   );
 }
+
 

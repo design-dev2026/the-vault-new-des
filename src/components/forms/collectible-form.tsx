@@ -503,7 +503,6 @@ export function CollectibleForm({ initialData, isEdit }: CollectibleFormProps) {
                         label="Drop high-resolution scan or browse files" 
                         value={field.value || ""} 
                         onChange={field.onChange} 
-                        className="border-2 border-dashed border-white/10 rounded-xl p-12 text-center hover:border-white/30 transition-colors cursor-pointer bg-white/[0.01]"
                       />
                     </FormControl>
                   </FormItem>
