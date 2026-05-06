@@ -11,7 +11,7 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "#131313",
+        background: "#000000",
         surface: "#131313",
         "surface-dim": "#131313",
         "surface-bright": "#393939",
@@ -25,26 +25,29 @@ const config: Config = {
         "outline": "#8e9192",
         "outline-variant": "#444748",
         primary: "#ffffff",
-        "on-primary": "#2f3131",
+        "on-primary": "#000000",
         secondary: "#c8c6c5",
         "on-secondary": "#313030",
         tertiary: "#ffffff",
         "on-tertiary": "#2f3131",
-        "error-container": "#93000a",
       },
       fontFamily: {
         sans: ["var(--font-plus-jakarta-sans)", "ui-sans-serif", "system-ui"],
         heading: ["var(--font-plus-jakarta-sans)"],
       },
       borderRadius: {
-        DEFAULT: "4px",
-        lg: "8px",
-        xl: "12px",
+        sm: "4px",
+        DEFAULT: "8px",
+        md: "12px",
+        lg: "16px",
+        xl: "24px",
         full: "9999px",
       },
       spacing: {
         "container-max": "1440px",
         gutter: "24px",
+        unit: "4px",
+        "section-gap": "80px",
       },
       keyframes: {
         shimmer: {

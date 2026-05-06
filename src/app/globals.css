@@ -39,46 +39,46 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #131313;
+  --foreground: #000000;
   --card: #ffffff;
-  --card-foreground: #131313;
+  --card-foreground: #000000;
   --popover: #ffffff;
-  --popover-foreground: #131313;
-  --primary: #131313;
+  --popover-foreground: #000000;
+  --primary: #000000;
   --primary-foreground: #ffffff;
-  --secondary: #f4f4f4;
-  --secondary-foreground: #131313;
-  --muted: #f4f4f4;
+  --secondary: #f5f5f5;
+  --secondary-foreground: #000000;
+  --muted: #f5f5f5;
   --muted-foreground: #737373;
-  --accent: #f4f4f4;
-  --accent-foreground: #131313;
-  --destructive: #ef4444;
+  --accent: #f5f5f5;
+  --accent-foreground: #000000;
+  --destructive: #000000;
   --destructive-foreground: #ffffff;
   --border: #e5e5e5;
   --input: #e5e5e5;
-  --ring: #131313;
+  --ring: #000000;
   --radius: 0.5rem;
 }
 
 .dark {
-  --background: #131313;
-  --foreground: #e2e2e2;
-  --card: #131313;
-  --card-foreground: #e2e2e2;
-  --popover: #131313;
-  --popover-foreground: #e2e2e2;
+  --background: #000000;
+  --foreground: #ffffff;
+  --card: #0e0e0e;
+  --card-foreground: #ffffff;
+  --popover: #0e0e0e;
+  --popover-foreground: #ffffff;
   --primary: #ffffff;
-  --primary-foreground: #131313;
-  --secondary: #1f1f1f;
-  --secondary-foreground: #e2e2e2;
+  --primary-foreground: #000000;
+  --secondary: #1b1b1b;
+  --secondary-foreground: #ffffff;
   --muted: #1b1b1b;
   --muted-foreground: #8e9192;
   --accent: #353535;
   --accent-foreground: #ffffff;
-  --destructive: #991b1b;
-  --destructive-foreground: #f87171;
-  --border: #333333;
-  --input: #1a1a1a;
+  --destructive: #ffffff;
+  --destructive-foreground: #000000;
+  --border: #1a1a1a;
+  --input: #000000;
   --ring: #ffffff;
 }
 
@@ -92,33 +92,45 @@
   }
   
   ::selection {
-    @apply bg-primary text-primary-foreground;
+    @apply bg-white text-black;
+  }
+
+  svg.lucide {
+    stroke-width: 1.5px;
   }
 }
 
 @layer utilities {
-  .glass {
-    @apply bg-white/5 backdrop-blur-2xl border border-white/10;
+  .glass-vault {
+    @apply bg-white/[0.03] backdrop-blur-[40px] border border-white/5 border-t-white/10;
   }
   
-  .glass-dark {
-    @apply bg-black/40 backdrop-blur-3xl border border-white/5;
+  .text-h1 {
+    @apply text-[48px] font-bold leading-[1.1] tracking-[-0.04em] font-sans;
+  }
+
+  .text-h2 {
+    @apply text-[32px] font-bold leading-[1.2] tracking-[-0.03em] font-sans;
+  }
+
+  .text-h3 {
+    @apply text-[24px] font-semibold leading-[1.3] tracking-[-0.02em] font-sans;
   }
 
   .text-label-caps {
     @apply text-[12px] font-bold tracking-[0.1em] uppercase font-sans;
   }
+}
 
-  ::-webkit-scrollbar {
-    width: 4px;
-  }
-  ::-webkit-scrollbar-track {
-    background: #0e0e0e;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: #333;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: #555;
-  }
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #0e0e0e;
+}
+::-webkit-scrollbar-thumb {
+  background: #333;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

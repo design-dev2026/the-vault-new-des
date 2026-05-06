@@ -19,9 +19,9 @@ export function ItemCard({ item, priority = false }: { item: Collectible, priori
   const displayValue = item.current_value || item.cost_price || 0;
   
   return (
-    <div className="group relative bg-[#0A0A0A] border border-white/5 p-5 rounded-2xl hover:border-white/20 transition-all duration-700 animate-in fade-in zoom-in-95">
+    <div className="group relative bg-white/[0.02] backdrop-blur-3xl border border-white/10 p-5 rounded hover:border-white/40 transition-all duration-1000 animate-in fade-in zoom-in-95 overflow-hidden">
       <Link href={`/app/items/${item.id}`}>
-        <div className="aspect-[3/4] overflow-hidden mb-8 rounded-xl bg-[#131313] relative border border-white/5">
+        <div className="aspect-[3/4] overflow-hidden mb-8 rounded-sm bg-black relative border border-white/5">
           {item.image_url ? (
             <Image
               src={item.image_url}
@@ -68,9 +68,6 @@ export function ItemCard({ item, priority = false }: { item: Collectible, priori
           </div>
         </div>
       </Link>
-
-      {/* Hover Light Accent */}
-      <div className="absolute -inset-px bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl pointer-events-none"></div>
     </div>
   );
 }
